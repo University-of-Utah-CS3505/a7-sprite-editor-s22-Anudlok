@@ -1,16 +1,13 @@
 #include "framelist.h"
+#include <vector>
 
 FrameList::FrameList(QObject *parent)
     : QObject{parent}
 {
 
-    FrameList(QObject *parent = nullptr){
 
-    }
+}
 
-    void FrameList::displayFrameLists(vector<QImage> frames){
-
-    }
-
+void FrameList::displayFrameLists(std::vector<QImage> frames){
 
 }

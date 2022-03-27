@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QObject>
 #include <QWidget>
+#include <vector>
 
 class FrameList : public QObject
 {
@@ -12,7 +13,7 @@ public:
     explicit FrameList(QObject *parent = nullptr);
 
     //don't know if this is a signal
-    void displayFrameLists(vector<QImage>);
+    void displayFrameLists(std::vector<QImage>);
 
 signals:
     void NewFrameClick();

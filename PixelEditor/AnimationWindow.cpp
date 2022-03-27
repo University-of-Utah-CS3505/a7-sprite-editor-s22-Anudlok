@@ -5,11 +5,8 @@ AnimationWindow::AnimationWindow(QObject *parent)
 {
     AnimationWindow::framesPerSecond = 3;
 
-    AnimationWindow::AnimationWindow(QObject *parent = nullptr){
+}
 
-    }
-
-    void AnimationWindow::changeFramesPerSecond(int initFrames){
-        framesPerSecond = initFrames;
-    }
+void AnimationWindow::changeFramesPerSecond(int initFrames){
+    framesPerSecond = initFrames;
 }
