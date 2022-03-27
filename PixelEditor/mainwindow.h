@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <vector>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,6 +18,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    std::vector<QImage> frames;
 
 private slots:
     void prevFrameViewChanged(const QIcon &icon);
@@ -24,6 +26,16 @@ private slots:
     void currFrameViewChanged(const QIcon &icon);
 
     void nextFrameViewChanged(const QIcon &icon);
+
+    void loadFile(QString);
+
+    void on_actionNew_triggered();
+
+    void on_actionSave_triggered();
+
+    void on_actionOpen_triggered();
+
+    void on_actionExit_triggered();
 
 private:
     Ui::MainWindow *ui;
