@@ -11,11 +11,11 @@ class AnimationWindow : public QObject
     int framesPerSecond;
 public:
     explicit AnimationWindow(QObject *parent = nullptr);
-    void playPreviewClick();
-    void stopPreviewClick();
+
     void changeFramesPerSecond(int);
 signals:
-
+    void playPreviewClick();
+    void stopPreviewClick();
 };
 
 #endif // ANIMATIONWINDOW_H

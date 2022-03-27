@@ -20,19 +20,20 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::prevFrameViewChanged(const QIcon &icon)
-{
+{ //SLOT
+
 
 }
 
 
 void MainWindow::currFrameViewChanged(const QIcon &icon)
-{
+{ //SLOT
 
 }
 
 
 void MainWindow::nextFrameViewChanged(const QIcon &icon)
-{
+{ //SLOT
 
 }
 
