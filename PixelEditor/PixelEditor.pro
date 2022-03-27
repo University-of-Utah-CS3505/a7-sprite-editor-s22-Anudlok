@@ -11,12 +11,14 @@ CONFIG += c++11
 SOURCES += \
     animationwindow.cpp \
     framelist.cpp \
+    frames.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     animationwindow.h \
     framelist.h \
+    frames.h \
     mainwindow.h
 
 FORMS += \
@@ -26,3 +28,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Resources.qrc
