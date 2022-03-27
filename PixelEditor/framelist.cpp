@@ -4,28 +4,13 @@ FrameList::FrameList(QObject *parent)
     : QObject{parent}
 {
 
-    explicit FrameList(QObject *parent = nullptr){
+    FrameList(QObject *parent = nullptr){
 
     }
 
-    void displayFrameLists(vector<QImage>){
+    void FrameList::displayFrameLists(vector<QImage> frames){
 
     }
 
-    void NewFrameClick(){
-
-    }
-
-    void selectFrame(){
-
-    }
-
-    void moveFrameLeft(){
-
-    }
-
-    void moveFrameRight(){
-
-    }
 
 }
