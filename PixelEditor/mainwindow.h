@@ -7,6 +7,9 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+/**
+ * @brief The MainWindow class-The view class header file
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -14,6 +17,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+private slots:
+    void prevFrameViewChanged(const QIcon &icon);
+
+    void currFrameViewChanged(const QIcon &icon);
+
+    void nextFrameViewChanged(const QIcon &icon);
 
 private:
     Ui::MainWindow *ui;

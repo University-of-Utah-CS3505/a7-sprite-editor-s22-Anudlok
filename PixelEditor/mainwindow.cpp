@@ -18,3 +18,21 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+void MainWindow::prevFrameViewChanged(const QIcon &icon)
+{
+
+}
+
+
+void MainWindow::currFrameViewChanged(const QIcon &icon)
+{
+
+}
+
+
+void MainWindow::nextFrameViewChanged(const QIcon &icon)
+{
+
+}
+

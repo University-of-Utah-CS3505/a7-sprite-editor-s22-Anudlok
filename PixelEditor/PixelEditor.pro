@@ -10,11 +10,13 @@ CONFIG += c++11
 
 SOURCES += \
     animationwindow.cpp \
+    framelist.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     animationwindow.h \
+    framelist.h \
     mainwindow.h
 
 FORMS += \
