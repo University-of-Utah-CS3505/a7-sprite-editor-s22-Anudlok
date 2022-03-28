@@ -9,7 +9,7 @@ FrameList::FrameList(QObject *parent)
 
 }
 
-void FrameList::displayFrameLists(std::vector<QImage> frames){
+void FrameList::displayFrameLists(std::vector<QImage> &frames){
 
 }
 

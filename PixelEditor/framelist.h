@@ -19,11 +19,13 @@ public:
     QImage prevFrame();
 
 signals:
-    void displayFrameLists(std::vector<QImage>);
     void NewFrameClick();
     void selectFrame(int, std::vector<QImage>);
     void moveFrameLeft(int, std::vector<QImage>);
     void moveFrameRight(int, std::vector<QImage>);
+
+public slots:
+    void displayFrameLists(std::vector<QImage> &frames);
 };
 
 #endif // FRAMELIST_H
