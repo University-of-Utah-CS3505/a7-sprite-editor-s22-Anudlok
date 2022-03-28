@@ -32,8 +32,6 @@ private slots:
     void updateCurrFrameLeft(int, std::vector<QImage>);
     void updateCurrFrameRight(int,std:: vector<QImage>);
 
-    void loadFile(QString);
-
     void on_actionNew_triggered();
 
     void on_actionSave_triggered();
@@ -44,6 +42,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    void loadFile(QString);
+    void saveFile();
 
 };
 #endif // MAINWINDOW_H

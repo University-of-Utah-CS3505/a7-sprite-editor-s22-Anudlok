@@ -78,6 +78,27 @@ void MainWindow::nextFrameViewChanged(const QIcon &icon)
     ui->prevFrameView->setScene(&scene);
 }
 
+/// File Menu Methods
+
+void MainWindow::saveFile() {
+    // Make a QString of file name using QFile Dialog
+    QString filename = QFileDialog::getSaveFileName(this,
+                                                    tr("Save Project"), QDir::homePath());
+
+    filename.append(".ssp");
+
+    qDebug() << filename;
+
+    // Make a QFile with that and a QTextStream with the QFile
+    QFile file(filename);
+
+
+    file.close();
+
+
+    // Use ReadWrite of the file to grab info from the current framesList of the project and write that
+}
+
 void MainWindow::loadFile(QString fileName){
     if (fileName.isEmpty()) {
         return;
@@ -143,7 +164,7 @@ void MainWindow::on_actionNew_triggered()
 
     switch (ret) {
       case QMessageBox::Save:
-          // Save was clicked
+          saveFile();
           break;
       case QMessageBox::Discard:
           // Don't Save was clicked
@@ -160,11 +181,7 @@ void MainWindow::on_actionNew_triggered()
 
 void MainWindow::on_actionSave_triggered()
 {
-    // Make a QString of file name using QFile Dialog
-
-    // Make a QFile with that and a QTextStream with the QFile
-
-    // Use ReadWrite of the file to grab info from the current framesList of the project and write that
+    saveFile();
 }
 
 
@@ -180,4 +197,6 @@ void MainWindow::on_actionExit_triggered()
 {
         this->close();
 }
+
+/// End File Menu Methods
 
