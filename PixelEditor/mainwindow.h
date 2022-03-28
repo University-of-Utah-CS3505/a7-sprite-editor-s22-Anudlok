@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <vector>
-#include "framelist.h"
 #include "drawingwindow.h"
 #include "frames.h"
 

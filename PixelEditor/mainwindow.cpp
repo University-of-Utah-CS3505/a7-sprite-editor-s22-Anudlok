@@ -89,9 +89,9 @@ void MainWindow::saveFile() {
     QFile file(filename);
 
      QJsonObject obj;
- //    obj["height"] = height;
- //   obj["width"] = width;
- //    obj["numberOfFrames"] = numberOfFrames;
+  //   obj["height"] = height;
+  //   obj["width"] = width;
+  //   obj["numberOfFrames"] = vector list . size;
      QJsonArray frames;
 
      // Build up array of rows which have arrays of pixels which have arrays of rgba 0-255
@@ -149,6 +149,7 @@ void MainWindow::loadFile(QString fileName){
                 }
 
             }
+            //Make a frames object by calling in the height and width and numberOfFrames then call the addFrame method on that object
 
             allFrames.push_back(image);
         }
@@ -158,7 +159,7 @@ void MainWindow::loadFile(QString fileName){
 }
 
 void MainWindow::newFile(){
-
+    // Make a pop up of height and width every time a new project is open
 }
 
 

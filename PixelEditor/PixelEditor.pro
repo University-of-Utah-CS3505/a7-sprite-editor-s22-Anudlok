@@ -11,7 +11,6 @@ CONFIG += c++11
 SOURCES += \
     animationwindow.cpp \
     drawingwindow.cpp \
-    framelist.cpp \
     frames.cpp \
     main.cpp \
     mainwindow.cpp
@@ -19,7 +18,6 @@ SOURCES += \
 HEADERS += \
     animationwindow.h \
     drawingwindow.h \
-    framelist.h \
     frames.h \
     mainwindow.h
 
