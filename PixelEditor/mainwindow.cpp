@@ -83,20 +83,25 @@ void MainWindow::nextFrameViewChanged(const QIcon &icon)
 void MainWindow::saveFile() {
     // Make a QString of file name using QFile Dialog
     QString filename = QFileDialog::getSaveFileName(this,
-                                                    tr("Save Project"), QDir::homePath());
+                                                    tr("Save Project"), QDir::homePath(), ".SSP Files (*.ssp)");
 
-    filename.append(".ssp");
-
-    qDebug() << filename;
-
-    // Make a QFile with that and a QTextStream with the QFile
+    // Make a QFile with that
     QFile file(filename);
 
+     QJsonObject obj;
+ //    obj["height"] = height;
+ //   obj["width"] = width;
+ //    obj["numberOfFrames"] = numberOfFrames;
+     QJsonArray frames;
 
-    file.close();
+     // Build up array of rows which have arrays of pixels which have arrays of rgba 0-255
+
+     obj["frames"] = frames;
 
 
     // Use ReadWrite of the file to grab info from the current framesList of the project and write that
+
+    file.close();
 }
 
 void MainWindow::loadFile(QString fileName){
@@ -152,6 +157,10 @@ void MainWindow::loadFile(QString fileName){
     }
 }
 
+void MainWindow::newFile(){
+
+}
+
 
 void MainWindow::on_actionNew_triggered()
 {
@@ -167,7 +176,7 @@ void MainWindow::on_actionNew_triggered()
           saveFile();
           break;
       case QMessageBox::Discard:
-          // Don't Save was clicked
+          newFile();
           break;
       case QMessageBox::Cancel:
           // Cancel was clicked

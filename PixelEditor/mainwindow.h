@@ -44,6 +44,7 @@ private:
     Ui::MainWindow *ui;
     void loadFile(QString);
     void saveFile();
+    void newFile();
 
 };
 #endif // MAINWINDOW_H
