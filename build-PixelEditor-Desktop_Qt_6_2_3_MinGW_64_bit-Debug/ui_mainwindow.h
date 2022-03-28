@@ -35,6 +35,7 @@ public:
     QGraphicsView *prevFrameView;
     QGraphicsView *currFrameView;
     QGraphicsView *nextFrameView;
+    QGraphicsView *editFrameView;
     QMenuBar *menubar;
     QMenu *menuFile;
     QStatusBar *statusbar;
@@ -87,10 +88,13 @@ public:
 
         framesListView->addWidget(nextFrameView);
 
+        editFrameView = new QGraphicsView(centralwidget);
+        editFrameView->setObjectName(QString::fromUtf8("editFrameView"));
+        editFrameView->setGeometry(QRect(120, 20, 471, 391));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 21));
+        menubar->setGeometry(QRect(0, 0, 800, 17));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menubar);

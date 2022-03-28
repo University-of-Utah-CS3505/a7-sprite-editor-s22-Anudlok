@@ -42,6 +42,8 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_btnTest_clicked();
+
 private:
     Ui::MainWindow *ui;
 
