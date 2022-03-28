@@ -16,11 +16,12 @@
  * @brief MainWindow::MainWindow The View Class
  * @param parent
  */
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(Frames& frames, drawingwindow& dw, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    connect(&frames, &Frames::displayFrame, &dw, &drawingwindow::displayCurrentFrame);
 }
 
 
