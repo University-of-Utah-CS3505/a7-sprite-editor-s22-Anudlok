@@ -7,7 +7,7 @@ drawingwindow::drawingwindow(QObject *parent)
 
 }
 
-void drawingwindow::displayCurrentFrame(QImage frame) {
+void drawingwindow::displayCurrentFrame(QImage* frame) {
 
 }
 

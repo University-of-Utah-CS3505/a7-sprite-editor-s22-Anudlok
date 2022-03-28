@@ -21,7 +21,7 @@ void Frames::deleteFrame() {
 void Frames::updateFrame(QColor color, int row, int column) {
     QImage frame = frameList[currentFrame];
     frame.setPixel(row, column, color.rgba());
-    emit displayFrame(frame);
+    emit displayFrame(&frame);
 }
 
 void Frames::changeFrame(bool upOrDown) {
@@ -31,7 +31,7 @@ void Frames::changeFrame(bool upOrDown) {
     else {
         currentFrame -= 1;
     }
-    emit displayFrame(frameList[currentFrame]);
+    emit displayFrame(&(frameList[currentFrame]));
 }
 
 void Frames::playAllFrames() {

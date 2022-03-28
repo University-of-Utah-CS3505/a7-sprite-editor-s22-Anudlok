@@ -12,7 +12,7 @@ public:
 signals:
 
 public slots:
-    void displayCurrentFrame(QImage frame);
+    void displayCurrentFrame(QImage* frame);
     void clickOnFrame();
 };
 

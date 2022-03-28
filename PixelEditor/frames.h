@@ -21,7 +21,7 @@ private:
     int currentFrame = -1;
 
 signals:
-    void displayFrame(QImage frame);
+    void displayFrame(QImage* frame);
 
 };
 
