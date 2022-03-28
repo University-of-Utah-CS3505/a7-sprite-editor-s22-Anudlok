@@ -4,5 +4,6 @@
         <file>CloseIcon.png</file>
         <file>OpenIcon.png</file>
         <file>SaveIcon.png</file>
+        <file>BrushIcon.png</file>
     </qresource>
 </RCC>
