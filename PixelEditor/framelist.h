@@ -9,17 +9,16 @@
 class FrameList : public QObject
 {
     Q_OBJECT
+
 public:
     explicit FrameList(QObject *parent = nullptr);
 
-    //don't know if this is a signal
-    void displayFrameLists(std::vector<QImage>);
-
 signals:
+    void displayFrameLists(std::vector<QImage>);
     void NewFrameClick();
-    void selectFrame();
-    void moveFrameLeft();
-    void moveFrameRight();
+    void selectFrame(int, std::vector<QImage>);
+    void moveFrameLeft(int, std::vector<QImage>);
+    void moveFrameRight(int, std::vector<QImage>);
 };
 
 #endif // FRAMELIST_H

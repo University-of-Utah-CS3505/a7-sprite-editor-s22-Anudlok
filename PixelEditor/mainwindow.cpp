@@ -11,6 +11,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+
 /**
  * @brief MainWindow::MainWindow The View Class
  * @param parent
@@ -28,23 +29,52 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::updateCurrFrameLeft(int currFrameIndex, std::vector<QImage> frames){
+    //QGraphicsScene scene = new QGraphicsScene(this);
+    QPixmap nextImage;
+    if(currFrameIndex > 0){
+        nextImage = QPixmap::fromImage(frames.at(currFrameIndex--));
+    } else {
+       nextImage = QPixmap::fromImage(frames.at(currFrameIndex));
+    }
+    QIcon icon(nextImage);
+    emit icon;
+}
+
+void MainWindow::updateCurrFrameRight(int currFrameIndex, std::vector<QImage> frames){
+    //QGraphicsScene scene = new QGraphicsScene(this);
+    QPixmap nextImage;
+    if(currFrameIndex < frames.size() -1){
+        nextImage = QPixmap::fromImage(frames.at(currFrameIndex++));
+    } else {
+       nextImage = QPixmap::fromImage(frames.at(currFrameIndex));
+    }
+    QIcon icon(nextImage);
+    emit icon;
+}
 
 void MainWindow::prevFrameViewChanged(const QIcon &icon)
-{ //SLOT
-
+{ //SLOT FOR GUI
+    QGraphicsScene scene = new QGraphicsScene(this);
+    //ok so i still need to find a way to get the pixmap from this icon and put it into the GUI
+    ui->prevFrameView->setScene(&scene);
 
 }
 
 
 void MainWindow::currFrameViewChanged(const QIcon &icon)
-{ //SLOT
-
+{ //SLOT FOR GUI
+    QGraphicsScene scene = new QGraphicsScene(this);
+    //ok so i still need to find a way to get the pixmap from this icon and put it into the GUI
+    ui->prevFrameView->setScene(&scene);
 }
 
 
 void MainWindow::nextFrameViewChanged(const QIcon &icon)
-{ //SLOT
-
+{ //SLOT FOR GUI
+    QGraphicsScene scene = new QGraphicsScene(this);
+    //ok so i still need to find a way to get the pixmap from this icon and put it into the GUI
+    ui->prevFrameView->setScene(&scene);
 }
 
 void MainWindow::loadFile(QString fileName){

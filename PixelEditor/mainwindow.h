@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <vector>
+#include "framelist.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,6 +28,9 @@ private slots:
 
     void nextFrameViewChanged(const QIcon &icon);
 
+    void updateCurrFrameLeft(int, std::vector<QImage>);
+    void updateCurrFrameRight(int,std:: vector<QImage>);
+
     void loadFile(QString);
 
     void on_actionNew_triggered();
@@ -39,5 +43,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
 };
 #endif // MAINWINDOW_H

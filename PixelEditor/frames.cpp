@@ -26,4 +26,3 @@ void Frames::changeFrame() {
 void Frames::playAllFrames() {
 
 }
-
