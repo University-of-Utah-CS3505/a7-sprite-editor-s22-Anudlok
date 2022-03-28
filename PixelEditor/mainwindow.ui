@@ -52,7 +52,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -71,7 +71,7 @@
   <action name="actionNew">
    <property name="icon">
     <iconset>
-     <normalon>:/Downloads/AddFile.png</normalon>
+     <normalon>:/Icons/AddFile.png</normalon>
     </iconset>
    </property>
    <property name="text">
@@ -81,7 +81,7 @@
   <action name="actionSave">
    <property name="icon">
     <iconset>
-     <normalon>:/Downloads/SaveIcon.png</normalon>
+     <normalon>:/Icons/SaveIcon.png</normalon>
     </iconset>
    </property>
    <property name="text">
@@ -91,7 +91,7 @@
   <action name="actionOpen">
    <property name="icon">
     <iconset>
-     <normalon>:/Downloads/OpenIcon.png</normalon>
+     <normalon>:/Icons/OpenIcon.png</normalon>
     </iconset>
    </property>
    <property name="text">
@@ -101,7 +101,7 @@
   <action name="actionExit">
    <property name="icon">
     <iconset>
-     <normalon>:/Downloads/CloseIcon.png</normalon>
+     <normalon>:/Icons/CloseIcon.png</normalon>
     </iconset>
    </property>
    <property name="text">

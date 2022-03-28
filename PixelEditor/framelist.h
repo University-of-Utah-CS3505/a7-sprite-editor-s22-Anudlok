@@ -12,6 +12,11 @@ class FrameList : public QObject
 
 public:
     explicit FrameList(QObject *parent = nullptr);
+    QImage nextFrame();
+
+    QImage currFrame();
+
+    QImage prevFrame();
 
 signals:
     void displayFrameLists(std::vector<QImage>);

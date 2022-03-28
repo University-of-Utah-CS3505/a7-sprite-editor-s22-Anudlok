@@ -1,6 +1,7 @@
 #include "framelist.h"
 #include <vector>
 #include "frames.h"
+
 FrameList::FrameList(QObject *parent)
     : QObject{parent}
 {
