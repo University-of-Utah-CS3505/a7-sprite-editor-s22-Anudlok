@@ -30,54 +30,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::updateCurrFrameLeft(int currFrameIndex, std::vector<QImage> frames){
-    //QGraphicsScene scene = new QGraphicsScene(this);
-    QPixmap nextImage;
-    if(currFrameIndex > 0){
-        nextImage = QPixmap::fromImage(frames.at(currFrameIndex--));
-    } else {
-       nextImage = QPixmap::fromImage(frames.at(currFrameIndex));
-    }
-    QIcon icon(nextImage);
-    emit icon;
-}
-
-void MainWindow::updateCurrFrameRight(int currFrameIndex, std::vector<QImage> frames){
-    //QGraphicsScene scene = new QGraphicsScene(this);
-    QPixmap nextImage;
-    if(currFrameIndex < frames.size() -1){
-        nextImage = QPixmap::fromImage(frames.at(currFrameIndex++));
-    } else {
-       nextImage = QPixmap::fromImage(frames.at(currFrameIndex));
-    }
-    QIcon icon(nextImage);
-    emit icon;
-}
-
-void MainWindow::prevFrameViewChanged(const QIcon &icon)
-{ //SLOT FOR GUI
-    QGraphicsScene scene = new QGraphicsScene(this);
-    //ok so i still need to find a way to get the pixmap from this icon and put it into the GUI
-    ui->prevFrameView->setScene(&scene);
-
-}
-
-
-void MainWindow::currFrameViewChanged(const QIcon &icon)
-{ //SLOT FOR GUI
-    QGraphicsScene scene = new QGraphicsScene(this);
-    //ok so i still need to find a way to get the pixmap from this icon and put it into the GUI
-    ui->prevFrameView->setScene(&scene);
-}
-
-
-void MainWindow::nextFrameViewChanged(const QIcon &icon)
-{ //SLOT FOR GUI
-    QGraphicsScene scene = new QGraphicsScene(this);
-    //ok so i still need to find a way to get the pixmap from this icon and put it into the GUI
-    ui->prevFrameView->setScene(&scene);
-}
-
 /// File Menu Methods
 
 void MainWindow::saveFile() {
@@ -210,3 +162,34 @@ void MainWindow::on_actionExit_triggered()
 
 /// End File Menu Methods
 
+//FrameList View Slots
+void MainWindow::on_framesListWidget_itemDoubleClicked(QListWidgetItem *item)
+{
+   QImage clickedFrame;
+
+   //I need the width and height from the frames class
+   int width = 25;
+   int height = 25;
+
+   QPixmap framePixMap = item->icon().pixmap(width, height, QIcon::Mode(0),QIcon::State(0));
+   clickedFrame = framePixMap.toImage(); //this will compile but the internet says that it
+                                         //won't display with the same alpha, whatever that means
+   emit currentFrameChanged(&clickedFrame);
+}
+
+void MainWindow::on_framesListWidget_itemActivated(QListWidgetItem *item)
+{
+    //temporary until we can find a way to get the frameslist
+    std::vector<QImage> frameslist;
+
+    //goes through each frame in the frames list and adds it to list widget
+    for(unsigned int i = 0;i < frameslist.size(); i++){
+        QImage frame  = frameslist.at(i);
+        QPixmap framePixMap = QPixmap::fromImage(frame);
+        QIcon frameIcon(framePixMap);
+        QListWidgetItem newWidgetItem;
+        newWidgetItem.setIcon(frameIcon);
+        ui->framesListWidget->addItem(&newWidgetItem);
+    }
+
+}

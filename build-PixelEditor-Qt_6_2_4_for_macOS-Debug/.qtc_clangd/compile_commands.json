@@ -7,7 +7,7 @@
         "-I",
         "/Applications/QtStuff/Qt Creator.app/Contents/Resources/cplusplus/wrappedQtHeaders/QtCore",
         "-I",
-        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-uZTpmE/clang-uiheader-ynlhpR",
+        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-pabdKy/clang-uiheader-LXjlKq",
         "-nostdinc",
         "-nostdinc++",
         "-pipe",
@@ -79,7 +79,7 @@
         "-I",
         "/Applications/QtStuff/Qt Creator.app/Contents/Resources/cplusplus/wrappedQtHeaders/QtCore",
         "-I",
-        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-uZTpmE/clang-uiheader-ynlhpR",
+        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-pabdKy/clang-uiheader-LXjlKq",
         "-nostdinc",
         "-nostdinc++",
         "-pipe",
@@ -138,10 +138,10 @@
         "-Wno-unknown-pragmas",
         "-Wno-unknown-warning-option",
         "-Wno-documentation-unknown-command",
-        "/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/PixelEditor/framelist.cpp"
+        "/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/PixelEditor/drawingwindow.cpp"
     ],
     "directory": "/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/build-PixelEditor-Qt_6_2_4_for_macOS-Debug/.qtc_clangd",
-    "file": "/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/PixelEditor/framelist.cpp"
+    "file": "/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/PixelEditor/drawingwindow.cpp"
 },
 {
     "arguments": [
@@ -151,7 +151,7 @@
         "-I",
         "/Applications/QtStuff/Qt Creator.app/Contents/Resources/cplusplus/wrappedQtHeaders/QtCore",
         "-I",
-        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-uZTpmE/clang-uiheader-ynlhpR",
+        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-pabdKy/clang-uiheader-LXjlKq",
         "-nostdinc",
         "-nostdinc++",
         "-pipe",
@@ -223,7 +223,7 @@
         "-I",
         "/Applications/QtStuff/Qt Creator.app/Contents/Resources/cplusplus/wrappedQtHeaders/QtCore",
         "-I",
-        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-uZTpmE/clang-uiheader-ynlhpR",
+        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-pabdKy/clang-uiheader-LXjlKq",
         "-nostdinc",
         "-nostdinc++",
         "-pipe",
@@ -295,7 +295,7 @@
         "-I",
         "/Applications/QtStuff/Qt Creator.app/Contents/Resources/cplusplus/wrappedQtHeaders/QtCore",
         "-I",
-        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-uZTpmE/clang-uiheader-ynlhpR",
+        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-pabdKy/clang-uiheader-LXjlKq",
         "-nostdinc",
         "-nostdinc++",
         "-pipe",
@@ -367,7 +367,7 @@
         "-I",
         "/Applications/QtStuff/Qt Creator.app/Contents/Resources/cplusplus/wrappedQtHeaders/QtCore",
         "-I",
-        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-uZTpmE/clang-uiheader-ynlhpR",
+        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-pabdKy/clang-uiheader-LXjlKq",
         "-nostdinc",
         "-nostdinc++",
         "-pipe",
@@ -439,7 +439,7 @@
         "-I",
         "/Applications/QtStuff/Qt Creator.app/Contents/Resources/cplusplus/wrappedQtHeaders/QtCore",
         "-I",
-        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-uZTpmE/clang-uiheader-ynlhpR",
+        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-pabdKy/clang-uiheader-LXjlKq",
         "-nostdinc",
         "-nostdinc++",
         "-pipe",
@@ -498,10 +498,10 @@
         "-Wno-unknown-pragmas",
         "-Wno-unknown-warning-option",
         "-Wno-documentation-unknown-command",
-        "/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/PixelEditor/framelist.h"
+        "/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/PixelEditor/drawingwindow.h"
     ],
     "directory": "/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/build-PixelEditor-Qt_6_2_4_for_macOS-Debug/.qtc_clangd",
-    "file": "/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/PixelEditor/framelist.h"
+    "file": "/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/PixelEditor/drawingwindow.h"
 },
 {
     "arguments": [
@@ -511,7 +511,7 @@
         "-I",
         "/Applications/QtStuff/Qt Creator.app/Contents/Resources/cplusplus/wrappedQtHeaders/QtCore",
         "-I",
-        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-uZTpmE/clang-uiheader-ynlhpR",
+        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-pabdKy/clang-uiheader-LXjlKq",
         "-nostdinc",
         "-nostdinc++",
         "-pipe",
@@ -583,7 +583,7 @@
         "-I",
         "/Applications/QtStuff/Qt Creator.app/Contents/Resources/cplusplus/wrappedQtHeaders/QtCore",
         "-I",
-        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-uZTpmE/clang-uiheader-ynlhpR",
+        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-pabdKy/clang-uiheader-LXjlKq",
         "-nostdinc",
         "-nostdinc++",
         "-pipe",
@@ -655,7 +655,7 @@
         "-I",
         "/Applications/QtStuff/Qt Creator.app/Contents/Resources/cplusplus/wrappedQtHeaders/QtCore",
         "-I",
-        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-uZTpmE/clang-uiheader-ynlhpR",
+        "/private/var/folders/pp/sgrtml8s0cx9zxms9wt9hjnh0000gn/T/QtCreator-pabdKy/clang-uiheader-LXjlKq",
         "-nostdinc",
         "-nostdinc++",
         "-pipe",

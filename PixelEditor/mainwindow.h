@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <vector>
+#include "QtWidgets/qlistwidget.h"
 #include "drawingwindow.h"
 #include "frames.h"
 
@@ -20,16 +21,10 @@ public:
     MainWindow(Frames& frames, drawingwindow& dw, QWidget *parent = nullptr);
     ~MainWindow();
     std::vector<QImage> frames;
+signals:
+    void currentFrameChanged(QImage * frame);
 
 private slots:
-    void prevFrameViewChanged(const QIcon &icon);
-
-    void currFrameViewChanged(const QIcon &icon);
-
-    void nextFrameViewChanged(const QIcon &icon);
-
-    void updateCurrFrameLeft(int, std::vector<QImage>);
-    void updateCurrFrameRight(int,std:: vector<QImage>);
 
     void on_actionNew_triggered();
 
@@ -39,11 +34,14 @@ private slots:
 
     void on_actionExit_triggered();
 
+   void on_framesListWidget_itemDoubleClicked(QListWidgetItem *item);
+
+    void on_framesListWidget_itemActivated(QListWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
     void loadFile(QString);
     void saveFile();
     void newFile();
-
 };
 #endif // MAINWINDOW_H
