@@ -13,7 +13,6 @@
 #include <QtGui/QAction>
 #include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
@@ -34,7 +33,6 @@ public:
     QAction *actionOpen;
     QAction *actionExit;
     QWidget *centralwidget;
-    QGraphicsView *editFrameView;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
     QPushButton *brushButton;
@@ -47,6 +45,8 @@ public:
     QLabel *primaryColorLabel;
     QPushButton *swapColorButton;
     QListWidget *framesListWidget;
+    QLabel *editDrawingWindow;
+    QPushButton *btnTest;
     QMenuBar *menubar;
     QMenu *menuFile;
     QStatusBar *statusbar;
@@ -55,7 +55,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(800, 600);
+        MainWindow->resize(763, 600);
         actionNew = new QAction(MainWindow);
         actionNew->setObjectName(QString::fromUtf8("actionNew"));
         QIcon icon;
@@ -78,17 +78,12 @@ public:
         actionExit->setIcon(icon3);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        editFrameView = new QGraphicsView(centralwidget);
-        editFrameView->setObjectName(QString::fromUtf8("editFrameView"));
-        editFrameView->setGeometry(QRect(120, 20, 471, 391));
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(editFrameView->sizePolicy().hasHeightForWidth());
-        editFrameView->setSizePolicy(sizePolicy);
         verticalLayoutWidget = new QWidget(centralwidget);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
         verticalLayoutWidget->setGeometry(QRect(20, 20, 85, 512));
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(verticalLayoutWidget->sizePolicy().hasHeightForWidth());
         verticalLayoutWidget->setSizePolicy(sizePolicy);
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
@@ -189,10 +184,19 @@ public:
         framesListWidget->setGeometry(QRect(120, 421, 471, 101));
         sizePolicy.setHeightForWidth(framesListWidget->sizePolicy().hasHeightForWidth());
         framesListWidget->setSizePolicy(sizePolicy);
+        editDrawingWindow = new QLabel(centralwidget);
+        editDrawingWindow->setObjectName(QString::fromUtf8("editDrawingWindow"));
+        editDrawingWindow->setGeometry(QRect(120, 20, 471, 391));
+        editDrawingWindow->setAutoFillBackground(true);
+        editDrawingWindow->setFrameShape(QFrame::Box);
+        editDrawingWindow->setAlignment(Qt::AlignCenter);
+        btnTest = new QPushButton(centralwidget);
+        btnTest->setObjectName(QString::fromUtf8("btnTest"));
+        btnTest->setGeometry(QRect(620, 30, 80, 18));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 26));
+        menubar->setGeometry(QRect(0, 0, 763, 17));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menubar);
@@ -219,12 +223,6 @@ public:
         actionSave->setText(QCoreApplication::translate("MainWindow", "Save", nullptr));
         actionOpen->setText(QCoreApplication::translate("MainWindow", "Open", nullptr));
         actionExit->setText(QCoreApplication::translate("MainWindow", "Exit", nullptr));
-#if QT_CONFIG(tooltip)
-        editFrameView->setToolTip(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
-#endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(accessibility)
-        editFrameView->setAccessibleName(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
-#endif // QT_CONFIG(accessibility)
 #if QT_CONFIG(tooltip)
         verticalLayoutWidget->setToolTip(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
 #endif // QT_CONFIG(tooltip)
@@ -299,6 +297,8 @@ public:
 #if QT_CONFIG(accessibility)
         framesListWidget->setAccessibleName(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
 #endif // QT_CONFIG(accessibility)
+        editDrawingWindow->setText(QString());
+        btnTest->setText(QCoreApplication::translate("MainWindow", "New", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
     } // retranslateUi
 

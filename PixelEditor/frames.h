@@ -13,15 +13,15 @@ public:
 private:
     QVector<QImage> frameList;
     int currentFrame = -1;
-    int width = 100;
-    int height = 100;
+    int width = 3;
+    int height = 3;
 
 signals:
     void displayFrame(QImage* frame);
 
 public slots:
     void addFrame();
-    void addFrame(QImage frame);
+    void addFrameWithFrame(QImage frame);
     void deleteFrame();
     void updateFrame(QColor color, int row, int column);
     void changeFrame(bool upOrDown);

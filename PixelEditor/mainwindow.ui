@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>763</width>
     <height>600</height>
    </rect>
   </property>
@@ -14,28 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QGraphicsView" name="editFrameView">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>20</y>
-      <width>471</width>
-      <height>391</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="toolTip">
-     <string>Select Tool</string>
-    </property>
-    <property name="accessibleName">
-     <string>Select Tool</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
@@ -76,7 +54,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resources.qrc">
+        <iconset>
          <normaloff>:/Icons/icons8-paint-96.png</normaloff>:/Icons/icons8-paint-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -111,7 +89,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resources.qrc">
+        <iconset>
          <normaloff>:/Icons/icons8-erase-96.png</normaloff>:/Icons/icons8-erase-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -143,7 +121,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resources.qrc">
+        <iconset>
          <normaloff>:/Icons/icons8-fill-color-96.png</normaloff>:/Icons/icons8-fill-color-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -172,7 +150,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resources.qrc">
+        <iconset>
          <normaloff>:/Icons/icons8-color-dropper-96.png</normaloff>:/Icons/icons8-color-dropper-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -204,7 +182,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resources.qrc">
+        <iconset>
          <normaloff>:/Icons/icons8-select-all-96.png</normaloff>:/Icons/icons8-select-all-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -310,7 +288,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset>
           <normaloff>:/Icons/icons8-curved-arrow-48.png</normaloff>:/Icons/icons8-curved-arrow-48.png</iconset>
         </property>
        </widget>
@@ -340,14 +318,49 @@
      <string>Select Tool</string>
     </property>
    </widget>
+   <widget class="QLabel" name="editDrawingWindow">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>20</y>
+      <width>471</width>
+      <height>391</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnTest">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>30</y>
+      <width>80</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>New</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>26</height>
+     <width>763</width>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -404,8 +417,6 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

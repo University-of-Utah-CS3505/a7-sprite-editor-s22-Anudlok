@@ -23,6 +23,7 @@ public:
     std::vector<QImage> frames;
 signals:
     void currentFrameChanged(QImage * frame);
+    void makeNewFrame();
 
 private slots:
 
@@ -37,6 +38,9 @@ private slots:
    void on_framesListWidget_itemDoubleClicked(QListWidgetItem *item);
 
     void on_framesListWidget_itemActivated(QListWidgetItem *item);
+
+    void on_btnTest_clicked();
+    void displayFrame(QImage* frame);
 
 private:
     Ui::MainWindow *ui;

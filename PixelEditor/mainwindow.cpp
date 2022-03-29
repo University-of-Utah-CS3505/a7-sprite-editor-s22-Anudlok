@@ -21,7 +21,10 @@ MainWindow::MainWindow(Frames& frames, drawingwindow& dw, QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(&frames, &Frames::displayFrame, &dw, &drawingwindow::displayCurrentFrame);
+    connect(&frames, &Frames::displayFrame, this, &MainWindow::displayFrame);
+    connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrame);
+    ui->editDrawingWindow->setAutoFillBackground(true);
+    ui->editDrawingWindow->setStyleSheet("background-color: white;");
 }
 
 
@@ -192,4 +195,14 @@ void MainWindow::on_framesListWidget_itemActivated(QListWidgetItem *item)
         ui->framesListWidget->addItem(&newWidgetItem);
     }
 
+}
+
+void MainWindow::on_btnTest_clicked()
+{
+    emit makeNewFrame();
+}
+
+void MainWindow::displayFrame(QImage* frame) {
+    ui->editDrawingWindow->setPixmap(QPixmap::fromImage(*frame));
+    ui->editDrawingWindow->show();
 }

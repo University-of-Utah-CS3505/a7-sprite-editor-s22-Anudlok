@@ -16,11 +16,13 @@ void Frames::addFrame(){
     QImage image = QImage(width, height, QImage::Format_ARGB32);
     frameList.append(image);
     currentFrame += 1;
+    emit displayFrame(&(frameList[currentFrame]));
 }
 
-void Frames::addFrame(QImage frame){
+void Frames::addFrameWithFrame(QImage frame){
     frameList.append(frame);
     currentFrame += 1;
+    emit displayFrame(&(frameList[currentFrame]));
 }
 
 void Frames::deleteFrame() {
