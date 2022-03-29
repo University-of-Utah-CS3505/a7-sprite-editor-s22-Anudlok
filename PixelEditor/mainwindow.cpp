@@ -28,6 +28,7 @@ MainWindow::MainWindow(Frames& frames, drawingwindow& dw, drawingwindowwidget& d
     connect(&dww, &drawingwindowwidget::getWidthAndHeight, &frames, &Frames::getWidthAndHeight);
     this->layout()->addWidget(&dww);
     ui->editDrawingWindow->setVisible(false);
+    ui->brushButton->setEnabled(true);
 }
 
 

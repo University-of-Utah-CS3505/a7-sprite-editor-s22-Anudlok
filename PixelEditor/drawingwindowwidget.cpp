@@ -4,15 +4,16 @@
 drawingwindowwidget::drawingwindowwidget(QWidget *parent)
     : QWidget{parent}
 {
+    this->setGeometry(120, 40, 471, 391);
     drawingWindow = new QLabel(this);
-    drawingWindow->setGeometry(120, 40, 471, 391);
+    drawingWindow->setGeometry(0, 0, 471, 391);
     drawingWindow->setAlignment(Qt::AlignCenter);
     drawingWindow->setAutoFillBackground(true);
     drawingWindow->setStyleSheet("background-color: white;");
     drawingWindow->setFrameShape(QFrame::Box);
 
     gridWindow = new QLabel(this);
-    gridWindow->setGeometry(120, 40, 471, 391);
+    gridWindow->setGeometry(0, 0, 471, 391);
     gridWindow->setAlignment(Qt::AlignCenter);
     gridWindow->setAutoFillBackground(true);
     gridWindow->setStyleSheet("background-color: white;");

@@ -122,6 +122,7 @@ public:
         icon6.addFile(QString::fromUtf8(":/Icons/icons8-fill-color-96.png"), QSize(), QIcon::Normal, QIcon::Off);
         bucketButton->setIcon(icon6);
         bucketButton->setIconSize(QSize(70, 70));
+        bucketButton->setCheckable(true);
 
         verticalLayout->addWidget(bucketButton);
 
@@ -145,6 +146,7 @@ public:
         icon8.addFile(QString::fromUtf8(":/Icons/icons8-select-all-96.png"), QSize(), QIcon::Normal, QIcon::Off);
         selectButton->setIcon(icon8);
         selectButton->setIconSize(QSize(70, 70));
+        selectButton->setCheckable(true);
 
         verticalLayout->addWidget(selectButton);
 
