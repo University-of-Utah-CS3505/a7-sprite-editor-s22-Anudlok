@@ -5,6 +5,7 @@
 #include <vector>
 #include "QtWidgets/qlistwidget.h"
 #include "drawingwindow.h"
+#include "drawingwindowwidget.h"
 #include "frames.h"
 
 QT_BEGIN_NAMESPACE
@@ -18,7 +19,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    MainWindow(Frames& frames, drawingwindow& dw, QWidget *parent = nullptr);
+    MainWindow(Frames& frames, drawingwindow& dw, drawingwindowwidget& dww, QWidget *parent = nullptr);
     ~MainWindow();
     std::vector<QImage> frames;
 signals:

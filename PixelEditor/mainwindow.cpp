@@ -16,15 +16,17 @@
  * @brief MainWindow::MainWindow The View Class
  * @param parent
  */
-MainWindow::MainWindow(Frames& frames, drawingwindow& dw, QWidget *parent)
+MainWindow::MainWindow(Frames& frames, drawingwindow& dw, drawingwindowwidget& dww, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(&frames, &Frames::displayFrame, this, &MainWindow::displayFrame);
+    connect(&frames, &Frames::displayFrame, &dww, &drawingwindowwidget::displayCurrentFrame);
     connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrame);
-    ui->editDrawingWindow->setAutoFillBackground(true);
-    ui->editDrawingWindow->setStyleSheet("background-color: white;");
+    connect(&frames, &Frames::widthAndHeight, &dww, &drawingwindowwidget::setWidthAndHeight);
+    connect(&dww, &drawingwindowwidget::getWidthAndHeight, &frames, &Frames::getWidthAndHeight);
+    this->layout()->addWidget(&dww);
+    ui->editDrawingWindow->setVisible(false);
 }
 
 

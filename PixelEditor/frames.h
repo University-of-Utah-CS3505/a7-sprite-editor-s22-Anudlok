@@ -18,6 +18,7 @@ private:
 
 signals:
     void displayFrame(QImage* frame);
+    void widthAndHeight(int width, int height);
 
 public slots:
     void addFrame();
@@ -27,6 +28,7 @@ public slots:
     void changeFrame(bool upOrDown);
     void playAllFrames();
     void setWidthAndHeight(int width, int height);
+    void getWidthAndHeight();
 
 };
 
