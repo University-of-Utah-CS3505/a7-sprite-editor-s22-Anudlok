@@ -10,6 +10,7 @@
 #include <QVector>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include <QtDebug>
 
 
 /**
@@ -208,3 +209,69 @@ void MainWindow::displayFrame(QImage* frame) {
     ui->editDrawingWindow->setPixmap(QPixmap::fromImage(*frame));
     ui->editDrawingWindow->show();
 }
+
+void MainWindow::on_brushButton_clicked()
+{
+    qDebug() << "help";
+    selectButton(Toolbar::Tools::brush);
+}
+
+
+void MainWindow::on_eraserButton_clicked()
+{
+    selectButton(Toolbar::Tools::eraser);
+}
+
+
+void MainWindow::on_bucketButton_clicked()
+{
+    selectButton(Toolbar::Tools::bucket);
+}
+
+
+void MainWindow::on_colorPickerButton_clicked()
+{
+    selectButton(Toolbar::Tools::colorPicker);
+}
+
+
+void MainWindow::on_selectButton_clicked()
+{
+    selectButton(Toolbar::Tools::select);
+}
+
+void MainWindow::selectButton(Toolbar::Tools tool) {
+    toolbar.switchTool(tool);
+
+    bool brushChecked = false, eraserChecked = false, pickerChecked = false, bucketChecked = false, selectChecked = false;
+
+    switch (tool) {
+        case Toolbar::Tools::brush:
+            brushChecked = true;
+            break;
+        case Toolbar::Tools::eraser:
+            eraserChecked = true;
+            break;
+        case Toolbar::Tools::colorPicker:
+            pickerChecked = true;
+            break;
+        case Toolbar::Tools::bucket:
+            bucketChecked = true;
+            break;
+        case Toolbar::Tools::select:
+            selectChecked = true;
+            break;
+    }
+
+    ui->brushButton->setChecked(brushChecked);
+    ui->eraserButton->setChecked(eraserChecked);
+    ui->colorPickerButton->setChecked(pickerChecked);
+    ui->bucketButton->setChecked(bucketChecked);
+    ui->selectButton->setChecked(selectChecked);
+}
+
+void MainWindow::on_editDrawingWindow_linkActivated(const QString &link)
+{
+
+}
+

@@ -7,6 +7,7 @@
 #include "drawingwindow.h"
 #include "drawingwindowwidget.h"
 #include "frames.h"
+#include "toolbar.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -43,10 +44,24 @@ private slots:
     void on_btnTest_clicked();
     void displayFrame(QImage* frame);
 
+    void on_brushButton_clicked();
+
+    void on_eraserButton_clicked();
+
+    void on_bucketButton_clicked();
+
+    void on_colorPickerButton_clicked();
+
+    void on_selectButton_clicked();
+
+    void on_editDrawingWindow_linkActivated(const QString &link);
+
 private:
     Ui::MainWindow *ui;
+    Toolbar toolbar;
     void loadFile(QString);
     void saveFile();
     void newFile();
+    void selectButton(Toolbar::Tools tool);
 };
 #endif // MAINWINDOW_H

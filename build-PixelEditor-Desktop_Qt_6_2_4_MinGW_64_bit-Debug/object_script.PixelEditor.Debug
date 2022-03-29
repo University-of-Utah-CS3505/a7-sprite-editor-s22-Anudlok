@@ -1,0 +1,14 @@
+debug/animationwindow.o
+debug/drawingwindow.o
+debug/drawingwindowwidget.o
+debug/frames.o
+debug/main.o
+debug/mainwindow.o
+debug/toolbar.o
+debug/qrc_Resources.o
+debug/moc_animationwindow.o
+debug/moc_drawingwindow.o
+debug/moc_drawingwindowwidget.o
+debug/moc_frames.o
+debug/moc_mainwindow.o
+debug/moc_toolbar.o

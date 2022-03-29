@@ -45,7 +45,6 @@ void drawingwindowwidget::mousePressEvent(QMouseEvent *event)
     int x = QCursor::pos().x();
     int y = QCursor::pos().y();
     qDebug() << x << ", " << y;
-
 }
 
 void drawingwindowwidget::setWidthAndHeight(int _width, int _height) {

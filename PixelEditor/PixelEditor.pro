@@ -14,14 +14,16 @@ SOURCES += \
     drawingwindowwidget.cpp \
     frames.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    toolbar.cpp
 
 HEADERS += \
     animationwindow.h \
     drawingwindow.h \
     drawingwindowwidget.h \
     frames.h \
-    mainwindow.h
+    mainwindow.h \
+    toolbar.h
 
 FORMS += \
     mainwindow.ui

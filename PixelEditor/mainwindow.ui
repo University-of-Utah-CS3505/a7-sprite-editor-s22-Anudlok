@@ -54,7 +54,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="Resources.qrc">
          <normaloff>:/Icons/icons8-paint-96.png</normaloff>:/Icons/icons8-paint-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -89,7 +89,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="Resources.qrc">
          <normaloff>:/Icons/icons8-erase-96.png</normaloff>:/Icons/icons8-erase-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -121,7 +121,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="Resources.qrc">
          <normaloff>:/Icons/icons8-fill-color-96.png</normaloff>:/Icons/icons8-fill-color-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -129,6 +129,9 @@
          <width>70</width>
          <height>70</height>
         </size>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -150,7 +153,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="Resources.qrc">
          <normaloff>:/Icons/icons8-color-dropper-96.png</normaloff>:/Icons/icons8-color-dropper-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -182,7 +185,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="Resources.qrc">
          <normaloff>:/Icons/icons8-select-all-96.png</normaloff>:/Icons/icons8-select-all-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -190,6 +193,9 @@
          <width>70</width>
          <height>70</height>
         </size>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -288,7 +294,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="Resources.qrc">
           <normaloff>:/Icons/icons8-curved-arrow-48.png</normaloff>:/Icons/icons8-curved-arrow-48.png</iconset>
         </property>
        </widget>
@@ -360,7 +366,7 @@
      <x>0</x>
      <y>0</y>
      <width>763</width>
-     <height>17</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -417,6 +423,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

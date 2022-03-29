@@ -1,0 +1,14 @@
+release/animationwindow.o
+release/drawingwindow.o
+release/drawingwindowwidget.o
+release/frames.o
+release/main.o
+release/mainwindow.o
+release/toolbar.o
+release/qrc_Resources.o
+release/moc_animationwindow.o
+release/moc_drawingwindow.o
+release/moc_drawingwindowwidget.o
+release/moc_frames.o
+release/moc_mainwindow.o
+release/moc_toolbar.o
