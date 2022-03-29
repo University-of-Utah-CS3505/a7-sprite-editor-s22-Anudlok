@@ -11,13 +11,17 @@
 
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGraphicsView>
-#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -30,12 +34,19 @@ public:
     QAction *actionOpen;
     QAction *actionExit;
     QWidget *centralwidget;
-    QWidget *layoutWidget;
-    QHBoxLayout *framesListView;
-    QGraphicsView *prevFrameView;
-    QGraphicsView *currFrameView;
-    QGraphicsView *nextFrameView;
     QGraphicsView *editFrameView;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout;
+    QPushButton *brushButton;
+    QPushButton *eraserButton;
+    QPushButton *bucketButton;
+    QPushButton *colorPickerButton;
+    QPushButton *selectButton;
+    QWidget *widget;
+    QLabel *secondaryColorLabel;
+    QLabel *primaryColorLabel;
+    QPushButton *swapColorButton;
+    QListWidget *framesListWidget;
     QMenuBar *menubar;
     QMenu *menuFile;
     QStatusBar *statusbar;
@@ -67,34 +78,121 @@ public:
         actionExit->setIcon(icon3);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        layoutWidget = new QWidget(centralwidget);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(120, 420, 471, 121));
-        framesListView = new QHBoxLayout(layoutWidget);
-        framesListView->setObjectName(QString::fromUtf8("framesListView"));
-        framesListView->setContentsMargins(0, 0, 0, 0);
-        prevFrameView = new QGraphicsView(layoutWidget);
-        prevFrameView->setObjectName(QString::fromUtf8("prevFrameView"));
-
-        framesListView->addWidget(prevFrameView);
-
-        currFrameView = new QGraphicsView(layoutWidget);
-        currFrameView->setObjectName(QString::fromUtf8("currFrameView"));
-
-        framesListView->addWidget(currFrameView);
-
-        nextFrameView = new QGraphicsView(layoutWidget);
-        nextFrameView->setObjectName(QString::fromUtf8("nextFrameView"));
-
-        framesListView->addWidget(nextFrameView);
-
         editFrameView = new QGraphicsView(centralwidget);
         editFrameView->setObjectName(QString::fromUtf8("editFrameView"));
         editFrameView->setGeometry(QRect(120, 20, 471, 391));
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(editFrameView->sizePolicy().hasHeightForWidth());
+        editFrameView->setSizePolicy(sizePolicy);
+        verticalLayoutWidget = new QWidget(centralwidget);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(20, 20, 85, 512));
+        sizePolicy.setHeightForWidth(verticalLayoutWidget->sizePolicy().hasHeightForWidth());
+        verticalLayoutWidget->setSizePolicy(sizePolicy);
+        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        brushButton = new QPushButton(verticalLayoutWidget);
+        brushButton->setObjectName(QString::fromUtf8("brushButton"));
+        sizePolicy.setHeightForWidth(brushButton->sizePolicy().hasHeightForWidth());
+        brushButton->setSizePolicy(sizePolicy);
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/Icons/icons8-paint-96.png"), QSize(), QIcon::Normal, QIcon::Off);
+        brushButton->setIcon(icon4);
+        brushButton->setIconSize(QSize(70, 70));
+        brushButton->setCheckable(true);
+        brushButton->setChecked(true);
+
+        verticalLayout->addWidget(brushButton);
+
+        eraserButton = new QPushButton(verticalLayoutWidget);
+        eraserButton->setObjectName(QString::fromUtf8("eraserButton"));
+        sizePolicy.setHeightForWidth(eraserButton->sizePolicy().hasHeightForWidth());
+        eraserButton->setSizePolicy(sizePolicy);
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8(":/Icons/icons8-erase-96.png"), QSize(), QIcon::Normal, QIcon::Off);
+        eraserButton->setIcon(icon5);
+        eraserButton->setIconSize(QSize(70, 70));
+        eraserButton->setCheckable(true);
+
+        verticalLayout->addWidget(eraserButton);
+
+        bucketButton = new QPushButton(verticalLayoutWidget);
+        bucketButton->setObjectName(QString::fromUtf8("bucketButton"));
+        sizePolicy.setHeightForWidth(bucketButton->sizePolicy().hasHeightForWidth());
+        bucketButton->setSizePolicy(sizePolicy);
+        QIcon icon6;
+        icon6.addFile(QString::fromUtf8(":/Icons/icons8-fill-color-96.png"), QSize(), QIcon::Normal, QIcon::Off);
+        bucketButton->setIcon(icon6);
+        bucketButton->setIconSize(QSize(70, 70));
+
+        verticalLayout->addWidget(bucketButton);
+
+        colorPickerButton = new QPushButton(verticalLayoutWidget);
+        colorPickerButton->setObjectName(QString::fromUtf8("colorPickerButton"));
+        sizePolicy.setHeightForWidth(colorPickerButton->sizePolicy().hasHeightForWidth());
+        colorPickerButton->setSizePolicy(sizePolicy);
+        QIcon icon7;
+        icon7.addFile(QString::fromUtf8(":/Icons/icons8-color-dropper-96.png"), QSize(), QIcon::Normal, QIcon::Off);
+        colorPickerButton->setIcon(icon7);
+        colorPickerButton->setIconSize(QSize(70, 70));
+        colorPickerButton->setCheckable(true);
+
+        verticalLayout->addWidget(colorPickerButton);
+
+        selectButton = new QPushButton(verticalLayoutWidget);
+        selectButton->setObjectName(QString::fromUtf8("selectButton"));
+        sizePolicy.setHeightForWidth(selectButton->sizePolicy().hasHeightForWidth());
+        selectButton->setSizePolicy(sizePolicy);
+        QIcon icon8;
+        icon8.addFile(QString::fromUtf8(":/Icons/icons8-select-all-96.png"), QSize(), QIcon::Normal, QIcon::Off);
+        selectButton->setIcon(icon8);
+        selectButton->setIconSize(QSize(70, 70));
+
+        verticalLayout->addWidget(selectButton);
+
+        widget = new QWidget(verticalLayoutWidget);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        QSizePolicy sizePolicy1(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
+        widget->setSizePolicy(sizePolicy1);
+        widget->setMinimumSize(QSize(80, 80));
+        secondaryColorLabel = new QLabel(widget);
+        secondaryColorLabel->setObjectName(QString::fromUtf8("secondaryColorLabel"));
+        secondaryColorLabel->setGeometry(QRect(30, 30, 51, 51));
+        secondaryColorLabel->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        primaryColorLabel = new QLabel(widget);
+        primaryColorLabel->setObjectName(QString::fromUtf8("primaryColorLabel"));
+        primaryColorLabel->setGeometry(QRect(0, 0, 51, 50));
+        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(primaryColorLabel->sizePolicy().hasHeightForWidth());
+        primaryColorLabel->setSizePolicy(sizePolicy2);
+        primaryColorLabel->setMinimumSize(QSize(50, 50));
+        primaryColorLabel->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 4)"));
+        swapColorButton = new QPushButton(widget);
+        swapColorButton->setObjectName(QString::fromUtf8("swapColorButton"));
+        swapColorButton->setGeometry(QRect(0, 50, 31, 31));
+        QIcon icon9;
+        icon9.addFile(QString::fromUtf8(":/Icons/icons8-curved-arrow-48.png"), QSize(), QIcon::Normal, QIcon::Off);
+        swapColorButton->setIcon(icon9);
+
+        verticalLayout->addWidget(widget);
+
+        framesListWidget = new QListWidget(centralwidget);
+        framesListWidget->setObjectName(QString::fromUtf8("framesListWidget"));
+        framesListWidget->setGeometry(QRect(120, 421, 471, 101));
+        sizePolicy.setHeightForWidth(framesListWidget->sizePolicy().hasHeightForWidth());
+        framesListWidget->setSizePolicy(sizePolicy);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 21));
+        menubar->setGeometry(QRect(0, 0, 800, 26));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menubar);
@@ -121,6 +219,86 @@ public:
         actionSave->setText(QCoreApplication::translate("MainWindow", "Save", nullptr));
         actionOpen->setText(QCoreApplication::translate("MainWindow", "Open", nullptr));
         actionExit->setText(QCoreApplication::translate("MainWindow", "Exit", nullptr));
+#if QT_CONFIG(tooltip)
+        editFrameView->setToolTip(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        editFrameView->setAccessibleName(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
+#endif // QT_CONFIG(accessibility)
+#if QT_CONFIG(tooltip)
+        verticalLayoutWidget->setToolTip(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        verticalLayoutWidget->setAccessibleName(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
+#endif // QT_CONFIG(accessibility)
+#if QT_CONFIG(tooltip)
+        brushButton->setToolTip(QCoreApplication::translate("MainWindow", "Brush Tool", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        brushButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Brush Tool", nullptr));
+#endif // QT_CONFIG(accessibility)
+        brushButton->setText(QString());
+#if QT_CONFIG(tooltip)
+        eraserButton->setToolTip(QCoreApplication::translate("MainWindow", "Eraser Tool", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        eraserButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Eraser Tool", nullptr));
+#endif // QT_CONFIG(accessibility)
+        eraserButton->setText(QString());
+#if QT_CONFIG(tooltip)
+        bucketButton->setToolTip(QCoreApplication::translate("MainWindow", "Bucket Tool", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        bucketButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Bucket Tool", nullptr));
+#endif // QT_CONFIG(accessibility)
+        bucketButton->setText(QString());
+#if QT_CONFIG(tooltip)
+        colorPickerButton->setToolTip(QCoreApplication::translate("MainWindow", "Color Picker Tool", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        colorPickerButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Color Picker Tool", nullptr));
+#endif // QT_CONFIG(accessibility)
+        colorPickerButton->setText(QString());
+#if QT_CONFIG(tooltip)
+        selectButton->setToolTip(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        selectButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
+#endif // QT_CONFIG(accessibility)
+        selectButton->setText(QString());
+#if QT_CONFIG(tooltip)
+        widget->setToolTip(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        widget->setAccessibleName(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
+#endif // QT_CONFIG(accessibility)
+#if QT_CONFIG(tooltip)
+        secondaryColorLabel->setToolTip(QCoreApplication::translate("MainWindow", "Secondary Color", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        secondaryColorLabel->setAccessibleName(QCoreApplication::translate("MainWindow", "Secondary Color", nullptr));
+#endif // QT_CONFIG(accessibility)
+        secondaryColorLabel->setText(QString());
+#if QT_CONFIG(tooltip)
+        primaryColorLabel->setToolTip(QCoreApplication::translate("MainWindow", "Primary Color", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        primaryColorLabel->setAccessibleName(QCoreApplication::translate("MainWindow", "Primary Color", nullptr));
+#endif // QT_CONFIG(accessibility)
+        primaryColorLabel->setText(QString());
+#if QT_CONFIG(tooltip)
+        swapColorButton->setToolTip(QCoreApplication::translate("MainWindow", "Swap Colors", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        swapColorButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Swap Colors", nullptr));
+#endif // QT_CONFIG(accessibility)
+        swapColorButton->setText(QString());
+#if QT_CONFIG(tooltip)
+        framesListWidget->setToolTip(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        framesListWidget->setAccessibleName(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
+#endif // QT_CONFIG(accessibility)
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
     } // retranslateUi
 

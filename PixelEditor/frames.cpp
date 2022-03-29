@@ -7,9 +7,19 @@ Frames::Frames(QObject *parent)
 
 }
 
-void Frames::addFrame(int height, int width){
+void Frames::setWidthAndHeight(int _width, int _height) {
+    width = _width;
+    height = _height;
+}
+
+void Frames::addFrame(){
     QImage image = QImage(width, height, QImage::Format_ARGB32);
     frameList.append(image);
+    currentFrame += 1;
+}
+
+void Frames::addFrame(QImage frame){
+    frameList.append(frame);
     currentFrame += 1;
 }
 
