@@ -18,7 +18,6 @@ private:
 
 signals:
     void displayFrame(QImage* frame, int width, int height);
-    void widthAndHeight(int width, int height);
 
 public slots:
     void addFrame(int _width, int _height);

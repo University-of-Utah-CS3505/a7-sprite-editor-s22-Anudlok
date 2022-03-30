@@ -7,10 +7,6 @@ Frames::Frames(QObject *parent)
 
 }
 
-void Frames::getWidthAndHeight() {
-    emit widthAndHeight(width, height);
-}
-
 void Frames::setWidthAndHeight(int _width, int _height) {
     width = _width;
     height = _height;
