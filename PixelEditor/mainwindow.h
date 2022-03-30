@@ -25,7 +25,7 @@ public:
     std::vector<QImage> frames;
 signals:
     void currentFrameChanged(QImage * frame);
-    void makeNewFrame();
+    void makeNewFrame(int width, int height);
 
 private slots:
 

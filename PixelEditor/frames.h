@@ -17,11 +17,11 @@ private:
     int height = 3;
 
 signals:
-    void displayFrame(QImage* frame);
+    void displayFrame(QImage* frame, int width, int height);
     void widthAndHeight(int width, int height);
 
 public slots:
-    void addFrame();
+    void addFrame(int _width, int _height);
     void addFrameWithFrame(QImage frame);
     void deleteFrame();
     void updateFrame(QColor color, int row, int column);

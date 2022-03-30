@@ -16,17 +16,23 @@ void Frames::setWidthAndHeight(int _width, int _height) {
     height = _height;
 }
 
-void Frames::addFrame(){
+void Frames::addFrame(int _width, int _height){
+    setWidthAndHeight(_width, _height);
     QImage image = QImage(width, height, QImage::Format_ARGB32);
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            image.setPixelColor(i, j, QColor(0, 0, 0, 0));
+        }
+    }
     frameList.append(image);
     currentFrame += 1;
-    emit displayFrame(&(frameList[currentFrame]));
+    emit displayFrame(&(frameList[currentFrame]), width, height);
 }
 
 void Frames::addFrameWithFrame(QImage frame){
     frameList.append(frame);
     currentFrame += 1;
-    emit displayFrame(&(frameList[currentFrame]));
+    emit displayFrame(&(frameList[currentFrame]), width, height);
 }
 
 void Frames::deleteFrame() {
@@ -35,9 +41,8 @@ void Frames::deleteFrame() {
 }
 
 void Frames::updateFrame(QColor color, int row, int column) {
-    QImage frame = frameList[currentFrame];
-    frame.setPixel(row, column, color.rgba());
-    emit displayFrame(&frame);
+    frameList[currentFrame].setPixelColor(row, column, color);
+    emit displayFrame(&frameList[currentFrame], width, height);
 }
 
 void Frames::changeFrame(bool upOrDown) {
@@ -47,7 +52,7 @@ void Frames::changeFrame(bool upOrDown) {
     else {
         currentFrame -= 1;
     }
-    emit displayFrame(&(frameList[currentFrame]));
+    emit displayFrame(&(frameList[currentFrame]), width, height);
 }
 
 void Frames::playAllFrames() {

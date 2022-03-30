@@ -28,11 +28,14 @@ MainWindow::MainWindow(Frames& frames, drawingwindow& dw, drawingwindowwidget& d
 
     connect(&frames, &Frames::displayFrame, &dww, &drawingwindowwidget::displayCurrentFrame);
     connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrame);
-    connect(&frames, &Frames::widthAndHeight, &dww, &drawingwindowwidget::setWidthAndHeight);
     connect(&dww, &drawingwindowwidget::getWidthAndHeight, &frames, &Frames::getWidthAndHeight);
+    connect(&dww, &drawingwindowwidget::colorPixel, &frames, &Frames::updateFrame);
     this->layout()->addWidget(&dww);
     ui->editDrawingWindow->setVisible(false);
     ui->brushButton->setEnabled(true);
+    ui->sbWidth->setValue(1);
+    ui->sbHeight->setValue(1);
+
 }
 
 
@@ -207,7 +210,9 @@ void MainWindow::on_framesListWidget_itemActivated(QListWidgetItem *item)
 
 void MainWindow::on_btnTest_clicked()
 {
-    emit makeNewFrame();
+    int width = ui->sbWidth->value();
+    int height = ui->sbHeight->value();
+    emit makeNewFrame(width, height);
 }
 
 void MainWindow::displayFrame(QImage* frame) {

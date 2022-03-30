@@ -350,8 +350,8 @@
      <rect>
       <x>120</x>
       <y>20</y>
-      <width>471</width>
-      <height>391</height>
+      <width>400</width>
+      <height>400</height>
      </rect>
     </property>
     <property name="autoFillBackground">
@@ -370,14 +370,46 @@
    <widget class="QPushButton" name="btnTest">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>30</y>
+      <x>530</x>
+      <y>20</y>
       <width>80</width>
       <height>18</height>
      </rect>
     </property>
     <property name="text">
      <string>New</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="sbHeight">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>50</y>
+      <width>81</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>100000</number>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="sbWidth">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>80</y>
+      <width>81</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>100000</number>
     </property>
    </widget>
   </widget>
@@ -387,7 +419,7 @@
      <x>0</x>
      <y>0</y>
      <width>763</width>
-     <height>26</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
