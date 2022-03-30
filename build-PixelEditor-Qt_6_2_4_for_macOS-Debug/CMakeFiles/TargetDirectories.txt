@@ -1,5 +1,0 @@
-/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/build-PixelEditor-Qt_6_2_4_for_macOS-Debug/CMakeFiles/rebuild_cache.dir
-/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/build-PixelEditor-Qt_6_2_4_for_macOS-Debug/CMakeFiles/edit_cache.dir
-/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/build-PixelEditor-Qt_6_2_4_for_macOS-Debug/CMakeFiles/PixelEditor.dir
-/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/build-PixelEditor-Qt_6_2_4_for_macOS-Debug/CMakeFiles/PixelEditor_autogen_timestamp_deps.dir
-/Users/gabytorres/Documents/GitHub/a7-sprite-editor-s22-Anudlok/build-PixelEditor-Qt_6_2_4_for_macOS-Debug/CMakeFiles/PixelEditor_autogen.dir
