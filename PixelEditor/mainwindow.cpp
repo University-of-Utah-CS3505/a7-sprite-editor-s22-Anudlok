@@ -28,7 +28,6 @@ MainWindow::MainWindow(Frames& frames, drawingwindow& dw, drawingwindowwidget& d
 
     connect(&frames, &Frames::displayFrame, &dww, &drawingwindowwidget::displayCurrentFrame);
     connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrame);
-    connect(&dww, &drawingwindowwidget::getWidthAndHeight, &frames, &Frames::getWidthAndHeight);
     connect(&dww, &drawingwindowwidget::colorPixel, &frames, &Frames::updateFrame);
     this->layout()->addWidget(&dww);
     ui->editDrawingWindow->setVisible(false);

@@ -20,7 +20,6 @@ public:
     explicit drawingwindowwidget(QWidget *parent = nullptr);
 
 signals:
-    void getWidthAndHeight();
     void colorPixel(QColor color, int row, int column);
 
 public slots:
