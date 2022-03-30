@@ -41,9 +41,9 @@ public:
     QPushButton *colorPickerButton;
     QPushButton *selectButton;
     QWidget *widget;
-    QLabel *secondaryColorLabel;
-    QLabel *primaryColorLabel;
     QPushButton *swapColorButton;
+    QPushButton *primaryColorButton;
+    QPushButton *secondaryColorButton;
     QListWidget *framesListWidget;
     QLabel *editDrawingWindow;
     QPushButton *btnTest;
@@ -158,26 +158,39 @@ public:
         sizePolicy1.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
         widget->setSizePolicy(sizePolicy1);
         widget->setMinimumSize(QSize(80, 80));
-        secondaryColorLabel = new QLabel(widget);
-        secondaryColorLabel->setObjectName(QString::fromUtf8("secondaryColorLabel"));
-        secondaryColorLabel->setGeometry(QRect(30, 30, 51, 51));
-        secondaryColorLabel->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
-        primaryColorLabel = new QLabel(widget);
-        primaryColorLabel->setObjectName(QString::fromUtf8("primaryColorLabel"));
-        primaryColorLabel->setGeometry(QRect(0, 0, 51, 50));
-        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Minimum);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(primaryColorLabel->sizePolicy().hasHeightForWidth());
-        primaryColorLabel->setSizePolicy(sizePolicy2);
-        primaryColorLabel->setMinimumSize(QSize(50, 50));
-        primaryColorLabel->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 4)"));
         swapColorButton = new QPushButton(widget);
         swapColorButton->setObjectName(QString::fromUtf8("swapColorButton"));
         swapColorButton->setGeometry(QRect(0, 50, 31, 31));
         QIcon icon9;
         icon9.addFile(QString::fromUtf8(":/Icons/icons8-curved-arrow-48.png"), QSize(), QIcon::Normal, QIcon::Off);
         swapColorButton->setIcon(icon9);
+        swapColorButton->setFlat(true);
+        primaryColorButton = new QPushButton(widget);
+        primaryColorButton->setObjectName(QString::fromUtf8("primaryColorButton"));
+        primaryColorButton->setGeometry(QRect(0, 0, 50, 50));
+        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(primaryColorButton->sizePolicy().hasHeightForWidth());
+        primaryColorButton->setSizePolicy(sizePolicy2);
+        primaryColorButton->setMinimumSize(QSize(50, 50));
+        primaryColorButton->setStyleSheet(QString::fromUtf8("QPushButton#primaryColorButton {\n"
+"    background-color: red;\n"
+"	border-style: none;\n"
+"}"));
+        primaryColorButton->setFlat(false);
+        secondaryColorButton = new QPushButton(widget);
+        secondaryColorButton->setObjectName(QString::fromUtf8("secondaryColorButton"));
+        secondaryColorButton->setGeometry(QRect(30, 30, 50, 50));
+        sizePolicy2.setHeightForWidth(secondaryColorButton->sizePolicy().hasHeightForWidth());
+        secondaryColorButton->setSizePolicy(sizePolicy2);
+        secondaryColorButton->setStyleSheet(QString::fromUtf8("QPushButton#secondaryColorButton {\n"
+"    background-color: white;\n"
+"	border-style: none;\n"
+"}"));
+        swapColorButton->raise();
+        secondaryColorButton->raise();
+        primaryColorButton->raise();
 
         verticalLayout->addWidget(widget);
 
@@ -273,26 +286,26 @@ public:
         widget->setAccessibleName(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
 #endif // QT_CONFIG(accessibility)
 #if QT_CONFIG(tooltip)
-        secondaryColorLabel->setToolTip(QCoreApplication::translate("MainWindow", "Secondary Color", nullptr));
-#endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(accessibility)
-        secondaryColorLabel->setAccessibleName(QCoreApplication::translate("MainWindow", "Secondary Color", nullptr));
-#endif // QT_CONFIG(accessibility)
-        secondaryColorLabel->setText(QString());
-#if QT_CONFIG(tooltip)
-        primaryColorLabel->setToolTip(QCoreApplication::translate("MainWindow", "Primary Color", nullptr));
-#endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(accessibility)
-        primaryColorLabel->setAccessibleName(QCoreApplication::translate("MainWindow", "Primary Color", nullptr));
-#endif // QT_CONFIG(accessibility)
-        primaryColorLabel->setText(QString());
-#if QT_CONFIG(tooltip)
         swapColorButton->setToolTip(QCoreApplication::translate("MainWindow", "Swap Colors", nullptr));
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(accessibility)
         swapColorButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Swap Colors", nullptr));
 #endif // QT_CONFIG(accessibility)
         swapColorButton->setText(QString());
+#if QT_CONFIG(tooltip)
+        primaryColorButton->setToolTip(QCoreApplication::translate("MainWindow", "Primary Color", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        primaryColorButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Primary Color", nullptr));
+#endif // QT_CONFIG(accessibility)
+        primaryColorButton->setText(QString());
+#if QT_CONFIG(tooltip)
+        secondaryColorButton->setToolTip(QCoreApplication::translate("MainWindow", "Secondary Color", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        secondaryColorButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Secondary Color", nullptr));
+#endif // QT_CONFIG(accessibility)
+        secondaryColorButton->setText(QString());
 #if QT_CONFIG(tooltip)
         framesListWidget->setToolTip(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
 #endif // QT_CONFIG(tooltip)

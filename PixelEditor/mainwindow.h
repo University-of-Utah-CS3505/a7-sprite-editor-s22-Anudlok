@@ -54,11 +54,16 @@ private slots:
 
     void on_selectButton_clicked();
 
-    void on_editDrawingWindow_linkActivated(const QString &link);
+    void on_primaryColorButton_clicked();
+
+    void on_secondaryColorButton_clicked();
+
+    void on_swapColorButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     Toolbar toolbar;
+    QColor primaryColor, secondaryColor;
     void loadFile(QString);
     void saveFile();
     void newFile();

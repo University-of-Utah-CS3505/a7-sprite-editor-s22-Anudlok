@@ -10,7 +10,7 @@
 #include <QVector>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include <QtDebug>
+#include <QColorDialog>
 
 
 /**
@@ -22,6 +22,10 @@ MainWindow::MainWindow(Frames& frames, drawingwindow& dw, drawingwindowwidget& d
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    primaryColor = Qt::red;
+    secondaryColor = Qt::white;
+
     connect(&frames, &Frames::displayFrame, &dww, &drawingwindowwidget::displayCurrentFrame);
     connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrame);
     connect(&frames, &Frames::widthAndHeight, &dww, &drawingwindowwidget::setWidthAndHeight);
@@ -213,7 +217,6 @@ void MainWindow::displayFrame(QImage* frame) {
 
 void MainWindow::on_brushButton_clicked()
 {
-    qDebug() << "help";
     selectButton(Toolbar::Tools::brush);
 }
 
@@ -271,8 +274,22 @@ void MainWindow::selectButton(Toolbar::Tools tool) {
     ui->selectButton->setChecked(selectChecked);
 }
 
-void MainWindow::on_editDrawingWindow_linkActivated(const QString &link)
+void MainWindow::on_primaryColorButton_clicked()
 {
+    primaryColor = QColorDialog::getColor(primaryColor, this, "Primary Color", QColorDialog::ShowAlphaChannel);
+    ui->primaryColorButton->setStyleSheet("background-color: " + primaryColor.name() + ";border-style: none;");
+}
 
+void MainWindow::on_secondaryColorButton_clicked()
+{
+    secondaryColor = QColorDialog::getColor(secondaryColor, this, "Secondary Color", QColorDialog::ShowAlphaChannel);
+    ui->secondaryColorButton->setStyleSheet("background-color: " + secondaryColor.name() + ";border-style: none;");
+}
+
+void MainWindow::on_swapColorButton_clicked()
+{
+    std::swap(primaryColor, secondaryColor);
+    ui->primaryColorButton->setStyleSheet("background-color: " + primaryColor.name() + ";border-style: none;");
+    ui->secondaryColorButton->setStyleSheet("background-color: " + secondaryColor.name() + ";border-style: none;");
 }
 
