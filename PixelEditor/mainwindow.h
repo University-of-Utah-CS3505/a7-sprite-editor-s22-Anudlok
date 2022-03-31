@@ -60,6 +60,8 @@ private slots:
 
     void on_swapColorButton_clicked();
 
+    void on_playPreviewButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Toolbar toolbar;
