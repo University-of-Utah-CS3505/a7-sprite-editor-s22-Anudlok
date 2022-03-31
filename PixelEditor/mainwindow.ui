@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>763</width>
-    <height>600</height>
+    <width>683</width>
+    <height>571</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -274,7 +274,7 @@
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton#primaryColorButton {
-    background-color: red;
+    background-color: black;
 	border-style: none;
 }</string>
         </property>
@@ -371,7 +371,7 @@
     <property name="geometry">
      <rect>
       <x>530</x>
-      <y>20</y>
+      <y>170</y>
       <width>80</width>
       <height>18</height>
      </rect>
@@ -384,7 +384,7 @@
     <property name="geometry">
      <rect>
       <x>530</x>
-      <y>50</y>
+      <y>200</y>
       <width>81</width>
       <height>22</height>
      </rect>
@@ -400,7 +400,7 @@
     <property name="geometry">
      <rect>
       <x>530</x>
-      <y>80</y>
+      <y>230</y>
       <width>81</width>
       <height>22</height>
      </rect>
@@ -429,7 +429,7 @@
     <property name="geometry">
      <rect>
       <x>530</x>
-      <y>110</y>
+      <y>260</y>
       <width>80</width>
       <height>18</height>
      </rect>
@@ -438,13 +438,29 @@
      <string>Clear</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>20</y>
+      <width>141</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>763</width>
+     <width>683</width>
      <height>17</height>
     </rect>
    </property>

@@ -17,13 +17,14 @@
  * @brief MainWindow::MainWindow The View Class
  * @param parent
  */
-MainWindow::MainWindow(Frames& frames, drawingwindow& dw, drawingwindowwidget& dww, QWidget *parent)
+MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
+                       drawingwindowwidget& dww, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    primaryColor = Qt::red;
+    primaryColor = Qt::black;
     secondaryColor = Qt::white;
     eraser = QColor(0, 0, 0, 0);
 
@@ -35,10 +36,13 @@ MainWindow::MainWindow(Frames& frames, drawingwindow& dw, drawingwindowwidget& d
     connect(&dww, &drawingwindowwidget::colorChosen, this, &MainWindow::changePrimaryColor);
     connect(this, &MainWindow::startDrawing, &dww, &drawingwindowwidget::startDrawing);
     connect(this, &MainWindow::clearScreen, &frames, &Frames::clearFrame);
+    connect(&frames, &Frames::displayPreview, &pw, &PreviewWindow::displayPreviewFrame);
 
     emit currentColor(primaryColor);
 
     this->layout()->addWidget(&dww);
+    this->layout()->addWidget(&pw);
+
     ui->editDrawingWindow->setVisible(false);
     ui->brushButton->setEnabled(true);
     ui->sbWidth->setValue(1);
@@ -239,6 +243,7 @@ void MainWindow::on_brushButton_clicked()
 void MainWindow::on_eraserButton_clicked()
 {
     emit colorPickerPicked(false);
+    emit currentColor(eraser);
     selectButton(Toolbar::Tools::eraser);
 }
 
@@ -333,6 +338,5 @@ void MainWindow::changePrimaryColor(QColor color) {
 void MainWindow::on_btnClear_clicked()
 {
     emit clearScreen();
-    ui->btnClear->setEnabled(false);
 }
 

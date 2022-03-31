@@ -26,23 +26,25 @@ void drawingwindowwidget::displayCurrentFrame(QImage* frame, int width, int heig
     int vLines = screenWidth / width;
     int hLines = screenHeight / height;
 
-    QVector<QColor> color;
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            color.append(frame->pixelColor(i,j));
-        }
-    }
-    int count = 0;
-    for (int i = 1; i <= width; i++) {
-        for (int j = 1; j <= height; j++) {
-            for (int k = vLines * (i - 1); k < vLines * i; k++) {
-                for (int l = hLines * (j - 1); l < hLines * j; l++) {
-                    pixels.setPixelColor(k, l, color.at(count));
-                }
-            }
-            count++;
-        }
-    }
+//    QVector<QColor> color;
+//    for (int i = 0; i < width; i++) {
+//        for (int j = 0; j < height; j++) {
+//            color.append(frame->pixelColor(i,j));
+//        }
+//    }
+//    int count = 0;
+//    for (int i = 1; i <= width; i++) {
+//        for (int j = 1; j <= height; j++) {
+//            for (int k = vLines * (i - 1); k < vLines * i; k++) {
+//                for (int l = hLines * (j - 1); l < hLines * j; l++) {
+//                    pixels.setPixelColor(k, l, color.at(count));
+//                }
+//            }
+//            count++;
+//        }
+//    }
+
+    QImage scaledFrame = frame->scaled(screenWidth, screenHeight);
 
     bars.fill(QColor(0, 0, 0, 0));
     for (int i = 0; i < gridWindow->width(); i += vLines) {
@@ -59,35 +61,37 @@ void drawingwindowwidget::displayCurrentFrame(QImage* frame, int width, int heig
     gridWindow->setPixmap(QPixmap::fromImage(bars));
     gridWindow->setEnabled(false);
     gridWindow->show();
-    drawingWindow->setPixmap(QPixmap::fromImage(pixels));
+    drawingWindow->setPixmap(QPixmap::fromImage(scaledFrame));
     drawingWindow->show();
 }
 
 void drawingwindowwidget::mouseMoveEvent(QMouseEvent *event){
-    if (mouseButtonDown) {
-        mouseColor();
+    int x = drawingWindow->mapFromGlobal(QCursor::pos()).x();
+    int y = drawingWindow->mapFromGlobal(QCursor::pos()).y();
+    if (mouseButtonDown && (x >= 0 && x < screenWidth) && (y >= 0 && y < screenHeight)) {
+        mouseColor(x, y);
     }
 }
 
-void drawingwindowwidget::mouseColor() {
-    int x = drawingWindow->mapFromGlobal(QCursor::pos()).x() / (screenWidth / width);
-    int y = drawingWindow->mapFromGlobal(QCursor::pos()).y() / (screenHeight / height);
-    emit colorPixel(color, x, y);
+void drawingwindowwidget::mouseColor(int x, int y) {
+    int row = x / (screenWidth / width);
+    int column = y / (screenHeight / height);
+    emit colorPixel(color, row, column);
 }
 
 void drawingwindowwidget::mousePressEvent(QMouseEvent *event)
 {
     if (start) {
+        int x = drawingWindow->mapFromGlobal(QCursor::pos()).x();
+        int y = drawingWindow->mapFromGlobal(QCursor::pos()).y();
         if (colorPicker) {
             QImage pixmap = drawingWindow->pixmap().toImage();
-            int x = drawingWindow->mapFromGlobal(QCursor::pos()).x();
-            int y = drawingWindow->mapFromGlobal(QCursor::pos()).y();
             QColor colorOfPixel = pixmap.pixelColor(x, y);
             if (colorOfPixel.alpha() > 0)
                 emit colorChosen(colorOfPixel);
         }
         else {
-            mouseColor();
+            mouseColor(x, y);
             mouseButtonDown = true;
         }
         colorPicker = false;

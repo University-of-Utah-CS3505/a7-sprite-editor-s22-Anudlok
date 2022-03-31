@@ -15,6 +15,7 @@ void Frames::setWidthAndHeight(int _width, int _height) {
 void Frames::clearFrame() {
     frameList[currentFrame].fill(QColor(0, 0, 0, 0));
     emit displayFrame(&(frameList[currentFrame]), width, height);
+    emit displayPreview(&(frameList[currentFrame]));
 }
 
 void Frames::addFrame(int _width, int _height){
@@ -24,12 +25,14 @@ void Frames::addFrame(int _width, int _height){
     frameList.append(image);
     currentFrame += 1;
     emit displayFrame(&(frameList[currentFrame]), width, height);
+    emit displayPreview(&(frameList[currentFrame]));
 }
 
 void Frames::addFrameWithFrame(QImage frame){
     frameList.append(frame);
     currentFrame += 1;
     emit displayFrame(&(frameList[currentFrame]), width, height);
+    emit displayPreview(&(frameList[currentFrame]));
 }
 
 void Frames::deleteFrame() {
@@ -40,6 +43,7 @@ void Frames::deleteFrame() {
 void Frames::updateFrame(QColor color, int row, int column) {
     frameList[currentFrame].setPixelColor(row, column, color);
     emit displayFrame(&frameList[currentFrame], width, height);
+    emit displayPreview(&(frameList[currentFrame]));
 }
 
 void Frames::changeFrame(bool upOrDown) {
@@ -50,6 +54,7 @@ void Frames::changeFrame(bool upOrDown) {
         currentFrame -= 1;
     }
     emit displayFrame(&(frameList[currentFrame]), width, height);
+    emit displayPreview(&(frameList[currentFrame]));
 }
 
 void Frames::playAllFrames() {

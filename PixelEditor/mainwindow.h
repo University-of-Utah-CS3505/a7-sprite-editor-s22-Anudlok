@@ -6,6 +6,7 @@
 #include "QtWidgets/qlistwidget.h"
 #include "drawingwindow.h"
 #include "drawingwindowwidget.h"
+#include "previewwindow.h"
 #include "frames.h"
 #include "toolbar.h"
 
@@ -20,7 +21,8 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    MainWindow(Frames& frames, drawingwindow& dw, drawingwindowwidget& dww, QWidget *parent = nullptr);
+    MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw, drawingwindowwidget& dww,
+               QWidget *parent = nullptr);
     ~MainWindow();
     std::vector<QImage> frames;
 signals:

@@ -15,6 +15,7 @@ SOURCES += \
     frames.cpp \
     main.cpp \
     mainwindow.cpp \
+    previewwindow.cpp \
     toolbar.cpp
 
 HEADERS += \
@@ -23,6 +24,7 @@ HEADERS += \
     drawingwindowwidget.h \
     frames.h \
     mainwindow.h \
+    previewwindow.h \
     toolbar.h
 
 FORMS += \

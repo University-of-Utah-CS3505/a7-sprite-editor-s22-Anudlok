@@ -52,6 +52,7 @@ public:
     QSpinBox *sbWidth;
     QPushButton *playPreviewButton;
     QPushButton *btnClear;
+    QLabel *label;
     QMenuBar *menubar;
     QMenu *menuFile;
     QStatusBar *statusbar;
@@ -60,7 +61,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(763, 600);
+        MainWindow->resize(683, 571);
         actionNew = new QAction(MainWindow);
         actionNew->setObjectName(QString::fromUtf8("actionNew"));
         QIcon icon;
@@ -180,7 +181,7 @@ public:
         primaryColorButton->setSizePolicy(sizePolicy2);
         primaryColorButton->setMinimumSize(QSize(50, 50));
         primaryColorButton->setStyleSheet(QString::fromUtf8("QPushButton#primaryColorButton {\n"
-"    background-color: red;\n"
+"    background-color: black;\n"
 "	border-style: none;\n"
 "}"));
         primaryColorButton->setFlat(false);
@@ -212,15 +213,15 @@ public:
         editDrawingWindow->setAlignment(Qt::AlignCenter);
         btnTest = new QPushButton(centralwidget);
         btnTest->setObjectName(QString::fromUtf8("btnTest"));
-        btnTest->setGeometry(QRect(530, 20, 80, 18));
+        btnTest->setGeometry(QRect(530, 170, 80, 18));
         sbHeight = new QSpinBox(centralwidget);
         sbHeight->setObjectName(QString::fromUtf8("sbHeight"));
-        sbHeight->setGeometry(QRect(530, 50, 81, 22));
+        sbHeight->setGeometry(QRect(530, 200, 81, 22));
         sbHeight->setMinimum(1);
         sbHeight->setMaximum(100000);
         sbWidth = new QSpinBox(centralwidget);
         sbWidth->setObjectName(QString::fromUtf8("sbWidth"));
-        sbWidth->setGeometry(QRect(530, 80, 81, 22));
+        sbWidth->setGeometry(QRect(530, 230, 81, 22));
         sbWidth->setMinimum(1);
         sbWidth->setMaximum(100000);
         playPreviewButton = new QPushButton(centralwidget);
@@ -228,11 +229,15 @@ public:
         playPreviewButton->setGeometry(QRect(530, 421, 91, 101));
         btnClear = new QPushButton(centralwidget);
         btnClear->setObjectName(QString::fromUtf8("btnClear"));
-        btnClear->setGeometry(QRect(530, 110, 80, 18));
+        btnClear->setGeometry(QRect(530, 260, 80, 18));
+        label = new QLabel(centralwidget);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(530, 20, 141, 141));
+        label->setFrameShape(QFrame::Box);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 763, 17));
+        menubar->setGeometry(QRect(0, 0, 683, 17));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menubar);
@@ -337,6 +342,7 @@ public:
         btnTest->setText(QCoreApplication::translate("MainWindow", "New", nullptr));
         playPreviewButton->setText(QCoreApplication::translate("MainWindow", "Play", nullptr));
         btnClear->setText(QCoreApplication::translate("MainWindow", "Clear", nullptr));
+        label->setText(QString());
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
     } // retranslateUi
 

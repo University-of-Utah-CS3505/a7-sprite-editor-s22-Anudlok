@@ -22,7 +22,7 @@ private:
 
 public:
     explicit drawingwindowwidget(QWidget *parent = nullptr);
-    void mouseColor();
+    void mouseColor(int x, int y);
 
 signals:
     void colorPixel(QColor color, int row, int column);
