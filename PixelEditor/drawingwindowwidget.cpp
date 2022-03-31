@@ -44,11 +44,7 @@ void drawingwindowwidget::displayCurrentFrame(QImage* frame, int width, int heig
         }
     }
 
-    for (int i = 0; i < gridWindow->width(); i++) {
-        for (int j = 0; j < gridWindow->height(); j++) {
-            bars.setPixelColor(i, j, QColor(0, 0, 0, 0));
-        }
-    }
+    bars.fill(QColor(0, 0, 0, 0));
     for (int i = 0; i < gridWindow->width(); i += vLines) {
         for (int j = 0; j < gridWindow->height(); j++) {
             bars.setPixelColor(i, j, QColor(0, 0, 0, 100));
@@ -67,15 +63,54 @@ void drawingwindowwidget::displayCurrentFrame(QImage* frame, int width, int heig
     drawingWindow->show();
 }
 
-void drawingwindowwidget::mousePressEvent(QMouseEvent *event)
-{
-    QColor brush(0, 0, 0, 255);
+void drawingwindowwidget::mouseMoveEvent(QMouseEvent *event){
+    if (mouseButtonDown) {
+        mouseColor();
+    }
+}
+
+void drawingwindowwidget::mouseColor() {
     int x = drawingWindow->mapFromGlobal(QCursor::pos()).x() / (screenWidth / width);
     int y = drawingWindow->mapFromGlobal(QCursor::pos()).y() / (screenHeight / height);
-    emit colorPixel(brush, x, y);
+    emit colorPixel(color, x, y);
+}
+
+void drawingwindowwidget::mousePressEvent(QMouseEvent *event)
+{
+    if (start) {
+        if (colorPicker) {
+            QImage pixmap = drawingWindow->pixmap().toImage();
+            int x = drawingWindow->mapFromGlobal(QCursor::pos()).x();
+            int y = drawingWindow->mapFromGlobal(QCursor::pos()).y();
+            QColor colorOfPixel = pixmap.pixelColor(x, y);
+            if (colorOfPixel.alpha() > 0)
+                emit colorChosen(colorOfPixel);
+        }
+        else {
+            mouseColor();
+            mouseButtonDown = true;
+        }
+        colorPicker = false;
+    }
+}
+
+void drawingwindowwidget::mouseReleaseEvent(QMouseEvent *event) {
+    mouseButtonDown = false;
 }
 
 void drawingwindowwidget::setWidthAndHeight(int _width, int _height) {
     height = _height;
     width = _width;
+}
+
+void drawingwindowwidget::setCurrentColor(QColor _color) {
+    color = _color;
+}
+
+void drawingwindowwidget::colorPicked(bool state) {
+    colorPicker = state;
+}
+
+void drawingwindowwidget::startDrawing() {
+    start = true;
 }

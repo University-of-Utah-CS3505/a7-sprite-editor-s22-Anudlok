@@ -26,6 +26,10 @@ public:
 signals:
     void currentFrameChanged(QImage * frame);
     void makeNewFrame(int width, int height);
+    void currentColor(QColor color);
+    void colorPickerPicked(bool state);
+    void startDrawing();
+    void clearScreen();
 
 private slots:
 
@@ -61,11 +65,15 @@ private slots:
     void on_swapColorButton_clicked();
 
     void on_playPreviewButton_clicked();
+    void changePrimaryColor(QColor color);
+
+    void on_btnClear_clicked();
 
 private:
     Ui::MainWindow *ui;
     Toolbar toolbar;
     QColor primaryColor, secondaryColor;
+    QColor eraser;
     void loadFile(QString);
     void saveFile();
     void newFile();

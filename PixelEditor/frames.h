@@ -27,7 +27,7 @@ public slots:
     void changeFrame(bool upOrDown);
     void playAllFrames();
     void setWidthAndHeight(int width, int height);
-
+    void clearFrame();
 };
 
 

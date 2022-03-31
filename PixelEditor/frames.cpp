@@ -12,14 +12,15 @@ void Frames::setWidthAndHeight(int _width, int _height) {
     height = _height;
 }
 
+void Frames::clearFrame() {
+    frameList[currentFrame].fill(QColor(0, 0, 0, 0));
+    emit displayFrame(&(frameList[currentFrame]), width, height);
+}
+
 void Frames::addFrame(int _width, int _height){
     setWidthAndHeight(_width, _height);
     QImage image = QImage(width, height, QImage::Format_ARGB32);
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            image.setPixelColor(i, j, QColor(0, 0, 0, 0));
-        }
-    }
+    image.fill(QColor(0, 0, 0, 0));
     frameList.append(image);
     currentFrame += 1;
     emit displayFrame(&(frameList[currentFrame]), width, height);

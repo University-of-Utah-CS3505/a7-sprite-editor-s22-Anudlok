@@ -25,16 +25,25 @@ MainWindow::MainWindow(Frames& frames, drawingwindow& dw, drawingwindowwidget& d
 
     primaryColor = Qt::red;
     secondaryColor = Qt::white;
+    eraser = QColor(0, 0, 0, 0);
 
     connect(&frames, &Frames::displayFrame, &dww, &drawingwindowwidget::displayCurrentFrame);
     connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrame);
     connect(&dww, &drawingwindowwidget::colorPixel, &frames, &Frames::updateFrame);
+    connect(this, &MainWindow::currentColor, &dww, &drawingwindowwidget::setCurrentColor);
+    connect(this, &MainWindow::colorPickerPicked, &dww, &drawingwindowwidget::colorPicked);
+    connect(&dww, &drawingwindowwidget::colorChosen, this, &MainWindow::changePrimaryColor);
+    connect(this, &MainWindow::startDrawing, &dww, &drawingwindowwidget::startDrawing);
+    connect(this, &MainWindow::clearScreen, &frames, &Frames::clearFrame);
+
+    emit currentColor(primaryColor);
+
     this->layout()->addWidget(&dww);
     ui->editDrawingWindow->setVisible(false);
     ui->brushButton->setEnabled(true);
     ui->sbWidth->setValue(1);
     ui->sbHeight->setValue(1);
-
+    ui->btnClear->setEnabled(false);
 }
 
 
@@ -210,6 +219,8 @@ void MainWindow::on_btnTest_clicked()
     int height = ui->sbHeight->value();
 
     emit makeNewFrame(width, height);
+    emit startDrawing();
+    ui->btnClear->setEnabled(true);
 }
 
 void MainWindow::displayFrame(QImage* frame) {
@@ -219,30 +230,36 @@ void MainWindow::displayFrame(QImage* frame) {
 
 void MainWindow::on_brushButton_clicked()
 {
+    emit colorPickerPicked(false);
+    emit currentColor(primaryColor);
     selectButton(Toolbar::Tools::brush);
 }
 
 
 void MainWindow::on_eraserButton_clicked()
 {
+    emit colorPickerPicked(false);
     selectButton(Toolbar::Tools::eraser);
 }
 
 
 void MainWindow::on_bucketButton_clicked()
 {
+    emit colorPickerPicked(false);
     selectButton(Toolbar::Tools::bucket);
 }
 
 
 void MainWindow::on_colorPickerButton_clicked()
 {
+    emit colorPickerPicked(true);
     selectButton(Toolbar::Tools::colorPicker);
 }
 
 
 void MainWindow::on_selectButton_clicked()
 {
+    emit colorPickerPicked(false);
     selectButton(Toolbar::Tools::select);
 }
 
@@ -280,6 +297,7 @@ void MainWindow::on_primaryColorButton_clicked()
 {
     primaryColor = QColorDialog::getColor(primaryColor, this, "Primary Color", QColorDialog::ShowAlphaChannel);
     ui->primaryColorButton->setStyleSheet("background-color: " + primaryColor.name() + ";border-style: none;");
+    emit currentColor(primaryColor);
 }
 
 void MainWindow::on_secondaryColorButton_clicked()
@@ -293,6 +311,7 @@ void MainWindow::on_swapColorButton_clicked()
     std::swap(primaryColor, secondaryColor);
     ui->primaryColorButton->setStyleSheet("background-color: " + primaryColor.name() + ";border-style: none;");
     ui->secondaryColorButton->setStyleSheet("background-color: " + secondaryColor.name() + ";border-style: none;");
+    emit currentColor(primaryColor);
 }
 
 
@@ -302,5 +321,18 @@ void MainWindow::on_playPreviewButton_clicked()
     //code the timer
 
 
+}
+
+void MainWindow::changePrimaryColor(QColor color) {
+    primaryColor = color;
+    ui->primaryColorButton->setStyleSheet("background-color: " + primaryColor.name() + ";border-style: none;");
+    emit currentColor(primaryColor);
+    selectButton(Toolbar::Tools::brush);
+}
+
+void MainWindow::on_btnClear_clicked()
+{
+    emit clearScreen();
+    ui->btnClear->setEnabled(false);
 }
 

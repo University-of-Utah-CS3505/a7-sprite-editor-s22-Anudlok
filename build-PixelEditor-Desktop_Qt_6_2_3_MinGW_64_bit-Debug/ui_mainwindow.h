@@ -50,6 +50,8 @@ public:
     QPushButton *btnTest;
     QSpinBox *sbHeight;
     QSpinBox *sbWidth;
+    QPushButton *playPreviewButton;
+    QPushButton *btnClear;
     QMenuBar *menubar;
     QMenu *menuFile;
     QStatusBar *statusbar;
@@ -83,7 +85,7 @@ public:
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayoutWidget = new QWidget(centralwidget);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(20, 20, 85, 512));
+        verticalLayoutWidget->setGeometry(QRect(20, 20, 106, 512));
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -199,7 +201,7 @@ public:
 
         framesListWidget = new QListWidget(centralwidget);
         framesListWidget->setObjectName(QString::fromUtf8("framesListWidget"));
-        framesListWidget->setGeometry(QRect(120, 421, 471, 101));
+        framesListWidget->setGeometry(QRect(120, 421, 401, 101));
         sizePolicy.setHeightForWidth(framesListWidget->sizePolicy().hasHeightForWidth());
         framesListWidget->setSizePolicy(sizePolicy);
         editDrawingWindow = new QLabel(centralwidget);
@@ -221,6 +223,12 @@ public:
         sbWidth->setGeometry(QRect(530, 80, 81, 22));
         sbWidth->setMinimum(1);
         sbWidth->setMaximum(100000);
+        playPreviewButton = new QPushButton(centralwidget);
+        playPreviewButton->setObjectName(QString::fromUtf8("playPreviewButton"));
+        playPreviewButton->setGeometry(QRect(530, 421, 91, 101));
+        btnClear = new QPushButton(centralwidget);
+        btnClear->setObjectName(QString::fromUtf8("btnClear"));
+        btnClear->setGeometry(QRect(530, 110, 80, 18));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -327,6 +335,8 @@ public:
 #endif // QT_CONFIG(accessibility)
         editDrawingWindow->setText(QString());
         btnTest->setText(QCoreApplication::translate("MainWindow", "New", nullptr));
+        playPreviewButton->setText(QCoreApplication::translate("MainWindow", "Play", nullptr));
+        btnClear->setText(QCoreApplication::translate("MainWindow", "Clear", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
     } // retranslateUi
 
