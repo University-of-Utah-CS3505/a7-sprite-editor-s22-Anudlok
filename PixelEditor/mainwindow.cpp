@@ -181,8 +181,8 @@ void MainWindow::on_framesListWidget_itemDoubleClicked(QListWidgetItem *item)
    QImage clickedFrame;
 
    //I need the width and height from the frames class
-   int width = 25;
-   int height = 25;
+   int width = 400;
+   int height = 400;
 
    QPixmap framePixMap = item->icon().pixmap(width, height, QIcon::Mode(0),QIcon::State(0));
    clickedFrame = framePixMap.toImage(); //this will compile but the internet says that it
@@ -192,25 +192,23 @@ void MainWindow::on_framesListWidget_itemDoubleClicked(QListWidgetItem *item)
 
 void MainWindow::on_framesListWidget_itemActivated(QListWidgetItem *item)
 {
-    //temporary until we can find a way to get the frameslist
-    std::vector<QImage> frameslist;
-
     //goes through each frame in the frames list and adds it to list widget
-    for(unsigned int i = 0;i < frameslist.size(); i++){
-        QImage frame  = frameslist.at(i);
+    for(unsigned int i = 0;i < frames.size(); i++){
+        QImage frame  = frames.at(i);
         QPixmap framePixMap = QPixmap::fromImage(frame);
         QIcon frameIcon(framePixMap);
-        QListWidgetItem newWidgetItem;
-        newWidgetItem.setIcon(frameIcon);
-        ui->framesListWidget->addItem(&newWidgetItem);
-    }
 
+        item->setIcon(frameIcon);
+        //comment for future debugging, possible error bc idk what i'm doing tbh
+        ui->framesListWidget->addItem(item);
+    }
 }
 
 void MainWindow::on_btnTest_clicked()
 {
     int width = ui->sbWidth->value();
     int height = ui->sbHeight->value();
+
     emit makeNewFrame(width, height);
 }
 
@@ -295,5 +293,14 @@ void MainWindow::on_swapColorButton_clicked()
     std::swap(primaryColor, secondaryColor);
     ui->primaryColorButton->setStyleSheet("background-color: " + primaryColor.name() + ";border-style: none;");
     ui->secondaryColorButton->setStyleSheet("background-color: " + secondaryColor.name() + ";border-style: none;");
+}
+
+
+void MainWindow::on_playPreviewButton_clicked()
+{
+    QMessageBox msgBox;
+    //code the timer
+
+
 }
 
