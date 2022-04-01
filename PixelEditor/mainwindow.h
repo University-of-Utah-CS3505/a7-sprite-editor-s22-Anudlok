@@ -39,6 +39,9 @@ signals:
     void animateFrames(std::vector<QListWidgetItem> frames);
     void requestFrame();
     void deleteFrameAt(int);
+    void sendFrame();
+    void saveFile(QString fileName);
+    void loadFile(QString fileName);
 
 private slots:
 
@@ -88,6 +91,7 @@ private slots:
 
     void addToFrames(QPixmap *frame);
 
+
 private:
     Ui::MainWindow *ui;
     AnimationPopUp *popUp;
@@ -95,9 +99,6 @@ private:
     QColor primaryColor, secondaryColor;
     QColor eraser;
     int currFrame = -1;
-    void loadFile(QString);
-    void saveFile();
-    void newFile();
     void selectButton(Toolbar::Tools tool);
 };
 #endif // MAINWINDOW_H

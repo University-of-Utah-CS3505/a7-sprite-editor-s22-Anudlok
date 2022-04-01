@@ -46,6 +46,8 @@ MainWindow::MainWindow(AnimationPopUp& aw ,PreviewWindow& pw, Frames& frames, dr
     connect(this, &MainWindow::currentFrameChanged, &frames, &Frames::addFrameWithFrame);
     connect(this, &MainWindow::moveCurrFrame, &frames, &Frames::changeFrame);
 
+    connect(this, &MainWindow::loadFile, &frames, &Frames::loadFile);
+    connect(this, &MainWindow::loadFile, &frames, &Frames::saveFile);
 
     emit currentColor(primaryColor);
 
@@ -67,100 +69,9 @@ MainWindow::~MainWindow()
 }
 
 /// File Menu Methods
-
-void MainWindow::saveFile() {
-    // Make a QString of file name using QFile Dialog
-    QString filename = QFileDialog::getSaveFileName(this,
-                                                    tr("Save Project"), QDir::homePath(), ".SSP Files (*.ssp)");
-
-    // Make a QFile with that
-    QFile file(filename);
-
-     QJsonObject obj;
-  //   obj["height"] = height;
-  //   obj["width"] = width;
-  //   obj["numberOfFrames"] = vector list . size;
-     QJsonArray frames;
-
-     // Build up array of rows which have arrays of pixels which have arrays of rgba 0-255
-
-     obj["frames"] = frames;
-
-
-    // Use ReadWrite of the file to grab info from the current framesList of the project and write that
-
-    file.close();
-}
-
-void MainWindow::loadFile(QString fileName){
-    if (fileName.isEmpty()) {
-        return;
-    }
-    else {
-        // Make a new file
-        QFile file(fileName);
-
-        // If there is a error reading in the file, pop up a window
-        if(!file.open(QIODevice::ReadOnly)) {
-            QMessageBox::information(0, "Error reading file.", file.errorString());
-        }
-
-        QByteArray array = file.readAll();
-        QJsonDocument doc(QJsonDocument::fromJson(array));
-
-        int height = doc["height"].toInt();
-        int width = doc["width"].toInt();
-        int maxFrames = doc["numberOfFrames"].toInt();
-        QJsonArray listOfFrames = doc["frames"].toArray();
-        std::vector<QImage> allFrames;
-
-        // Iterate through list of frames
-        for(int frame = 0; frame < maxFrames; frame++) {
-            // Create a frame
-            QImage image (height, width, QImage::Format_RGB32);
-
-            // Create a array of rows for each frame
-            QJsonArray rows = listOfFrames[frame].toArray();
-
-            // Iterate through the rows
-            for(int row = 0; row < rows.size(); row++) {
-                // Create a array of RGBA values for each pixel
-                QJsonArray pixels = rows[row].toArray();
-
-                // Iterate through the pixels in each row
-                for (int pixel = 0; pixel < pixels.size(); pixel++) {
-                    // Create a rgba of the array within a pixel
-                    QJsonArray RGBAColors = pixels[pixel].toArray();
-                    QRgb value = qRgba(RGBAColors[0].toInt(), RGBAColors[1].toInt(), RGBAColors[2].toInt(), RGBAColors[3].toInt());
-
-                    image.setPixel(pixel, row, value);
-                }
-
-            }
-            //Make a frames object by calling in the height and width and numberOfFrames then call the addFrame method on that object
-
-            allFrames.push_back(image);
-
-            //put all the frames in the wiidgetList
-            QPixmap framePixMap = QPixmap::fromImage(image);
-            QIcon frameIcon(framePixMap);
-            QListWidgetItem item;
-            item.setIcon(frameIcon);
-            widgetList.push_back(item);
-        }
-
-        file.close();
-    }
-}
-
-void MainWindow::newFile(){
-
-    // Make a pop up of height and width every time a new project is open
-}
-
-
 void MainWindow::on_actionNew_triggered()
 {
+    QString filename = "";
     QMessageBox msgBox;
     msgBox.setText("Opening a new file will erase all progress.");
     msgBox.setInformativeText("Do you want to save your changes?");
@@ -168,12 +79,19 @@ void MainWindow::on_actionNew_triggered()
     msgBox.setDefaultButton(QMessageBox::Save);
     int ret = msgBox.exec();
 
+    if (msgBox.Save) {
+        // Make a QString of file name using QFile Dialog
+        filename = QFileDialog::getSaveFileName(this,
+                                                        tr("Save Project"),
+                                                        "",
+                                                     tr("Sprite Project (*.ssp)"));
+    }
+
     switch (ret) {
       case QMessageBox::Save:
-          saveFile();
+          emit saveFile(filename);
           break;
       case QMessageBox::Discard:
-          newFile();
           break;
       case QMessageBox::Cancel:
           // Cancel was clicked
@@ -187,15 +105,22 @@ void MainWindow::on_actionNew_triggered()
 
 void MainWindow::on_actionSave_triggered()
 {
-    saveFile();
+    // Make a QString of file name using QFile Dialog
+    QString filename = QFileDialog::getSaveFileName(this,
+                                                    tr("Save Project"),
+                                                    "",
+                                                    tr("Sprite Project (*.ssp)"));
+    emit saveFile(filename);
 }
 
 
 void MainWindow::on_actionOpen_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Sprite Project"), tr("Sprite Project (*.ssp)"));
-
-    loadFile(fileName);
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open Sprite Project"),
+                                                    QDir::homePath(),
+                                                    tr("Sprite Project (*.ssp)"));
+    emit loadFile(fileName);
 }
 
 
@@ -203,6 +128,7 @@ void MainWindow::on_actionExit_triggered()
 {
         this->close();
 }
+
 
 /// End File Menu Methods
 

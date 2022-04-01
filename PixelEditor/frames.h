@@ -31,6 +31,8 @@ public slots:
     void playAllFrames();
     void setWidthAndHeight(int width, int height);
     void clearFrame();
+    void saveFile(QString fileName);
+    void loadFile(QString fileName);
 };
 
 
