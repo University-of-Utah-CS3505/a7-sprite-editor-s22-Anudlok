@@ -8,6 +8,7 @@
 #include "drawingwindowwidget.h"
 #include "previewwindow.h"
 #include "animationpopup.h"
+#include "./ui_animationpopup.h"
 #include "frames.h"
 #include "toolbar.h"
 #include <QTimer>
@@ -82,6 +83,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    AnimationPopUp *popUp;
     Toolbar toolbar;
     QColor primaryColor, secondaryColor;
     QColor eraser;

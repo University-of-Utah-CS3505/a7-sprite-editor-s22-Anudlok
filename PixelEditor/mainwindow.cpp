@@ -23,6 +23,7 @@ MainWindow::MainWindow(AnimationPopUp& aw ,PreviewWindow& pw, Frames& frames, dr
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    popUp = new AnimationPopUp;
 
     primaryColor = Qt::black;
     secondaryColor = Qt::white;
@@ -38,6 +39,7 @@ MainWindow::MainWindow(AnimationPopUp& aw ,PreviewWindow& pw, Frames& frames, dr
     connect(this, &MainWindow::clearScreen, &frames, &Frames::clearFrame);
     connect(&frames, &Frames::displayPreview, &pw, &PreviewWindow::displayPreviewFrame);
     connect(this, &MainWindow::animateFrames, &aw, &AnimationPopUp::playPreviewClick);
+
 
     emit currentColor(primaryColor);
 
@@ -55,6 +57,7 @@ MainWindow::MainWindow(AnimationPopUp& aw ,PreviewWindow& pw, Frames& frames, dr
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete popUp;
 }
 
 /// File Menu Methods
@@ -193,12 +196,10 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_framesListWidget_itemDoubleClicked(QListWidgetItem *item)
 {
    QImage clickedFrame;
-
-   //I need the width and height from the frames class
    int width = 400;
    int height = 400;
-
    QPixmap framePixMap = item->icon().pixmap(width, height, QIcon::Mode(0),QIcon::State(0));
+
    clickedFrame = framePixMap.toImage(); //this will compile but the internet says that it
                                          //won't display with the same alpha, whatever that means
    emit currentFrameChanged(&clickedFrame);
@@ -323,7 +324,8 @@ void MainWindow::on_swapColorButton_clicked()
 
 void MainWindow::on_playPreviewButton_clicked()
 {
-
+    popUp->show();
+    emit animateFrames(frames);
 }
 
 void MainWindow::changePrimaryColor(QColor color) {
