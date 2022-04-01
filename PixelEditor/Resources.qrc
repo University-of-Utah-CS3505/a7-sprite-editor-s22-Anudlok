@@ -5,13 +5,10 @@
         <file>OpenIcon.png</file>
         <file>SaveIcon.png</file>
         <file>icons8-fill-color-96.png</file>
-        <file>icons8-select-all-96.png</file>
-        <file>icons8-curved-arrow-48.png</file>
         <file>icons8-erase-96.png</file>
         <file>icons8-paint-96.png</file>
         <file>icons8-color-dropper-96.png</file>
-        <file>icons8-select-all-2-96.png</file>
-        <file>icons8-select-all-3-96.png</file>
+        <file>icons8-select-all-96.png</file>
         <file>icons8-curved-arrows-48.png</file>
     </qresource>
 </RCC>
