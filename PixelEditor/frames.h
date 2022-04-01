@@ -19,11 +19,13 @@ private:
 signals:
     void displayFrame(QImage* frame, int width, int height);
     void displayPreview(QImage* frame);
+    void sendFrame(QPixmap *frame);
 
 public slots:
     void addFrame(int _width, int _height);
     void addFrameWithFrame(QImage frame);
     void deleteFrame();
+    void deleteFrameAt(int index);
     void updateFrame(QColor color, int row, int column);
     void changeFrame(bool upOrDown);
     void playAllFrames();

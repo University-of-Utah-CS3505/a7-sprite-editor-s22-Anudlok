@@ -17,9 +17,11 @@ private:
     int screenHeight = 141;
 
 signals:
+    void sendWindow(QPixmap *frame);
 
 public slots:
     void displayPreviewFrame(QImage* frame);
+    void requestForWindow();
 };
 
 #endif // PREVIEWWINDOW_H

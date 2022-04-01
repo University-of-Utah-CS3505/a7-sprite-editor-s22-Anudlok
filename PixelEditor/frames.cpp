@@ -40,6 +40,10 @@ void Frames::deleteFrame() {
     frameList.removeAt(deleteFrameIndex);
 }
 
+void Frames::deleteFrameAt(int index){
+    frameList.removeAt(index);
+}
+
 void Frames::updateFrame(QColor color, int row, int column) {
     frameList[currentFrame].setPixelColor(row, column, color);
     emit displayFrame(&frameList[currentFrame], width, height);

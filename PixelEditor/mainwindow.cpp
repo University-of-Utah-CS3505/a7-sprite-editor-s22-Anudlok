@@ -29,6 +29,7 @@ MainWindow::MainWindow(AnimationPopUp& aw ,PreviewWindow& pw, Frames& frames, dr
     secondaryColor = Qt::white;
     eraser = QColor(0, 0, 0, 0);
 
+
     connect(&frames, &Frames::displayFrame, &dww, &drawingwindowwidget::displayCurrentFrame);
     connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrame);
     connect(&dww, &drawingwindowwidget::colorPixel, &frames, &Frames::updateFrame);
@@ -39,6 +40,11 @@ MainWindow::MainWindow(AnimationPopUp& aw ,PreviewWindow& pw, Frames& frames, dr
     connect(this, &MainWindow::clearScreen, &frames, &Frames::clearFrame);
     connect(&frames, &Frames::displayPreview, &pw, &PreviewWindow::displayPreviewFrame);
     connect(this, &MainWindow::animateFrames, &aw, &AnimationPopUp::playPreviewClick);
+    connect(this, &MainWindow::requestFrame, &pw, &PreviewWindow::requestForWindow);
+    connect(&pw, &PreviewWindow::sendWindow, this, &MainWindow::addToFrames);
+    connect(this, &MainWindow::deleteFrameAt, &frames, &Frames::deleteFrameAt);
+    connect(this, &MainWindow::currentFrameChanged, &frames, &Frames::addFrameWithFrame);
+    connect(this, &MainWindow::moveCurrFrame, &frames, &Frames::changeFrame);
 
 
     emit currentColor(primaryColor);
@@ -134,6 +140,13 @@ void MainWindow::loadFile(QString fileName){
             //Make a frames object by calling in the height and width and numberOfFrames then call the addFrame method on that object
 
             allFrames.push_back(image);
+
+            //put all the frames in the wiidgetList
+            QPixmap framePixMap = QPixmap::fromImage(image);
+            QIcon frameIcon(framePixMap);
+            QListWidgetItem item;
+            item.setIcon(frameIcon);
+            widgetList.push_back(item);
         }
 
         file.close();
@@ -141,6 +154,7 @@ void MainWindow::loadFile(QString fileName){
 }
 
 void MainWindow::newFile(){
+
     // Make a pop up of height and width every time a new project is open
 }
 
@@ -192,32 +206,59 @@ void MainWindow::on_actionExit_triggered()
 
 /// End File Menu Methods
 
-//FrameList View Slots
-void MainWindow::on_framesListWidget_itemDoubleClicked(QListWidgetItem *item)
-{
-   QImage clickedFrame;
-   int width = 400;
-   int height = 400;
-   QPixmap framePixMap = item->icon().pixmap(width, height, QIcon::Mode(0),QIcon::State(0));
-
-   clickedFrame = framePixMap.toImage(); //this will compile but the internet says that it
-                                         //won't display with the same alpha, whatever that means
-   emit currentFrameChanged(&clickedFrame);
-}
 
 void MainWindow::on_framesListWidget_itemActivated(QListWidgetItem *item)
 {
+    //comment for future debugging, possible error bc idk what i'm doing tbh
+    ui->framesListWidget->addItem(item);
     //goes through each frame in the frames list and adds it to list widget
-    for(unsigned int i = 0;i < frames.size(); i++){
-        QImage frame  = frames.at(i);
-        QPixmap framePixMap = QPixmap::fromImage(frame);
-        QIcon frameIcon(framePixMap);
-
-        item->setIcon(frameIcon);
-        //comment for future debugging, possible error bc idk what i'm doing tbh
-        ui->framesListWidget->addItem(item);
+    for(QListWidgetItem item : widgetList){
+        ui->framesListWidget->addItem(&item);
     }
 }
+
+void MainWindow::on_deleteFrameButton_clicked()
+{
+    emit deleteFrameAt(currFrame);
+    widgetList.erase(widgetList.begin() + currFrame);
+    currFrame--;
+}
+
+
+void MainWindow::on_addFrameButton_clicked()
+{
+    emit requestFrame();
+}
+
+void MainWindow::addToFrames(QPixmap *frame){
+    QIcon frameIcon(*frame);
+    QListWidgetItem item;
+    QImage clickedFrame;
+
+    item.setIcon(frameIcon);
+    widgetList.push_back(item);
+    currFrame++;
+    clickedFrame = frame->toImage();
+    emit currentFrameChanged(clickedFrame);
+}
+
+void MainWindow::on_frameLeftButton_clicked()
+{
+    if(currFrame > 0){
+        currFrame--;
+        emit moveCurrFrame(false);
+    }
+}
+
+
+void MainWindow::on_frameRightButton_clicked()
+{
+    if(currFrame < widgetList.size()-1){
+        currFrame++;
+        emit moveCurrFrame(true);
+    }
+}
+
 
 void MainWindow::on_btnTest_clicked()
 {
@@ -225,6 +266,7 @@ void MainWindow::on_btnTest_clicked()
     int height = ui->sbHeight->value();
 
     emit makeNewFrame(width, height);
+    emit requestFrame();
     emit startDrawing();
     ui->btnClear->setEnabled(true);
 }
@@ -325,7 +367,7 @@ void MainWindow::on_swapColorButton_clicked()
 void MainWindow::on_playPreviewButton_clicked()
 {
     popUp->show();
-    emit animateFrames(frames);
+    emit animateFrames(widgetList);
 }
 
 void MainWindow::changePrimaryColor(QColor color) {
@@ -340,15 +382,4 @@ void MainWindow::on_btnClear_clicked()
     emit clearScreen();
 }
 
-
-void MainWindow::on_deleteFrameButton_clicked()
-{
-
-}
-
-
-void MainWindow::on_addFrameButton_clicked()
-{
-
-}
 

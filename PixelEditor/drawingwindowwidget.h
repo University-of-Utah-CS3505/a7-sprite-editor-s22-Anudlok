@@ -28,6 +28,7 @@ signals:
     void colorPixel(QColor color, int row, int column);
     void colorChosen(QColor color);
 
+
 public slots:
     void displayCurrentFrame(QImage* frame, int width, int height);
     void mousePressEvent(QMouseEvent *event);

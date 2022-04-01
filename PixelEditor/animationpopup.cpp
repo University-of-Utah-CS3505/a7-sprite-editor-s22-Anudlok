@@ -24,7 +24,7 @@ void AnimationPopUp::changeFramesPerSecond(int initFrames){
     framesPerSecond = initFrames;
 }
 
-void AnimationPopUp::playPreviewClick(std::vector<QImage> initFrames){
+void AnimationPopUp::playPreviewClick(std::vector<QListWidgetItem> initFrames){
     QTimer timer;
     int interval = 6000/framesPerSecond;
     frames = initFrames;
@@ -36,6 +36,7 @@ void AnimationPopUp::animate(){
     if(currFrameIndex > frames.size()-1){
         currFrameIndex = 0;
     }
-    animationWindow->setPixmap(QPixmap::fromImage(frames[currFrameIndex]));
+    QIcon icon = frames[currFrameIndex].icon();
+    animationWindow->setWindowIcon(icon);
     currFrameIndex++;
 }

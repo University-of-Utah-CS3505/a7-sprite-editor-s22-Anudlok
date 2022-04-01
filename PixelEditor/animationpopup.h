@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QTimer>
+#include <QListWidget>
 
 namespace Ui {
 class AnimationPopUp;
@@ -16,17 +17,17 @@ class AnimationPopUp : public QWidget
     int framesPerSecond;
     unsigned int currFrameIndex;
     QLabel* animationWindow;
-    std::vector<QImage> frames;
+    std::vector<QListWidgetItem> frames;
     int screenWidth = 141;
     int screenHeight = 141;
 
 public:
     explicit AnimationPopUp(QWidget *parent = nullptr);
     ~AnimationPopUp();
-    void changeFramesPerSecond(int);
 
 public slots:
-    void playPreviewClick(std::vector<QImage>);
+    void changeFramesPerSecond(int);
+    void playPreviewClick(std::vector<QListWidgetItem>);
     void animate();
 
 private:

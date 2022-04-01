@@ -27,15 +27,18 @@ public:
     MainWindow(AnimationPopUp& aw, PreviewWindow& pw, Frames& frames, drawingwindow& dw, drawingwindowwidget& dww,
                QWidget *parent = nullptr);
     ~MainWindow();
-    std::vector<QImage> frames;
+    std::vector<QListWidgetItem> widgetList;
 signals:
-    void currentFrameChanged(QImage * frame);
+    void currentFrameChanged(QImage frame);
     void makeNewFrame(int width, int height);
     void currentColor(QColor color);
     void colorPickerPicked(bool state);
+    void moveCurrFrame(bool isUp);
     void startDrawing();
     void clearScreen();
-    void animateFrames(std::vector<QImage> frames);
+    void animateFrames(std::vector<QListWidgetItem> frames);
+    void requestFrame();
+    void deleteFrameAt(int);
 
 private slots:
 
@@ -46,8 +49,6 @@ private slots:
     void on_actionOpen_triggered();
 
     void on_actionExit_triggered();
-
-   void on_framesListWidget_itemDoubleClicked(QListWidgetItem *item);
 
     void on_framesListWidget_itemActivated(QListWidgetItem *item);
 
@@ -81,12 +82,19 @@ private slots:
 
     void on_addFrameButton_clicked();
 
+    void on_frameLeftButton_clicked();
+
+    void on_frameRightButton_clicked();
+
+    void addToFrames(QPixmap *frame);
+
 private:
     Ui::MainWindow *ui;
     AnimationPopUp *popUp;
     Toolbar toolbar;
     QColor primaryColor, secondaryColor;
     QColor eraser;
+    int currFrame = -1;
     void loadFile(QString);
     void saveFile();
     void newFile();
