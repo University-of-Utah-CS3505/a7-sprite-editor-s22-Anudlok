@@ -1,21 +1,31 @@
 #ifndef ANIMATIONWINDOW_H
 #define ANIMATIONWINDOW_H
 
-#include <QMainWindow>
-#include <QObject>
 #include <QWidget>
+#include <QLabel>
+#include <QPixmap>
 
-class AnimationWindow : public QObject
+QT_BEGIN_NAMESPACE
+namespace Ui { class AnimationWindow; }
+QT_END_NAMESPACE
+
+class AnimationWindow : public QWidget
 {
     Q_OBJECT
     int framesPerSecond;
+    QLabel* animationWindow;
+    int screenWidth = 141;
+    int screenHeight = 141;
 public:
-    explicit AnimationWindow(QObject *parent = nullptr);
+    explicit AnimationWindow(QWidget *parent = nullptr);
 
     void changeFramesPerSecond(int);
 signals:
-    void playPreviewClick();
-    void stopPreviewClick();
+    void displayAnimationFrame(QImage* frame);
+public slots:
+    void playPreviewClick(std::vector<QImage>);
+ private:
+    Ui::AnimationWindow * ui;
 };
 
 #endif // ANIMATIONWINDOW_H

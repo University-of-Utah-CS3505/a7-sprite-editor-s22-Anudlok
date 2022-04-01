@@ -9,7 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    animationwindow.cpp \
+    animationpopup.cpp \
     drawingwindow.cpp \
     drawingwindowwidget.cpp \
     frames.cpp \
@@ -19,7 +19,7 @@ SOURCES += \
     toolbar.cpp
 
 HEADERS += \
-    animationwindow.h \
+    animationpopup.h \
     drawingwindow.h \
     drawingwindowwidget.h \
     frames.h \
@@ -28,6 +28,7 @@ HEADERS += \
     toolbar.h
 
 FORMS += \
+    animationpopup.ui \
     mainwindow.ui
 
 # Default rules for deployment.

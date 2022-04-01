@@ -2,6 +2,7 @@
 #include "drawingwindow.h"
 #include "drawingwindowwidget.h"
 #include "previewwindow.h"
+#include "animationpopup.h"
 
 #include <QApplication>
 
@@ -12,7 +13,8 @@ int main(int argc, char *argv[])
     drawingwindow dw;
     drawingwindowwidget dww;
     PreviewWindow pw;
-    MainWindow w(pw, f, dw, dww);
+    AnimationPopUp aw;
+    MainWindow w(aw, pw, f, dw, dww);
     w.show();
     return a.exec();
 }

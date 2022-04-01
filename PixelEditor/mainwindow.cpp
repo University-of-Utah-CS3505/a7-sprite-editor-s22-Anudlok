@@ -17,7 +17,7 @@
  * @brief MainWindow::MainWindow The View Class
  * @param parent
  */
-MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
+MainWindow::MainWindow(AnimationPopUp& aw ,PreviewWindow& pw, Frames& frames, drawingwindow& dw,
                        drawingwindowwidget& dww, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -37,6 +37,7 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
     connect(this, &MainWindow::startDrawing, &dww, &drawingwindowwidget::startDrawing);
     connect(this, &MainWindow::clearScreen, &frames, &Frames::clearFrame);
     connect(&frames, &Frames::displayPreview, &pw, &PreviewWindow::displayPreviewFrame);
+    connect(this, &MainWindow::animateFrames, &aw, &AnimationPopUp::playPreviewClick);
 
     emit currentColor(primaryColor);
 
@@ -322,9 +323,6 @@ void MainWindow::on_swapColorButton_clicked()
 
 void MainWindow::on_playPreviewButton_clicked()
 {
-    QMessageBox msgBox;
-    //code the timer
-
 
 }
 
@@ -338,5 +336,17 @@ void MainWindow::changePrimaryColor(QColor color) {
 void MainWindow::on_btnClear_clicked()
 {
     emit clearScreen();
+}
+
+
+void MainWindow::on_deleteFrameButton_clicked()
+{
+
+}
+
+
+void MainWindow::on_addFrameButton_clicked()
+{
+
 }
 

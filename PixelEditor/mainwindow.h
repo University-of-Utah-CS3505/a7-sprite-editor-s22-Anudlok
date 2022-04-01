@@ -7,8 +7,10 @@
 #include "drawingwindow.h"
 #include "drawingwindowwidget.h"
 #include "previewwindow.h"
+#include "animationpopup.h"
 #include "frames.h"
 #include "toolbar.h"
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,7 +23,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw, drawingwindowwidget& dww,
+    MainWindow(AnimationPopUp& aw, PreviewWindow& pw, Frames& frames, drawingwindow& dw, drawingwindowwidget& dww,
                QWidget *parent = nullptr);
     ~MainWindow();
     std::vector<QImage> frames;
@@ -32,6 +34,7 @@ signals:
     void colorPickerPicked(bool state);
     void startDrawing();
     void clearScreen();
+    void animateFrames(std::vector<QImage> frames);
 
 private slots:
 
@@ -48,6 +51,7 @@ private slots:
     void on_framesListWidget_itemActivated(QListWidgetItem *item);
 
     void on_btnTest_clicked();
+
     void displayFrame(QImage* frame);
 
     void on_brushButton_clicked();
@@ -67,9 +71,14 @@ private slots:
     void on_swapColorButton_clicked();
 
     void on_playPreviewButton_clicked();
+
     void changePrimaryColor(QColor color);
 
     void on_btnClear_clicked();
+
+    void on_deleteFrameButton_clicked();
+
+    void on_addFrameButton_clicked();
 
 private:
     Ui::MainWindow *ui;
