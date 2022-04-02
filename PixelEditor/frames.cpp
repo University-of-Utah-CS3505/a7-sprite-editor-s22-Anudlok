@@ -115,17 +115,16 @@ void Frames::loadFile(QString fileName) {
         height = doc["height"].toInt();
         width = doc["width"].toInt();
         int maxFrames = doc["numberOfFrames"].toInt();
-        QJsonArray listOfFrames = doc["frames"].toArray();
+        QJsonObject listOfFrames = doc["frames"].toObject();
         std::vector<QImage> allFrames;
-        QColor color;
 
         // Iterate through list of frames
-        for(int frame = 0; frame < maxFrames; frame++) {
+        foreach(const QJsonValue &frame, listOfFrames) {
             // Create a frame
             QImage image (height, width, QImage::Format_RGB32);
 
             // Create a array of rows for each frame
-            QJsonArray rows = listOfFrames[frame].toArray();
+            QJsonArray rows = frame.toArray();
 
             // Iterate through the rows
             for(int row = 0; row < rows.size(); row++) {
@@ -136,11 +135,8 @@ void Frames::loadFile(QString fileName) {
                 for (int pixel = 0; pixel < pixels.size(); pixel++) {
                     // Create a rgba of the array within a pixel
                     QJsonArray RGBAColors = pixels[pixel].toArray();
-                    color.setRgba((RGBAColors[0].toInt(), RGBAColors[1].toInt(), RGBAColors[2].toInt(), RGBAColors[3].toInt()));
-
-                        image.setPixelColor(row, pixel, color);
-
-
+                    QColor color((RGBAColors[0].toInt(), RGBAColors[1].toInt(), RGBAColors[2].toInt(), RGBAColors[3].toInt()));
+                    image.setPixelColor(pixel, row, color);
                 }
 
             }
