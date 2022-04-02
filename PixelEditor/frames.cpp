@@ -76,50 +76,60 @@ void Frames::playAllFrames() {
 }
 
 void Frames::saveFile(QString fileName) {
+    int counter = 0;
     // Make a QFile with that
     QFile file(fileName);
 
     // Create the JSON objects
-     QJsonObject obj;
-     obj["height"] = height;
-     obj["width"] = width;
-     obj["numberOfFrames"] = frameList.size();
-     QJsonArray frames;
+     QJsonObject projectObj;
+     projectObj["height"] = height;
+     projectObj["width"] = width;
+     projectObj["numberOfFrames"] = frameList.size();
 
-     // Build up array of rows which have arrays of pixels which have arrays of rgba 0-255
-  //   QJsonObject listOfFrames = objectName()["frames"];
-
-
-     // Iterate through list of frames
-  //   foreach(const QJsonValue &frame, listOfFrames) {
-
-   //      // Create a array of rows for each frame
-  //       QJsonArray rows = frame.toArray();
-
+     // Make a frames object
+     QJsonObject listOfFrames;
+     // Iterate through vector of frames
+     for(QVector<QImage>::iterator iter = frameList.begin(); iter != frameList.end(); iter++) {
+         QJsonArray frame;
          // Iterate through the rows
-   //      for(int row = 0; row < rows.size(); row++) {
-             // Create a array of RGBA values for each pixel
-   //          QJsonArray pixels = rows[row].toArray();
-
+        for(int row = 0; row < width; row++) {
+            QJsonArray rows;
              // Iterate through the pixels in each row
-    //         for (int pixel = 0; pixel < pixels.size(); pixel++) {
+             for (int pixel = 0; pixel < height; pixel++) {
+                 QJsonArray RGBAColors;
                  //Grab the color of the pixel and put it inside a array
+                QRgb rgbas = iter->pixel(QPoint(pixel, row));
+                QColor color(rgbas);
 
-                 // grab the column and row (pixel, row)
+                RGBAColors.push_back(color.red());
+                RGBAColors.push_back(color.green());
+                RGBAColors.push_back(color.blue());
+                RGBAColors.push_back(color.alpha());
+                rows.push_back(RGBAColors);
+                frame.push_back(rows);
+             }
+         }
+        counter++;
+        QString str = QString::number(counter);
+        str.prepend("frame");
 
+        listOfFrames.insert(str, frame);
+     }
 
-              //   // Create a rgba of the array within a pixel
-              //   QJsonArray RGBAColors = pixels[pixel].toArray();
-              //   QColor color(RGBAColors[0].toInt(), RGBAColors[1].toInt(), RGBAColors[2].toInt(), RGBAColors[3].toInt());
-               //  image.setPixelColor(pixel, row, color);
-    //         }
+     // Add the frames object into the project object
+     projectObj.insert("frames", listOfFrames);
 
- //        }
-
-     obj["frames"] = frames;
-
-
-    // Use ReadWrite of the file to grab info from the current framesList of the project and write that
+    // Write the object
+     QJsonDocument document;
+     document.setObject(projectObj);
+     QByteArray bytes = document.toJson( QJsonDocument::Indented);
+     QFile writeFile(fileName);
+     if(writeFile.open( QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
+     {
+         QTextStream iStream(&writeFile);
+         iStream << bytes;
+         file.close();
+     }
 
     file.close();
 }
@@ -144,7 +154,6 @@ void Frames::loadFile(QString fileName) {
 
         height = doc["height"].toInt();
         width = doc["width"].toInt();
-        int maxFrames = doc["numberOfFrames"].toInt();
         QJsonObject listOfFrames = doc["frames"].toObject();
         std::vector<QImage> allFrames;
 
