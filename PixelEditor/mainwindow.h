@@ -42,6 +42,9 @@ signals:
     void sendFrame();
     void saveFile(QString fileName);
     void loadFile(QString fileName);
+    void newFile(int width, int height);
+    void saveAndNewFile(QString filename, int width, int height);
+    void resetWindow();
 
 private slots:
 

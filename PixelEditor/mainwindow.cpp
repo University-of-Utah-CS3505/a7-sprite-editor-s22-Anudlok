@@ -11,6 +11,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QColorDialog>
+#include <QInputDialog>
 
 
 /**
@@ -46,19 +47,32 @@ MainWindow::MainWindow(AnimationPopUp& aw ,PreviewWindow& pw, Frames& frames, dr
     connect(this, &MainWindow::currentFrameChanged, &frames, &Frames::addFrameWithFrame);
     connect(this, &MainWindow::moveCurrFrame, &frames, &Frames::changeFrame);
 
+    // File-related Connects
     connect(this, &MainWindow::loadFile, &frames, &Frames::loadFile);
-    connect(this, &MainWindow::loadFile, &frames, &Frames::saveFile);
+    connect(this, &MainWindow::saveFile, &frames, &Frames::saveFile);
+    connect(this, &MainWindow::newFile, &frames, &Frames::newFile);
+    connect(this, &MainWindow::saveAndNewFile, &frames, &Frames::saveAndNewFile);
+
+    // Reset Drawing Window with the height and width already in the project
+    connect(this, &MainWindow::resetWindow, &frames, &Frames::resetWindow);
 
     emit currentColor(primaryColor);
+
+    // This code block pops up a input dialog grabbing the width and height from the user
+    bool ok;
+    int width = QInputDialog::getInt(this, tr("Width of Sprite Project"),
+                                 tr("Width:"), 25, 1, 400, 1, &ok);
+    int height = QInputDialog::getInt(this, tr("Height of Sprite Project"),
+                                 tr("Height:"), 25, 1, 400, 1, &ok);
+    if (ok) {
+            emit makeNewFrame(width, height);
+    }
 
     this->layout()->addWidget(&dww);
     this->layout()->addWidget(&pw);
 
     ui->editDrawingWindow->setVisible(false);
     ui->brushButton->setEnabled(true);
-    ui->sbWidth->setValue(1);
-    ui->sbHeight->setValue(1);
-    ui->btnClear->setEnabled(false);
 }
 
 
@@ -69,6 +83,7 @@ MainWindow::~MainWindow()
 }
 
 /// File Menu Methods
+///
 void MainWindow::on_actionNew_triggered()
 {
     QString filename = "";
@@ -79,19 +94,25 @@ void MainWindow::on_actionNew_triggered()
     msgBox.setDefaultButton(QMessageBox::Save);
     int ret = msgBox.exec();
 
-    if (msgBox.Save) {
-        // Make a QString of file name using QFile Dialog
-        filename = QFileDialog::getSaveFileName(this,
-                                                        tr("Save Project"),
-                                                        "",
-                                                     tr("Sprite Project (*.ssp)"));
-    }
+    // This code block pops up a input dialog grabbing the width and height from the user
+    bool ok;
+    int width = QInputDialog::getInt(this, tr("Width of Sprite Project"),
+                                 tr("Width:"), 25, 1, 400, 1, &ok);
+    int height = QInputDialog::getInt(this, tr("Height of Sprite Project"),
+                                 tr("Height:"), 25, 1, 400, 1, &ok);
 
     switch (ret) {
-      case QMessageBox::Save:
-          emit saveFile(filename);
+      case QMessageBox::Save: {
+        // Make a QString of file name using QFile Dialog
+        filename = QFileDialog::getSaveFileName(this,
+                                                tr("Save Project"),
+                                                "",
+                                                tr("Sprite Project (*.ssp)"));
+          emit saveAndNewFile(filename, width, height);
           break;
+      }
       case QMessageBox::Discard:
+          emit newFile(width, height);
           break;
       case QMessageBox::Cancel:
           // Cancel was clicked
@@ -188,13 +209,9 @@ void MainWindow::on_frameRightButton_clicked()
 
 void MainWindow::on_btnTest_clicked()
 {
-    int width = ui->sbWidth->value();
-    int height = ui->sbHeight->value();
-
-    emit makeNewFrame(width, height);
+    emit resetWindow();
     emit requestFrame();
     emit startDrawing();
-    ui->btnClear->setEnabled(true);
 }
 
 void MainWindow::displayFrame(QImage* frame) {

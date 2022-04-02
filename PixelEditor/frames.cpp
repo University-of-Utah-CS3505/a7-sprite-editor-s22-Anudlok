@@ -87,6 +87,34 @@ void Frames::saveFile(QString fileName) {
      QJsonArray frames;
 
      // Build up array of rows which have arrays of pixels which have arrays of rgba 0-255
+  //   QJsonObject listOfFrames = objectName()["frames"];
+
+
+     // Iterate through list of frames
+  //   foreach(const QJsonValue &frame, listOfFrames) {
+
+   //      // Create a array of rows for each frame
+  //       QJsonArray rows = frame.toArray();
+
+         // Iterate through the rows
+   //      for(int row = 0; row < rows.size(); row++) {
+             // Create a array of RGBA values for each pixel
+   //          QJsonArray pixels = rows[row].toArray();
+
+             // Iterate through the pixels in each row
+    //         for (int pixel = 0; pixel < pixels.size(); pixel++) {
+                 //Grab the color of the pixel and put it inside a array
+
+                 // grab the column and row (pixel, row)
+
+
+              //   // Create a rgba of the array within a pixel
+              //   QJsonArray RGBAColors = pixels[pixel].toArray();
+              //   QColor color(RGBAColors[0].toInt(), RGBAColors[1].toInt(), RGBAColors[2].toInt(), RGBAColors[3].toInt());
+               //  image.setPixelColor(pixel, row, color);
+    //         }
+
+ //        }
 
      obj["frames"] = frames;
 
@@ -101,6 +129,8 @@ void Frames::loadFile(QString fileName) {
         return;
     }
     else {
+        frameList.clear();
+
         // Make a new file
         QFile file(fileName);
 
@@ -135,7 +165,7 @@ void Frames::loadFile(QString fileName) {
                 for (int pixel = 0; pixel < pixels.size(); pixel++) {
                     // Create a rgba of the array within a pixel
                     QJsonArray RGBAColors = pixels[pixel].toArray();
-                    QColor color((RGBAColors[0].toInt(), RGBAColors[1].toInt(), RGBAColors[2].toInt(), RGBAColors[3].toInt()));
+                    QColor color(RGBAColors[0].toInt(), RGBAColors[1].toInt(), RGBAColors[2].toInt(), RGBAColors[3].toInt());
                     image.setPixelColor(pixel, row, color);
                 }
 
@@ -150,9 +180,26 @@ void Frames::loadFile(QString fileName) {
     //        widgetList.push_back(item);
         }
 
-        currentFrame += 1;
+        currentFrame = 0;
         emit displayFrame(&(frameList[currentFrame]), width, height);
 
         file.close();
     }
 }
+
+ void Frames::newFile(int width, int height) {
+     currentFrame = -1;
+     frameList.clear();
+
+     //need pop up and then put the height and width inside addFrame
+     addFrame(width, height);
+ }
+
+ void Frames::saveAndNewFile(QString filename, int width, int height) {
+     saveFile(filename);
+     newFile(width, height);
+ }
+
+ void Frames::resetWindow() {
+      addFrame(width, height);
+ }
