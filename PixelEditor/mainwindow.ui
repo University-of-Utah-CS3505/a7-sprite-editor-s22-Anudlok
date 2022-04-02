@@ -185,7 +185,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resources.qrc">
+        <iconset>
          <normaloff>:/Icons/icons8-select-all-3-96.png</normaloff>:/Icons/icons8-select-all-3-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -370,46 +370,14 @@
    <widget class="QPushButton" name="btnTest">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>180</y>
+      <x>560</x>
+      <y>160</y>
       <width>80</width>
       <height>18</height>
      </rect>
     </property>
     <property name="text">
      <string>New</string>
-    </property>
-   </widget>
-   <widget class="QSpinBox" name="sbHeight">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>200</y>
-      <width>81</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="minimum">
-     <number>1</number>
-    </property>
-    <property name="maximum">
-     <number>100000</number>
-    </property>
-   </widget>
-   <widget class="QSpinBox" name="sbWidth">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>230</y>
-      <width>81</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="minimum">
-     <number>1</number>
-    </property>
-    <property name="maximum">
-     <number>100000</number>
     </property>
    </widget>
    <widget class="QPushButton" name="playPreviewButton">
@@ -423,19 +391,6 @@
     </property>
     <property name="text">
      <string>Play</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnClear">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>260</y>
-      <width>80</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Clear</string>
     </property>
    </widget>
    <widget class="QPushButton" name="deleteFrameButton">
@@ -497,7 +452,7 @@
      <x>0</x>
      <y>0</y>
      <width>751</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
