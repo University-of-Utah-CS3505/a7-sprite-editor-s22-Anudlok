@@ -81,7 +81,6 @@ void drawingwindowwidget::mouseColor(int x, int y) {
 
 void drawingwindowwidget::mousePressEvent(QMouseEvent *event)
 {
-    if (start) {
         int x = drawingWindow->mapFromGlobal(QCursor::pos()).x();
         int y = drawingWindow->mapFromGlobal(QCursor::pos()).y();
         if (colorPicker) {
@@ -95,7 +94,6 @@ void drawingwindowwidget::mousePressEvent(QMouseEvent *event)
             mouseButtonDown = true;
         }
         colorPicker = false;
-    }
 }
 
 void drawingwindowwidget::mouseReleaseEvent(QMouseEvent *event) {
