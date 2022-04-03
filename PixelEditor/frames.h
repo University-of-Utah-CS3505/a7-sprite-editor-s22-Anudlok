@@ -19,6 +19,7 @@ private:
     int interval = 6000 / 24;
     bool animPlaying = false;
 
+    void updateView();
     void playNextFrame();
 
 signals:
@@ -32,7 +33,6 @@ public slots:
     void addNewFrame();
     void addFrameWithFrame(QImage frame);
     void deleteFrame();
-    void deleteFrameAt(int index);
     void updateFrame(QColor color, int row, int column);
     void changeFrame(bool upOrDown);
     void playAllFrames(int framesPerSecond);

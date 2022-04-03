@@ -39,7 +39,7 @@ signals:
     void clearScreen();
     void animateFrames(std::vector<QListWidgetItem> frames);
     void requestFrame();
-    void deleteFrameAt(int);
+    void deleteFrame();
     void sendFrame();
     void saveFile(QString fileName);
     void loadFile(QString fileName);

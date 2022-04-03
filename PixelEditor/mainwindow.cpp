@@ -43,7 +43,7 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
     connect(&frames, &Frames::displayPreview, &pw, &PreviewWindow::displayPreviewFrame);
     connect(this, &MainWindow::requestFrame, &pw, &PreviewWindow::requestForWindow);
     connect(&pw, &PreviewWindow::sendWindow, this, &MainWindow::addToFrames);
-    connect(this, &MainWindow::deleteFrameAt, &frames, &Frames::deleteFrameAt);
+    connect(this, &MainWindow::deleteFrame, &frames, &Frames::deleteFrame);
     connect(this, &MainWindow::currentFrameChanged, &frames, &Frames::addFrameWithFrame);
     connect(this, &MainWindow::moveCurrFrame, &frames, &Frames::changeFrame);
 
@@ -176,9 +176,11 @@ void MainWindow::on_framesListWidget_itemActivated(QListWidgetItem *item)
 
 void MainWindow::on_deleteFrameButton_clicked()
 {
-    emit deleteFrameAt(currFrame);
-    widgetList.erase(widgetList.begin() + currFrame);
-    currFrame--;
+    emit deleteFrame();
+//    widgetList.erase(widgetList.begin() + currFrame);
+//    if (currFrame > 0) {
+//        currFrame--;
+//    }
 }
 
 

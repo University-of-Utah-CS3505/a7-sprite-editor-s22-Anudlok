@@ -23,10 +23,14 @@ void Frames::setWidthAndHeight(int _width, int _height) {
     height = _height;
 }
 
-void Frames::clearFrame() {
-    frameList[currentFrame].fill(QColor(0, 0, 0, 0));
+void Frames::updateView() {
     emit displayFrame(&(frameList[currentFrame]), width, height);
     emit displayPreview(&(frameList[currentFrame]));
+}
+
+void Frames::clearFrame() {
+    frameList[currentFrame].fill(QColor(0, 0, 0, 0));
+    updateView();
 }
 
 void Frames::addFrame(int _width, int _height){
@@ -37,32 +41,38 @@ void Frames::addFrame(int _width, int _height){
 void Frames::addNewFrame() {
     QImage image = QImage(width, height, QImage::Format_ARGB32);
     image.fill(QColor(0, 0, 0, 0));
-    frameList.append(image);
+    frameList.insert(currentFrame + 1, image);
     currentFrame += 1;
-    emit displayFrame(&(frameList[currentFrame]), width, height);
-    emit displayPreview(&(frameList[currentFrame]));
+    updateView();
 }
 
 void Frames::addFrameWithFrame(QImage frame){
     frameList.append(frame);
     currentFrame += 1;
-    emit displayFrame(&(frameList[currentFrame]), width, height);
-    emit displayPreview(&(frameList[currentFrame]));
+    updateView();
 }
 
 void Frames::deleteFrame() {
     int deleteFrameIndex = currentFrame;
-    frameList.removeAt(deleteFrameIndex);
-}
 
-void Frames::deleteFrameAt(int index){
-    frameList.removeAt(index);
+    // If deleted frame is last frame, change frame displayed
+    if (currentFrame == frameList.size() - 1) {
+        currentFrame--;
+    }
+
+    frameList.removeAt(deleteFrameIndex);
+
+    // Frame list should never be empty
+    if (frameList.empty()) {
+        addNewFrame();
+    }
+
+    updateView();
 }
 
 void Frames::updateFrame(QColor color, int row, int column) {
     frameList[currentFrame].setPixelColor(row, column, color);
-    emit displayFrame(&frameList[currentFrame], width, height);
-    emit displayPreview(&(frameList[currentFrame]));
+    updateView();
 }
 
 void Frames::changeFrame(bool upOrDown) {
@@ -76,8 +86,7 @@ void Frames::changeFrame(bool upOrDown) {
             currentFrame -= 1;
         }
     }
-    emit displayFrame(&(frameList[currentFrame]), width, height);
-    emit displayPreview(&(frameList[currentFrame]));
+    updateView();
 }
 
 void Frames::playAllFrames(int framesPerSecond) {
@@ -221,7 +230,7 @@ void Frames::loadFile(QString fileName) {
         }
 
         currentFrame = 0;
-        emit displayFrame(&(frameList[currentFrame]), width, height);
+        updateView();
 
         file.close();
     }
