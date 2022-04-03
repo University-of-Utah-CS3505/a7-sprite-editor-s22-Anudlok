@@ -119,6 +119,9 @@ void Frames::saveFile(QString fileName) {
     int counter = 0;
     // Make a QFile with that
     QFile file(fileName);
+                QJsonArray rows;
+
+
 
     // Create the JSON objects
      QJsonObject projectObj;
@@ -133,7 +136,7 @@ void Frames::saveFile(QString fileName) {
          QJsonArray frame;
          // Iterate through the rows
         for(int row = 0; row < width; row++) {
-            QJsonArray rows;
+            rows = QJsonArray();
              // Iterate through the pixels in each row
              for (int pixel = 0; pixel < height; pixel++) {
                  QJsonArray RGBAColors;
@@ -146,14 +149,16 @@ void Frames::saveFile(QString fileName) {
                 RGBAColors.push_back(color.blue());
                 RGBAColors.push_back(color.alpha());
                 rows.push_back(RGBAColors);
-                frame.push_back(rows);
              }
+           frame.push_back(rows);
          }
-        counter++;
+
         QString str = QString::number(counter);
         str.prepend("frame");
 
         listOfFrames.insert(str, frame);
+
+        counter++;
      }
 
      // Add the frames object into the project object
