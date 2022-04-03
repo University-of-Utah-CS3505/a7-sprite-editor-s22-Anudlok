@@ -46,6 +46,11 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
     connect(this, &MainWindow::currentFrameChanged, &frames, &Frames::addFrameWithFrame);
     connect(this, &MainWindow::moveCurrFrame, &frames, &Frames::changeFrame);
 
+    // Animation preview-related Connects
+    connect(&frames, &Frames::displayAnimFrame, popUp, &AnimationPopUp::displayAnimFrame);
+    connect(popUp, &AnimationPopUp::playAnim, &frames, &Frames::playAllFrames);
+    connect(popUp, &AnimationPopUp::stopAnim, &frames, &Frames::stopPlayingFrames);
+
     // File-related Connects
     connect(this, &MainWindow::loadFile, &frames, &Frames::loadFile);
     connect(this, &MainWindow::saveFile, &frames, &Frames::saveFile);
@@ -154,7 +159,7 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_playPreviewButton_clicked()
 {
     popUp->show();
-    popUp->playPreviewClick(widgetList);
+    emit popUp->playAnim(24);
 }
 
 void MainWindow::on_framesListWidget_itemActivated(QListWidgetItem *item)

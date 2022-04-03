@@ -1,7 +1,7 @@
 #ifndef ANIMATIONPOPUP_H
 #define ANIMATIONPOPUP_H
 
-#include <QWidget>
+#include <QMainWindow>
 #include <QLabel>
 #include <QPixmap>
 #include <QTimer>
@@ -22,12 +22,22 @@ class AnimationPopUp : public QWidget
     int screenWidth = 141;
     int screenHeight = 141;
 
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
 public:
     explicit AnimationPopUp(QWidget *parent = nullptr);
     ~AnimationPopUp();
     void changeFramesPerSecond(int);
-    void playPreviewClick(std::vector<QListWidgetItem>);
-    void animate();
+    //void playPreviewClick(std::vector<QListWidgetItem>);
+    //void animate();
+
+signals:
+    void playAnim(int framesPerSecond);
+    void stopAnim();
+
+public slots:
+    void displayAnimFrame(QImage* frame);//, int width, int height);
 
 private:
     Ui::AnimationPopUp *ui;

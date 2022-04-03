@@ -10,6 +10,7 @@
 #include <QRgb>
 #include <QImage>
 #include <QVector>
+#include <QTimer>
 
 Frames::Frames(QObject *parent)
     : QObject{parent}
@@ -71,8 +72,30 @@ void Frames::changeFrame(bool upOrDown) {
     emit displayPreview(&(frameList[currentFrame]));
 }
 
-void Frames::playAllFrames() {
+void Frames::playAllFrames(int framesPerSecond) {
+   animFrame = 0;
+   interval = 1000 / framesPerSecond;
+   animPlaying = true;
+   playNextFrame();
 
+   // timer.setInterval(interval);
+
+   //connect(&timer, SIGNAL(QTimer::timeout()), this, SLOT(AnimationPopUp::animate()));
+
+//    void AnimationPopUp::animate();
+//    QIcon icon = frames[currFrameIndex].icon();
+//    animationWindow->setWindowIcon(icon);
+}
+
+void Frames::playNextFrame() {
+    emit displayAnimFrame(&(frameList[animFrame]));//, width, height);
+    animFrame = (animFrame + 1) % frameList.size();
+    if (animPlaying)
+        QTimer::singleShot(interval, this, &Frames::playNextFrame);
+}
+
+void Frames::stopPlayingFrames() {
+    animPlaying = false;
 }
 
 void Frames::saveFile(QString fileName) {
