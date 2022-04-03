@@ -18,7 +18,7 @@
  * @brief MainWindow::MainWindow The View Class
  * @param parent
  */
-MainWindow::MainWindow(AnimationPopUp& aw ,PreviewWindow& pw, Frames& frames, drawingwindow& dw,
+MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
                        drawingwindowwidget& dww, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -40,7 +40,6 @@ MainWindow::MainWindow(AnimationPopUp& aw ,PreviewWindow& pw, Frames& frames, dr
     connect(this, &MainWindow::startDrawing, &dww, &drawingwindowwidget::startDrawing);
     connect(this, &MainWindow::clearScreen, &frames, &Frames::clearFrame);
     connect(&frames, &Frames::displayPreview, &pw, &PreviewWindow::displayPreviewFrame);
-    connect(this, &MainWindow::animateFrames, &aw, &AnimationPopUp::playPreviewClick);
     connect(this, &MainWindow::requestFrame, &pw, &PreviewWindow::requestForWindow);
     connect(&pw, &PreviewWindow::sendWindow, this, &MainWindow::addToFrames);
     connect(this, &MainWindow::deleteFrameAt, &frames, &Frames::deleteFrameAt);
@@ -152,7 +151,11 @@ void MainWindow::on_actionExit_triggered()
 
 
 /// End File Menu Methods
-
+void MainWindow::on_playPreviewButton_clicked()
+{
+    popUp->show();
+    popUp->playPreviewClick(widgetList);
+}
 
 void MainWindow::on_framesListWidget_itemActivated(QListWidgetItem *item)
 {
@@ -304,13 +307,6 @@ void MainWindow::on_swapColorButton_clicked()
     ui->primaryColorButton->setStyleSheet("background-color: " + primaryColor.name() + ";border-style: none;");
     ui->secondaryColorButton->setStyleSheet("background-color: " + secondaryColor.name() + ";border-style: none;");
     emit currentColor(primaryColor);
-}
-
-
-void MainWindow::on_playPreviewButton_clicked()
-{
-    popUp->show();
-    emit animateFrames(widgetList);
 }
 
 void MainWindow::changePrimaryColor(QColor color) {

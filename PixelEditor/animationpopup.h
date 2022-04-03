@@ -15,6 +15,7 @@ class AnimationPopUp : public QWidget
 {
     Q_OBJECT
     int framesPerSecond;
+    int interval;
     unsigned int currFrameIndex;
     QLabel* animationWindow;
     std::vector<QListWidgetItem> frames;
@@ -24,8 +25,6 @@ class AnimationPopUp : public QWidget
 public:
     explicit AnimationPopUp(QWidget *parent = nullptr);
     ~AnimationPopUp();
-
-public slots:
     void changeFramesPerSecond(int);
     void playPreviewClick(std::vector<QListWidgetItem>);
     void animate();

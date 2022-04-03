@@ -24,7 +24,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    MainWindow(AnimationPopUp& aw, PreviewWindow& pw, Frames& frames, drawingwindow& dw, drawingwindowwidget& dww,
+    MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw, drawingwindowwidget& dww,
                QWidget *parent = nullptr);
     ~MainWindow();
     std::vector<QListWidgetItem> widgetList;
