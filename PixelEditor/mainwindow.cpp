@@ -33,6 +33,7 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
 
     connect(&frames, &Frames::displayFrame, &dww, &drawingwindowwidget::displayCurrentFrame);
     connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrame);
+    connect(this, &MainWindow::addNewFrame, &frames, &Frames::addNewFrame);
     connect(&dww, &drawingwindowwidget::colorPixel, &frames, &Frames::updateFrame);
     connect(this, &MainWindow::currentColor, &dww, &drawingwindowwidget::setCurrentColor);
     connect(this, &MainWindow::colorPickerPicked, &dww, &drawingwindowwidget::colorPicked);
@@ -161,7 +162,7 @@ void MainWindow::on_playPreviewButton_clicked()
     popUp->show();
     emit popUp->playAnim(24);
 }
-
+/**
 void MainWindow::on_framesListWidget_itemActivated(QListWidgetItem *item)
 {
     //comment for future debugging, possible error bc idk what i'm doing tbh
@@ -171,6 +172,7 @@ void MainWindow::on_framesListWidget_itemActivated(QListWidgetItem *item)
         ui->framesListWidget->addItem(&item);
     }
 }
+**/
 
 void MainWindow::on_deleteFrameButton_clicked()
 {
@@ -182,43 +184,30 @@ void MainWindow::on_deleteFrameButton_clicked()
 
 void MainWindow::on_addFrameButton_clicked()
 {
-    emit requestFrame();
+    emit addNewFrame();
 }
 
 void MainWindow::addToFrames(QPixmap *frame){
-    QIcon frameIcon(*frame);
-    QListWidgetItem item;
-    QImage clickedFrame;
 
-    item.setIcon(frameIcon);
-    widgetList.push_back(item);
-    currFrame++;
-    clickedFrame = frame->toImage();
-    emit currentFrameChanged(clickedFrame);
 }
 
 void MainWindow::on_frameLeftButton_clicked()
 {
-    if(currFrame > 0){
-        currFrame--;
-        emit moveCurrFrame(false);
-    }
+   // currFrame = (currFrame-1) % widgetList.size();
+    emit moveCurrFrame(false);
 }
 
 
 void MainWindow::on_frameRightButton_clicked()
 {
-    if(currFrame < widgetList.size()-1){
-        currFrame++;
-        emit moveCurrFrame(true);
-    }
+  //  currFrame = (currFrame + 1) % widgetList.size();
+    emit moveCurrFrame(true);
 }
 
 
 void MainWindow::on_btnTest_clicked()
 {
     emit resetWindow();
-    emit requestFrame();
     emit startDrawing();
 }
 

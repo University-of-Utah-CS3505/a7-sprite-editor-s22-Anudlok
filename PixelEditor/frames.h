@@ -29,6 +29,7 @@ signals:
 
 public slots:
     void addFrame(int _width, int _height);
+    void addNewFrame();
     void addFrameWithFrame(QImage frame);
     void deleteFrame();
     void deleteFrameAt(int index);
@@ -43,6 +44,7 @@ public slots:
     void newFile(int width, int height);
     void saveAndNewFile(QString filename, int width, int height);
     void resetWindow();
+
 };
 
 

@@ -31,6 +31,7 @@ public:
 signals:
     void currentFrameChanged(QImage frame);
     void makeNewFrame(int width, int height);
+    void addNewFrame();
     void currentColor(QColor color);
     void colorPickerPicked(bool state);
     void moveCurrFrame(bool isUp);
@@ -56,7 +57,7 @@ private slots:
 
     void on_actionExit_triggered();
 
-    void on_framesListWidget_itemActivated(QListWidgetItem *item);
+   // void on_framesListWidget_itemActivated(QListWidgetItem *item);
 
     void on_btnTest_clicked();
 
@@ -101,7 +102,7 @@ private:
     Toolbar toolbar;
     QColor primaryColor, secondaryColor;
     QColor eraser;
-    int currFrame = -1;
+    int currFrame = 0;
     void selectButton(Toolbar::Tools tool);
 };
 #endif // MAINWINDOW_H

@@ -31,6 +31,10 @@ void Frames::clearFrame() {
 
 void Frames::addFrame(int _width, int _height){
     setWidthAndHeight(_width, _height);
+    addNewFrame();
+}
+
+void Frames::addNewFrame() {
     QImage image = QImage(width, height, QImage::Format_ARGB32);
     image.fill(QColor(0, 0, 0, 0));
     frameList.append(image);
@@ -63,10 +67,14 @@ void Frames::updateFrame(QColor color, int row, int column) {
 
 void Frames::changeFrame(bool upOrDown) {
     if (upOrDown) {
-        currentFrame += 1;
+       if(currentFrame < frameList.size()-1){
+            currentFrame += 1;
+       }
     }
     else {
-        currentFrame -= 1;
+        if(currentFrame > 0){
+            currentFrame -= 1;
+        }
     }
     emit displayFrame(&(frameList[currentFrame]), width, height);
     emit displayPreview(&(frameList[currentFrame]));
