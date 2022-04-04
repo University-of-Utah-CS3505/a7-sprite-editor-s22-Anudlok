@@ -44,15 +44,19 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
     connect(this, &MainWindow::requestFrame, &pw, &PreviewWindow::requestForWindow);
     //connect(&pw, &PreviewWindow::sendWindow, this, &MainWindow::addToFrames);
     connect(this, &MainWindow::deleteFrame, &frames, &Frames::deleteFrame);
-    connect(this, &MainWindow::currentFrameChanged, &frames, &Frames::addFrameWithFrame);
     connect(this, &MainWindow::moveCurrFrame, &frames, &Frames::changeFrame);
+
+    // Frame list-relatd Connects
+    connect(&frames, &Frames::displayInList, this, &MainWindow::displayInList);
+    connect(&frames, &Frames::addFrameToList, this, &MainWindow::addFrameToList);
+    //connect(&frames, &Frames::removeFrameFromList, this, &MainWindow::removeFrameFromList);
 
     // Animation preview-related Connects
     connect(&frames, &Frames::displayAnimFrame, popUp, &AnimationPopUp::displayAnimFrame);
     connect(popUp, &AnimationPopUp::playAnim, &frames, &Frames::playAllFrames);
     connect(popUp, &AnimationPopUp::stopAnim, &frames, &Frames::stopPlayingFrames);
     connect(this, &MainWindow::newFps, popUp, &AnimationPopUp::changeFramesPerSecond);
-    connect(&frames, &Frames::displayInList, this, &MainWindow::displayInList);
+
     //connect(this, &MainWindow::addNewFrame, &frames, &Frames::addNewFrame);
 
     // File-related Connects
@@ -73,7 +77,8 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
     int height = QInputDialog::getInt(this, tr("Height of Sprite Project"),
                                  tr("Height:"), 25, 1, 400, 1, &ok);
     if (ok) {
-            emit makeNewFrame(width, height);
+        qDebug() << "Making new frame";
+        emit makeNewFrame(width, height);
     }
 
     this->layout()->addWidget(&dww);
@@ -84,8 +89,7 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
 }
 
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
     delete popUp;
 }
@@ -155,7 +159,7 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_actionExit_triggered()
 {
-        this->close();
+    this->close();
 }
 
 
@@ -199,16 +203,24 @@ void MainWindow::on_addFrameButton_clicked()
     //add item to QList
 }
 
-void MainWindow::addFrameToList(QPixmap *frame, int index){
-    QListWidgetItem item;
-    item.setIcon(QIcon(*frame));
-    ui->framesListWidget->insertItem(index, &item);
+void MainWindow::addFrameToList(QPixmap *frame, int index) {
+    qDebug() << "Adding frame to list";
+    QListWidgetItem* item = new QListWidgetItem();
+    item->setIcon(QIcon(*frame));
+    ui->framesListWidget->insertItem(index, item);
+    qDebug() << "Added, " << ui->framesListWidget->count();
 }
 
-void MainWindow::displayInList(QPixmap *frame, int index){
-    QListWidgetItem currItem = *(ui->framesListWidget->item(index));
-    QIcon icon(*frame);
-    currItem.setIcon(icon);
+void MainWindow::displayInList(QPixmap *frame, int index) {
+    qDebug() << "Displaying frame in list";
+    QListWidgetItem* currItem = ui->framesListWidget->item(index);
+    qDebug() << "Got item";
+    QPixmap newFrame = *frame;
+    qDebug() << "Created new frame";
+    QIcon icon(newFrame);
+    qDebug() << "Created icon";
+    currItem->setIcon(icon);
+    qDebug() << "Set icon";
 }
 
 void MainWindow::on_frameLeftButton_clicked()
@@ -330,6 +342,7 @@ void MainWindow::changePrimaryColor(QColor color) {
     selectButton(Toolbar::Tools::brush);
 }
 
+// TODO I don't think this button exists anymore??? Is the signal/slot used???
 void MainWindow::on_btnClear_clicked()
 {
     emit clearScreen();

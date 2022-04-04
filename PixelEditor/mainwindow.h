@@ -29,7 +29,6 @@ public:
     ~MainWindow();
     std::vector<QListWidgetItem> widgetList;
 signals:
-    void currentFrameChanged(QImage frame);
     void makeNewFrame(int width, int height);
     void addNewFrame();
     void currentColor(QColor color);

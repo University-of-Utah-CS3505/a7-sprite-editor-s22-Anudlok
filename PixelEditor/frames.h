@@ -20,6 +20,9 @@ private:
     bool animPlaying = false;
 
     void updateView();
+    void updateViewFrameList();
+    void addToFrameList();
+    void removeFromFrameList();
     void playNextFrame();
 
 signals:
@@ -27,12 +30,13 @@ signals:
     void displayPreview(QImage* frame);
     void sendFrame(QPixmap *frame, int index);
     void displayAnimFrame(QImage* frame);//, int width, int height);
-    void displayInList(QPixmap *, int);
+    void displayInList(QPixmap*, int);
+    void addFrameToList(QPixmap *, int);
+    void removeFrameFromList(QPixmap *, int);
 
 public slots:
     void addFrame(int _width, int _height);
     void addNewFrame();
-    void addFrameWithFrame(QImage frame);
     void deleteFrame();
     void updateFrame(QColor color, int row, int column);
     void changeFrame(bool upOrDown);

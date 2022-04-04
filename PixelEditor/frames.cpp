@@ -26,16 +26,35 @@ void Frames::setWidthAndHeight(int _width, int _height) {
 void Frames::updateView() {
     emit displayFrame(&(frameList[currentFrame]), width, height);
     emit displayPreview(&(frameList[currentFrame]));
+}
+
+void Frames::updateViewFrameList() {
+    qDebug() << "Updating the frame list";
     QPixmap pxMap = QPixmap::fromImage(frameList[currentFrame]);
     emit displayInList(&pxMap, currentFrame);
+    qDebug() << "Updated";
+}
+
+void Frames::addToFrameList() {
+    qDebug() << "Emitting addFrameToList";
+    QPixmap pxMap = QPixmap::fromImage(frameList[currentFrame]);
+    emit addFrameToList(&pxMap, currentFrame);
+}
+
+void Frames::removeFromFrameList() {
+    QPixmap pxMap = QPixmap::fromImage(frameList[currentFrame]);
+    emit removeFrameFromList(&pxMap, currentFrame);
 }
 
 void Frames::clearFrame() {
     frameList[currentFrame].fill(QColor(0, 0, 0, 0));
+
     updateView();
+    updateViewFrameList();
 }
 
 void Frames::addFrame(int _width, int _height){
+    qDebug() << "Adding frame";
     setWidthAndHeight(_width, _height);
     addNewFrame();
 }
@@ -45,13 +64,9 @@ void Frames::addNewFrame() {
     image.fill(QColor(0, 0, 0, 0));
     frameList.insert(currentFrame + 1, image);
     currentFrame += 1;
-    updateView();
-}
 
-void Frames::addFrameWithFrame(QImage frame){
-    frameList.append(frame);
-    currentFrame += 1;
     updateView();
+    addToFrameList();
 }
 
 void Frames::deleteFrame() {
@@ -70,11 +85,13 @@ void Frames::deleteFrame() {
     }
 
     updateView();
+    removeFromFrameList();
 }
 
 void Frames::updateFrame(QColor color, int row, int column) {
     frameList[currentFrame].setPixelColor(row, column, color);
     updateView();
+    updateViewFrameList();
 }
 
 void Frames::changeFrame(bool upOrDown) {
