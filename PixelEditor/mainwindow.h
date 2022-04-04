@@ -58,6 +58,8 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void addFrameToList(QPixmap *frame, int index);
+
    // void on_framesListWidget_itemActivated(QListWidgetItem *item);
 
     void on_btnTest_clicked();

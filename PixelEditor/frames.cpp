@@ -26,6 +26,8 @@ void Frames::setWidthAndHeight(int _width, int _height) {
 void Frames::updateView() {
     emit displayFrame(&(frameList[currentFrame]), width, height);
     emit displayPreview(&(frameList[currentFrame]));
+    QPixmap pxMap = QPixmap::fromImage(frameList[currentFrame]);
+    emit displayInList(&pxMap, currentFrame);
 }
 
 void Frames::clearFrame() {

@@ -52,6 +52,8 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
     connect(popUp, &AnimationPopUp::playAnim, &frames, &Frames::playAllFrames);
     connect(popUp, &AnimationPopUp::stopAnim, &frames, &Frames::stopPlayingFrames);
     connect(this, &MainWindow::newFps, popUp, &AnimationPopUp::changeFramesPerSecond);
+    connect(&frames, &Frames::displayInList, this, &MainWindow::displayInList);
+    //connect(this, &MainWindow::addNewFrame, &frames, &Frames::addNewFrame);
 
     // File-related Connects
     connect(this, &MainWindow::loadFile, &frames, &Frames::loadFile);
@@ -163,6 +165,7 @@ void MainWindow::on_playPreviewButton_clicked()
     popUp->show();
     emit popUp->playAnim(24);
 }
+
 /**
 void MainWindow::on_framesListWidget_itemActivated(QListWidgetItem *item)
 {
@@ -188,14 +191,18 @@ void MainWindow::on_deleteFrameButton_clicked()
 void MainWindow::on_addFrameButton_clicked()
 {
     emit addNewFrame();
-    QListWidgetItem item;
-    ui->framesListWidget->addItem(&item);
 
    // ui->framesListWidget->addItem(&item);
     //ui->framesListWidget->addItem()
     //get the current frame pixmap
     //make a QListWidgetItem
     //add item to QList
+}
+
+void MainWindow::addFrameToList(QPixmap *frame, int index){
+    QListWidgetItem item;
+    item.setIcon(QIcon(*frame));
+    ui->framesListWidget->insertItem(index, &item);
 }
 
 void MainWindow::displayInList(QPixmap *frame, int index){
