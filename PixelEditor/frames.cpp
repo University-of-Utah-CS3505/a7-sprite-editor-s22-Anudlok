@@ -41,17 +41,16 @@ void Frames::addToFrameList() {
     emit addFrameToList(&pxMap, currentFrame);
 }
 
-void Frames::removeFromFrameList() {
-    QPixmap pxMap = QPixmap::fromImage(frameList[currentFrame]);
-    emit removeFrameFromList(&pxMap, currentFrame);
+void Frames::removeFromFrameList(int deletedFrame) {
+    emit removeFrameFromList(deletedFrame);
 }
 
-void Frames::clearFrame() {
-    frameList[currentFrame].fill(QColor(0, 0, 0, 0));
+//void Frames::clearFrame() {
+//    frameList[currentFrame].fill(QColor(0, 0, 0, 0));
 
-    updateView();
-    updateViewFrameList();
-}
+//    updateView();
+//    updateViewFrameList();
+//}
 
 void Frames::addFrame(int _width, int _height){
     qDebug() << "Adding frame";
@@ -78,14 +77,15 @@ void Frames::deleteFrame() {
     }
 
     frameList.removeAt(deleteFrameIndex);
+    removeFromFrameList(deleteFrameIndex);
 
     // Frame list should never be empty
     if (frameList.empty()) {
         addNewFrame();
     }
-
-    updateView();
-    removeFromFrameList();
+    else {
+        updateView();
+    }
 }
 
 void Frames::updateFrame(QColor color, int row, int column) {
@@ -204,6 +204,9 @@ void Frames::loadFile(QString fileName) {
     }
     else {
         frameList.clear();
+        emit clearFrameList();
+
+        currentFrame = -1;
 
         // Make a new file
         QFile file(fileName);
@@ -243,17 +246,18 @@ void Frames::loadFile(QString fileName) {
                 }
 
             }
+
+            // Add frame to model
             frameList.push_back(image);
 
-            //put all the frames in the wiidgetList
-      //      QPixmap framePixMap = QPixmap::fromImage(image);
-      //      QIcon frameIcon(framePixMap);
-     //       QListWidgetItem item;
-     //       item.setIcon(frameIcon);
-    //        widgetList.push_back(item);
+            // Add current frame to frame list in view
+            currentFrame++;
+            addToFrameList();
         }
 
+        // Set current frame to first frame
         currentFrame = 0;
+
         updateView();
 
         file.close();
@@ -263,6 +267,7 @@ void Frames::loadFile(QString fileName) {
  void Frames::newFile(int width, int height) {
      currentFrame = -1;
      frameList.clear();
+     emit clearFrameList();
 
      //need pop up and then put the height and width inside addFrame
      addFrame(width, height);

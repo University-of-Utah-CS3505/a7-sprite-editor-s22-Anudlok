@@ -22,7 +22,7 @@ private:
     void updateView();
     void updateViewFrameList();
     void addToFrameList();
-    void removeFromFrameList();
+    void removeFromFrameList(int);
     void playNextFrame();
 
 signals:
@@ -32,7 +32,8 @@ signals:
     void displayAnimFrame(QImage* frame);//, int width, int height);
     void displayInList(QPixmap*, int);
     void addFrameToList(QPixmap *, int);
-    void removeFrameFromList(QPixmap *, int);
+    void removeFrameFromList(int);
+    void clearFrameList();
 
 public slots:
     void addFrame(int _width, int _height);
@@ -43,7 +44,7 @@ public slots:
     void playAllFrames(int framesPerSecond);
     void stopPlayingFrames();
     void setWidthAndHeight(int width, int height);
-    void clearFrame();
+    //void clearFrame();
     void saveFile(QString fileName);
     void loadFile(QString fileName);
     void newFile(int width, int height);

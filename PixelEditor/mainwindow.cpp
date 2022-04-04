@@ -39,25 +39,24 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
     connect(this, &MainWindow::colorPickerPicked, &dww, &drawingwindowwidget::colorPicked);
     connect(&dww, &drawingwindowwidget::colorChosen, this, &MainWindow::changePrimaryColor);
     connect(this, &MainWindow::startDrawing, &dww, &drawingwindowwidget::startDrawing);
-    connect(this, &MainWindow::clearScreen, &frames, &Frames::clearFrame);
+    //connect(this, &MainWindow::clearScreen, &frames, &Frames::clearFrame);
     connect(&frames, &Frames::displayPreview, &pw, &PreviewWindow::displayPreviewFrame);
     connect(this, &MainWindow::requestFrame, &pw, &PreviewWindow::requestForWindow);
     //connect(&pw, &PreviewWindow::sendWindow, this, &MainWindow::addToFrames);
     connect(this, &MainWindow::deleteFrame, &frames, &Frames::deleteFrame);
     connect(this, &MainWindow::moveCurrFrame, &frames, &Frames::changeFrame);
 
-    // Frame list-relatd Connects
+    // Frame list-related Connects
     connect(&frames, &Frames::displayInList, this, &MainWindow::displayInList);
     connect(&frames, &Frames::addFrameToList, this, &MainWindow::addFrameToList);
-    //connect(&frames, &Frames::removeFrameFromList, this, &MainWindow::removeFrameFromList);
+    connect(&frames, &Frames::removeFrameFromList, this, &MainWindow::removeFrameFromList);
+    connect(&frames, &Frames::clearFrameList, this, &MainWindow::clearFrameList);
 
     // Animation preview-related Connects
     connect(&frames, &Frames::displayAnimFrame, popUp, &AnimationPopUp::displayAnimFrame);
     connect(popUp, &AnimationPopUp::playAnim, &frames, &Frames::playAllFrames);
     connect(popUp, &AnimationPopUp::stopAnim, &frames, &Frames::stopPlayingFrames);
     connect(this, &MainWindow::newFps, popUp, &AnimationPopUp::changeFramesPerSecond);
-
-    //connect(this, &MainWindow::addNewFrame, &frames, &Frames::addNewFrame);
 
     // File-related Connects
     connect(this, &MainWindow::loadFile, &frames, &Frames::loadFile);
@@ -87,7 +86,6 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
     ui->editDrawingWindow->setVisible(false);
     ui->brushButton->setEnabled(true);
 }
-
 
 MainWindow::~MainWindow() {
     delete ui;
@@ -204,23 +202,27 @@ void MainWindow::on_addFrameButton_clicked()
 }
 
 void MainWindow::addFrameToList(QPixmap *frame, int index) {
-    qDebug() << "Adding frame to list";
     QListWidgetItem* item = new QListWidgetItem();
-    item->setIcon(QIcon(*frame));
+    QPixmap scaledFrame = frame->scaledToHeight(frameItemHeight);
+    item->setIcon(QIcon(scaledFrame));
     ui->framesListWidget->insertItem(index, item);
-    qDebug() << "Added, " << ui->framesListWidget->count();
+}
+
+void MainWindow::removeFrameFromList(int index) {
+    // Remove item from frame list widget
+    QListWidgetItem* item = ui->framesListWidget->takeItem(index);
+    // Clear up memory
+    delete item;
 }
 
 void MainWindow::displayInList(QPixmap *frame, int index) {
-    qDebug() << "Displaying frame in list";
     QListWidgetItem* currItem = ui->framesListWidget->item(index);
-    qDebug() << "Got item";
-    QPixmap newFrame = *frame;
-    qDebug() << "Created new frame";
-    QIcon icon(newFrame);
-    qDebug() << "Created icon";
-    currItem->setIcon(icon);
-    qDebug() << "Set icon";
+    QPixmap scaledFrame = frame->scaledToHeight(frameItemHeight);
+    currItem->setIcon(QIcon(scaledFrame));
+}
+
+void MainWindow::clearFrameList() {
+    ui->framesListWidget->clear();
 }
 
 void MainWindow::on_frameLeftButton_clicked()
@@ -254,7 +256,6 @@ void MainWindow::on_brushButton_clicked()
     emit currentColor(primaryColor);
     selectButton(Toolbar::Tools::brush);
 }
-
 
 void MainWindow::on_eraserButton_clicked()
 {
@@ -343,10 +344,10 @@ void MainWindow::changePrimaryColor(QColor color) {
 }
 
 // TODO I don't think this button exists anymore??? Is the signal/slot used???
-void MainWindow::on_btnClear_clicked()
-{
-    emit clearScreen();
-}
+//void MainWindow::on_btnClear_clicked()
+//{
+//    emit clearScreen();
+//}
 
 
 
