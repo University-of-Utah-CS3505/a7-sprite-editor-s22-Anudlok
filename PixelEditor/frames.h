@@ -27,7 +27,7 @@ signals:
     void displayPreview(QImage* frame);
     void sendFrame(QPixmap *frame, int index);
     void displayAnimFrame(QImage* frame);//, int width, int height);
-
+    void displayInList(QPixmap *, int);
 
 public slots:
     void addFrame(int _width, int _height);
