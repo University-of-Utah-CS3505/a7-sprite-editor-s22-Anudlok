@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Pixel Editor</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -299,7 +299,7 @@
      <rect>
       <x>530</x>
       <y>200</y>
-      <width>211</width>
+      <width>141</width>
       <height>321</height>
      </rect>
     </property>
@@ -310,10 +310,10 @@
      </sizepolicy>
     </property>
     <property name="toolTip">
-     <string>Select Tool</string>
+     <string/>
     </property>
     <property name="accessibleName">
-     <string>Select Tool</string>
+     <string>Frame List</string>
     </property>
    </widget>
    <widget class="QLabel" name="editDrawingWindow">
@@ -324,6 +324,12 @@
       <width>400</width>
       <height>400</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string/>
+    </property>
+    <property name="accessibleName">
+     <string>Drawing Window</string>
     </property>
     <property name="autoFillBackground">
      <bool>true</bool>
@@ -466,8 +472,11 @@
       <height>51</height>
      </rect>
     </property>
-    <property name="statusTip">
+    <property name="toolTip">
      <string>Move Down a Frame</string>
+    </property>
+    <property name="statusTip">
+     <string/>
     </property>
     <property name="accessibleName">
      <string>Move Down a Frame</string>
@@ -495,6 +504,18 @@
       <height>22</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>Frames Per Second</string>
+    </property>
+    <property name="accessibleName">
+     <string>Frames Per Second Spinbox</string>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>120</number>
+    </property>
    </widget>
    <widget class="QLabel" name="fpsLabel">
     <property name="geometry">
@@ -504,6 +525,9 @@
       <width>71</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="accessibleName">
+     <string>Frames Per Second Label</string>
     </property>
     <property name="text">
      <string>Frames 

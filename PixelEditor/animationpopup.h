@@ -15,12 +15,9 @@ class AnimationPopUp : public QWidget
 {
     Q_OBJECT
     int framesPerSecond;
-    int interval;
-    unsigned int currFrameIndex;
     QLabel* animationWindow;
-    std::vector<QListWidgetItem> frames;
-    int screenWidth = 300;
-    int screenHeight = 300;
+    int screenWidth = 200;
+    int screenHeight = 200;
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -28,8 +25,7 @@ protected:
 public:
     explicit AnimationPopUp(QWidget *parent = nullptr);
     ~AnimationPopUp();
-    //void playPreviewClick(std::vector<QListWidgetItem>);
-    //void animate();
+    int getFPS();
 
 signals:
     void playAnim(int framesPerSecond);
@@ -38,6 +34,7 @@ signals:
 public slots:
     void displayAnimFrame(QImage* frame);//, int width, int height);
     void changeFramesPerSecond(int);
+
 private:
     Ui::AnimationPopUp *ui;
 };

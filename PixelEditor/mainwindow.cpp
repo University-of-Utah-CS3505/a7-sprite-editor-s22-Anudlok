@@ -73,9 +73,9 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
     // This code block pops up a input dialog grabbing the width and height from the user
     bool ok;
     int width = QInputDialog::getInt(this, tr("Width of Sprite Project"),
-                                 tr("Width:"), 25, 1, 400, 1, &ok);
+                                 tr("Width:"), 25, 1, 128, 1, &ok);
     int height = QInputDialog::getInt(this, tr("Height of Sprite Project"),
-                                 tr("Height:"), 25, 1, 400, 1, &ok);
+                                 tr("Height:"), 25, 1, 128, 1, &ok);
     if (ok) {
         qDebug() << "Making new frame";
         emit makeNewFrame(width, height);
@@ -86,6 +86,8 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
 
     ui->editDrawingWindow->setVisible(false);
     ui->brushButton->setEnabled(true);
+    ui->framesListWidget->setIconSize(QSize(frameItemHeight, frameItemHeight));
+    ui->fpsSpinBox->setValue(popUp->getFPS());
 }
 
 MainWindow::~MainWindow() {
@@ -108,9 +110,9 @@ void MainWindow::on_actionNew_triggered()
     // This code block pops up a input dialog grabbing the width and height from the user
     bool ok;
     int width = QInputDialog::getInt(this, tr("Width of Sprite Project"),
-                                 tr("Width:"), 25, 1, 400, 1, &ok);
+                                 tr("Width:"), 25, 1, 128, 1, &ok);
     int height = QInputDialog::getInt(this, tr("Height of Sprite Project"),
-                                 tr("Height:"), 25, 1, 400, 1, &ok);
+                                 tr("Height:"), 25, 1, 128, 1, &ok);
 
     switch (ret) {
       case QMessageBox::Save: {
@@ -166,7 +168,7 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_playPreviewButton_clicked()
 {
     popUp->show();
-    emit popUp->playAnim(24);
+    emit popUp->playAnim(popUp->getFPS());
 }
 
 /**
@@ -228,13 +230,11 @@ void MainWindow::clearFrameList() {
 
 void MainWindow::on_frameLeftButton_clicked()
 {
-   // currFrame = (currFrame-1) % widgetList.size();
     emit moveCurrFrame(false);
 }
 
 void MainWindow::on_frameRightButton_clicked()
 {
-  //  currFrame = (currFrame + 1) % widgetList.size();
     emit moveCurrFrame(true);
 }
 

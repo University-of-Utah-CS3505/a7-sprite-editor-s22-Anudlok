@@ -34,14 +34,11 @@ void Frames::updateView() {
 }
 
 void Frames::updateViewFrameList() {
-    qDebug() << "Updating the frame list";
     QPixmap pxMap = QPixmap::fromImage(frameList[currentFrame]);
     emit displayInList(&pxMap, currentFrame);
-    qDebug() << "Updated";
 }
 
 void Frames::addToFrameList() {
-    qDebug() << "Emitting addFrameToList";
     QPixmap pxMap = QPixmap::fromImage(frameList[currentFrame]);
     emit addFrameToList(&pxMap, currentFrame);
 }
@@ -58,7 +55,6 @@ void Frames::removeFromFrameList(int deletedFrame) {
 //}
 
 void Frames::addFrame(int _width, int _height){
-    qDebug() << "Adding frame";
     setWidthAndHeight(_width, _height);
     addNewFrame();
 }
@@ -149,18 +145,10 @@ void Frames::playAllFrames(int framesPerSecond) {
    interval = 1000 / framesPerSecond;
    animPlaying = true;
    playNextFrame();
-
-   // timer.setInterval(interval);
-
-   //connect(&timer, SIGNAL(QTimer::timeout()), this, SLOT(AnimationPopUp::animate()));
-
-//    void AnimationPopUp::animate();
-//    QIcon icon = frames[currFrameIndex].icon();
-//    animationWindow->setWindowIcon(icon);
 }
 
 void Frames::playNextFrame() {
-    emit displayAnimFrame(&(frameList[animFrame]));//, width, height);
+    emit displayAnimFrame(&(frameList[animFrame]));
     animFrame = (animFrame + 1) % frameList.size();
     if (animPlaying)
         QTimer::singleShot(interval, this, &Frames::playNextFrame);
