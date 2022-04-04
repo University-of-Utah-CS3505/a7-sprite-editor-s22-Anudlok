@@ -20,7 +20,7 @@
       <x>20</x>
       <y>20</y>
       <width>106</width>
-      <height>512</height>
+      <height>441</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -155,38 +155,6 @@
        <property name="icon">
         <iconset resource="Resources.qrc">
          <normaloff>:/Icons/icons8-color-dropper-96.png</normaloff>:/Icons/icons8-color-dropper-96.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>70</width>
-         <height>70</height>
-        </size>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="selectButton">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="toolTip">
-        <string>Select Tool</string>
-       </property>
-       <property name="accessibleName">
-        <string>Select Tool</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>:/Icons/icons8-select-all-3-96.png</normaloff>:/Icons/icons8-select-all-3-96.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -370,91 +338,159 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnTest">
-    <property name="geometry">
-     <rect>
-      <x>560</x>
-      <y>160</y>
-      <width>80</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>New</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="playPreviewButton">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>500</y>
-      <width>91</width>
-      <height>31</height>
+      <x>110</x>
+      <y>440</y>
+      <width>81</width>
+      <height>81</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>Play Preview</string>
+    </property>
+    <property name="accessibleName">
+     <string>Play Preview</string>
+    </property>
     <property name="text">
-     <string>Play</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Resources.qrc">
+      <normaloff>:/Icons/icons8-circled-play-96.png</normaloff>:/Icons/icons8-circled-play-96.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>60</width>
+      <height>60</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="deleteFrameButton">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>470</y>
-      <width>91</width>
-      <height>31</height>
+      <x>380</x>
+      <y>440</y>
+      <width>81</width>
+      <height>81</height>
      </rect>
     </property>
-    <property name="text">
+    <property name="toolTip">
      <string>Delete Frame</string>
+    </property>
+    <property name="accessibleName">
+     <string>Delete Frame</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Resources.qrc">
+      <normaloff>:/Icons/icons8-remove-image-96.png</normaloff>:/Icons/icons8-remove-image-96.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>60</width>
+      <height>60</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="addFrameButton">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>300</x>
       <y>440</y>
-      <width>91</width>
-      <height>31</height>
+      <width>81</width>
+      <height>81</height>
      </rect>
     </property>
-    <property name="text">
+    <property name="toolTip">
      <string>Add Frame</string>
+    </property>
+    <property name="statusTip">
+     <string/>
+    </property>
+    <property name="accessibleName">
+     <string>Add Frame</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Resources.qrc">
+      <normaloff>:/Icons/icons8-add-image-96.png</normaloff>:/Icons/icons8-add-image-96.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>60</width>
+      <height>60</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="frameLeftButton">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>440</y>
-      <width>91</width>
-      <height>91</height>
+      <x>470</x>
+      <y>430</y>
+      <width>51</width>
+      <height>51</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>Move Up a Frame</string>
+    </property>
+    <property name="accessibleName">
+     <string>Move Up a Frame</string>
+    </property>
     <property name="text">
-     <string>Move Up 
-A Frame</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Resources.qrc">
+      <normaloff>:/Icons/icons8-sort-up-96.png</normaloff>:/Icons/icons8-sort-up-96.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="frameRightButton">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>440</y>
-      <width>91</width>
-      <height>91</height>
+      <x>470</x>
+      <y>480</y>
+      <width>51</width>
+      <height>51</height>
      </rect>
     </property>
+    <property name="statusTip">
+     <string>Move Down a Frame</string>
+    </property>
+    <property name="accessibleName">
+     <string>Move Down a Frame</string>
+    </property>
     <property name="text">
-     <string>Move Down 
-A Frame</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Resources.qrc">
+      <normaloff>:/Icons/icons8-sort-down-96.png</normaloff>:/Icons/icons8-sort-down-96.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
     </property>
    </widget>
    <widget class="QSpinBox" name="fpsSpinBox">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>500</y>
+      <x>200</x>
+      <y>490</y>
       <width>71</width>
       <height>22</height>
      </rect>
@@ -463,8 +499,8 @@ A Frame</string>
    <widget class="QLabel" name="fpsLabel">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>460</y>
+      <x>200</x>
+      <y>450</y>
       <width>71</width>
       <height>31</height>
      </rect>

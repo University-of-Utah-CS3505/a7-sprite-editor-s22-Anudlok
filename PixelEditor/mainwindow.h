@@ -24,7 +24,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw, drawingwindowwidget& dww,
+    MainWindow(PreviewWindow& pw, Frames& frames, drawingwindowwidget& dww,
                QWidget *parent = nullptr);
     ~MainWindow();
     std::vector<QListWidgetItem> widgetList;
@@ -58,22 +58,21 @@ private slots:
     void on_actionExit_triggered();
 
     // Button and spinbox slots
-    void on_btnTest_clicked(); // TODO remove
     void on_brushButton_clicked();
     void on_eraserButton_clicked();
     void on_bucketButton_clicked();
     void on_colorPickerButton_clicked();
-    void on_selectButton_clicked();
     void on_primaryColorButton_clicked();
     void on_secondaryColorButton_clicked();
     void on_swapColorButton_clicked();
+
     void on_playPreviewButton_clicked();
-//    void on_btnClear_clicked(); // TODO remove
+    void on_fpsSpinBox_valueChanged(int arg1);
     void on_deleteFrameButton_clicked();
     void on_addFrameButton_clicked();
     void on_frameLeftButton_clicked();
     void on_frameRightButton_clicked();
-    void on_fpsSpinBox_valueChanged(int arg1);
+
 
     // Drawing window slots
     void displayFrame(QImage* frame);
@@ -90,10 +89,16 @@ private slots:
 private:
     Ui::MainWindow *ui;
     AnimationPopUp *popUp;
-    Toolbar toolbar;
+    //Toolbar toolbar;
+    enum Tools {
+        brush,
+        eraser,
+        bucket,
+        colorPicker
+    };
     QColor primaryColor, secondaryColor;
-    QColor eraser;
-    const int frameItemHeight = 300;
-    void selectButton(Toolbar::Tools tool);
+    QColor eraserColor;
+    const int frameItemHeight = 100;
+    void selectButton(Tools tool);
 };
 #endif // MAINWINDOW_H

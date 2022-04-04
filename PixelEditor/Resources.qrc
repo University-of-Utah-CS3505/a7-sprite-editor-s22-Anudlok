@@ -8,7 +8,11 @@
         <file>icons8-erase-96.png</file>
         <file>icons8-paint-96.png</file>
         <file>icons8-color-dropper-96.png</file>
-        <file>icons8-select-all-96.png</file>
         <file>icons8-curved-arrows-48.png</file>
+        <file>icons8-add-image-96.png</file>
+        <file>icons8-circled-play-96.png</file>
+        <file>icons8-remove-image-96.png</file>
+        <file>icons8-sort-down-96.png</file>
+        <file>icons8-sort-up-96.png</file>
     </qresource>
 </RCC>

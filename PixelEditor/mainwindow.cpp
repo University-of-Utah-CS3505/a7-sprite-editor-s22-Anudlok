@@ -18,7 +18,7 @@
  * @brief MainWindow::MainWindow The View Class
  * @param parent
  */
-MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
+MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
                        drawingwindowwidget& dww, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -28,8 +28,7 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
 
     primaryColor = Qt::black;
     secondaryColor = Qt::white;
-    eraser = QColor(0, 0, 0, 0);
-
+    eraserColor = QColor(0, 0, 0, 0);
 
     connect(&frames, &Frames::displayFrame, &dww, &drawingwindowwidget::displayCurrentFrame);
     connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrame);
@@ -233,18 +232,10 @@ void MainWindow::on_frameLeftButton_clicked()
     emit moveCurrFrame(false);
 }
 
-
 void MainWindow::on_frameRightButton_clicked()
 {
   //  currFrame = (currFrame + 1) % widgetList.size();
     emit moveCurrFrame(true);
-}
-
-
-void MainWindow::on_btnTest_clicked()
-{
-    emit resetWindow();
-    emit startDrawing();
 }
 
 void MainWindow::displayFrame(QImage* frame) {
@@ -257,15 +248,15 @@ void MainWindow::on_brushButton_clicked()
     emit colorPickerPicked(false);
     emit bucketPicked(false);
     emit currentColor(primaryColor);
-    selectButton(Toolbar::Tools::brush);
+    selectButton(Tools::brush);
 }
 
 void MainWindow::on_eraserButton_clicked()
 {
     emit colorPickerPicked(false);
     emit bucketPicked(false);
-    emit currentColor(eraser);
-    selectButton(Toolbar::Tools::eraser);
+    emit currentColor(eraserColor);
+    selectButton(Tools::eraser);
 }
 
 
@@ -273,7 +264,7 @@ void MainWindow::on_bucketButton_clicked()
 {
     emit colorPickerPicked(false);
     emit bucketPicked(true);
-    selectButton(Toolbar::Tools::bucket);
+    selectButton(Tools::bucket);
 }
 
 
@@ -281,37 +272,26 @@ void MainWindow::on_colorPickerButton_clicked()
 {
     emit colorPickerPicked(true);
     emit bucketPicked(false);
-    selectButton(Toolbar::Tools::colorPicker);
+    selectButton(Tools::colorPicker);
 }
 
+void MainWindow::selectButton(Tools tool) {
+    //toolbar.switchTool(tool);
 
-void MainWindow::on_selectButton_clicked()
-{
-    emit colorPickerPicked(false);
-    emit bucketPicked(false);
-    selectButton(Toolbar::Tools::select);
-}
-
-void MainWindow::selectButton(Toolbar::Tools tool) {
-    toolbar.switchTool(tool);
-
-    bool brushChecked = false, eraserChecked = false, pickerChecked = false, bucketChecked = false, selectChecked = false;
+    bool brushChecked = false, eraserChecked = false, pickerChecked = false, bucketChecked = false;
 
     switch (tool) {
-        case Toolbar::Tools::brush:
+        case Tools::brush:
             brushChecked = true;
             break;
-        case Toolbar::Tools::eraser:
+        case Tools::eraser:
             eraserChecked = true;
             break;
-        case Toolbar::Tools::colorPicker:
+        case Tools::colorPicker:
             pickerChecked = true;
             break;
-        case Toolbar::Tools::bucket:
+        case Tools::bucket:
             bucketChecked = true;
-            break;
-        case Toolbar::Tools::select:
-            selectChecked = true;
             break;
     }
 
@@ -319,7 +299,6 @@ void MainWindow::selectButton(Toolbar::Tools tool) {
     ui->eraserButton->setChecked(eraserChecked);
     ui->colorPickerButton->setChecked(pickerChecked);
     ui->bucketButton->setChecked(bucketChecked);
-    ui->selectButton->setChecked(selectChecked);
 }
 
 void MainWindow::on_primaryColorButton_clicked()
@@ -347,16 +326,8 @@ void MainWindow::changePrimaryColor(QColor color) {
     primaryColor = color;
     ui->primaryColorButton->setStyleSheet("background-color: " + primaryColor.name() + ";border-style: none;");
     emit currentColor(primaryColor);
-    selectButton(Toolbar::Tools::brush);
+    selectButton(Tools::brush);
 }
-
-// TODO I don't think this button exists anymore??? Is the signal/slot used???
-//void MainWindow::on_btnClear_clicked()
-//{
-//    emit clearScreen();
-//}
-
-
 
 void MainWindow::on_fpsSpinBox_valueChanged(int fps)
 {

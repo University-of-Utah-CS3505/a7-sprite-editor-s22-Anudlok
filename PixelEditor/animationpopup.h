@@ -19,8 +19,8 @@ class AnimationPopUp : public QWidget
     unsigned int currFrameIndex;
     QLabel* animationWindow;
     std::vector<QListWidgetItem> frames;
-    int screenWidth = 141;
-    int screenHeight = 141;
+    int screenWidth = 300;
+    int screenHeight = 300;
 
 protected:
     void closeEvent(QCloseEvent *event) override;
