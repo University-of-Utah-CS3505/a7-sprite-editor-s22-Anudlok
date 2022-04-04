@@ -101,33 +101,30 @@ void Frames::updateFrame(QColor color, int row, int column) {
 
 void Frames::bucketToolFrame(QColor color, int row, int column) {
     QColor colorToChange = frameList[currentFrame].pixelColor(row, column);
-    QVector<int> rows;
-    QVector<int> columns;
-    rows.append(row);
-    columns.append(column);
-    int currentRow = 0;
-    int currentColumn = 0;
-    while (rows.length() > 0 && columns.length() > 0) {
-        currentRow = rows.at(0);
-        currentColumn = columns.at(0);
-        rows.pop_front();
-        columns.pop_front();
-        frameList[currentFrame].setPixelColor(currentRow, currentColumn, color);
+    QVector<QPair<int, int>> list;
+    list.append({row, column});
+    frameList[currentFrame].setPixelColor(row, column, color);
+
+    QPair<int, int> currentPair;
+    while (list.length() > 0) {
+        currentPair = list.takeFirst();
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
-                if (i != 0 && j != 0) {
-                    int rowToAdd = currentRow + i;
-                    int columnToAdd = currentColumn + j;
+                if ((i != j) && (j == 0 || i == 0)) {
+                    int rowToAdd = currentPair.first + i;
+                    int columnToAdd = currentPair.second + j;
                     if ((rowToAdd >= 0 && rowToAdd < width) && (columnToAdd >= 0 && columnToAdd < height)) {
-                        qDebug() << "Hello";
-                        if (frameList[currentFrame].pixelColor(rowToAdd, columnToAdd) == colorToChange) {
-                            rows.push_back(rowToAdd);
-                            columns.push_back(columnToAdd);
+                        if (frameList[currentFrame].pixelColor(rowToAdd, columnToAdd) == colorToChange
+                            && frameList[currentFrame].pixelColor(rowToAdd, columnToAdd) != color) {
+                            frameList[currentFrame].setPixelColor(rowToAdd, columnToAdd, color);
+                            QPair<int, int> newPair(rowToAdd, columnToAdd);
+                            list.push_front(newPair);
                         }
                     }
                 }
             }
         }
+
     }
     updateView();
     updateViewFrameList();
