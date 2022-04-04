@@ -24,7 +24,12 @@ void Frames::setWidthAndHeight(int _width, int _height) {
 }
 
 void Frames::updateView() {
-    emit displayFrame(&(frameList[currentFrame]), width, height);
+    if (currentFrame > 0) {
+        emit displayFrame(&(frameList[currentFrame]), &(frameList[currentFrame - 1]), width, height);
+    }
+    else {
+        emit displayFrame(&(frameList[currentFrame]), &(frameList[currentFrame]), width, height);
+    }
     emit displayPreview(&(frameList[currentFrame]));
 }
 
@@ -94,6 +99,40 @@ void Frames::updateFrame(QColor color, int row, int column) {
     updateViewFrameList();
 }
 
+void Frames::bucketToolFrame(QColor color, int row, int column) {
+    QColor colorToChange = frameList[currentFrame].pixelColor(row, column);
+    QVector<int> rows;
+    QVector<int> columns;
+    rows.append(row);
+    columns.append(column);
+    int currentRow = 0;
+    int currentColumn = 0;
+    while (rows.length() > 0 && columns.length() > 0) {
+        currentRow = rows.at(0);
+        currentColumn = columns.at(0);
+        rows.pop_front();
+        columns.pop_front();
+        frameList[currentFrame].setPixelColor(currentRow, currentColumn, color);
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                if (i != 0 && j != 0) {
+                    int rowToAdd = currentRow + i;
+                    int columnToAdd = currentColumn + j;
+                    if ((rowToAdd >= 0 && rowToAdd < width) && (columnToAdd >= 0 && columnToAdd < height)) {
+                        qDebug() << "Hello";
+                        if (frameList[currentFrame].pixelColor(rowToAdd, columnToAdd) == colorToChange) {
+                            rows.push_back(rowToAdd);
+                            columns.push_back(columnToAdd);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    updateView();
+    updateViewFrameList();
+}
+
 void Frames::changeFrame(bool upOrDown) {
     if (upOrDown) {
        if(currentFrame < frameList.size()-1){
@@ -139,8 +178,6 @@ void Frames::saveFile(QString fileName) {
     // Make a QFile with that
     QFile file(fileName);
                 QJsonArray rows;
-
-
 
     // Create the JSON objects
      QJsonObject projectObj;

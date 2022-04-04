@@ -48,11 +48,13 @@ public:
     QListWidget *framesListWidget;
     QLabel *editDrawingWindow;
     QPushButton *btnTest;
-    QSpinBox *sbHeight;
-    QSpinBox *sbWidth;
     QPushButton *playPreviewButton;
-    QPushButton *btnClear;
-    QLabel *label;
+    QPushButton *deleteFrameButton;
+    QPushButton *addFrameButton;
+    QPushButton *frameLeftButton;
+    QPushButton *frameRightButton;
+    QSpinBox *fpsSpinBox;
+    QLabel *fpsLabel;
     QMenuBar *menubar;
     QMenu *menuFile;
     QStatusBar *statusbar;
@@ -61,7 +63,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(683, 571);
+        MainWindow->resize(751, 593);
         actionNew = new QAction(MainWindow);
         actionNew->setObjectName(QString::fromUtf8("actionNew"));
         QIcon icon;
@@ -149,7 +151,7 @@ public:
         sizePolicy.setHeightForWidth(selectButton->sizePolicy().hasHeightForWidth());
         selectButton->setSizePolicy(sizePolicy);
         QIcon icon8;
-        icon8.addFile(QString::fromUtf8(":/Icons/icons8-select-all-96.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon8.addFile(QString::fromUtf8(":/Icons/icons8-select-all-3-96.png"), QSize(), QIcon::Normal, QIcon::Off);
         selectButton->setIcon(icon8);
         selectButton->setIconSize(QSize(70, 70));
         selectButton->setCheckable(true);
@@ -168,7 +170,7 @@ public:
         swapColorButton->setObjectName(QString::fromUtf8("swapColorButton"));
         swapColorButton->setGeometry(QRect(0, 50, 31, 31));
         QIcon icon9;
-        icon9.addFile(QString::fromUtf8(":/Icons/icons8-curved-arrow-48.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon9.addFile(QString::fromUtf8(":/Icons/icons8-curved-arrows-48.png"), QSize(), QIcon::Normal, QIcon::Off);
         swapColorButton->setIcon(icon9);
         swapColorButton->setFlat(true);
         primaryColorButton = new QPushButton(widget);
@@ -202,42 +204,44 @@ public:
 
         framesListWidget = new QListWidget(centralwidget);
         framesListWidget->setObjectName(QString::fromUtf8("framesListWidget"));
-        framesListWidget->setGeometry(QRect(120, 421, 401, 101));
+        framesListWidget->setEnabled(true);
+        framesListWidget->setGeometry(QRect(530, 200, 211, 321));
         sizePolicy.setHeightForWidth(framesListWidget->sizePolicy().hasHeightForWidth());
         framesListWidget->setSizePolicy(sizePolicy);
         editDrawingWindow = new QLabel(centralwidget);
         editDrawingWindow->setObjectName(QString::fromUtf8("editDrawingWindow"));
-        editDrawingWindow->setGeometry(QRect(120, 20, 400, 400));
+        editDrawingWindow->setGeometry(QRect(140, 20, 400, 400));
         editDrawingWindow->setAutoFillBackground(true);
         editDrawingWindow->setFrameShape(QFrame::Box);
         editDrawingWindow->setAlignment(Qt::AlignCenter);
         btnTest = new QPushButton(centralwidget);
         btnTest->setObjectName(QString::fromUtf8("btnTest"));
-        btnTest->setGeometry(QRect(530, 170, 80, 18));
-        sbHeight = new QSpinBox(centralwidget);
-        sbHeight->setObjectName(QString::fromUtf8("sbHeight"));
-        sbHeight->setGeometry(QRect(530, 200, 81, 22));
-        sbHeight->setMinimum(1);
-        sbHeight->setMaximum(100000);
-        sbWidth = new QSpinBox(centralwidget);
-        sbWidth->setObjectName(QString::fromUtf8("sbWidth"));
-        sbWidth->setGeometry(QRect(530, 230, 81, 22));
-        sbWidth->setMinimum(1);
-        sbWidth->setMaximum(100000);
+        btnTest->setGeometry(QRect(560, 160, 80, 18));
         playPreviewButton = new QPushButton(centralwidget);
         playPreviewButton->setObjectName(QString::fromUtf8("playPreviewButton"));
-        playPreviewButton->setGeometry(QRect(530, 421, 91, 101));
-        btnClear = new QPushButton(centralwidget);
-        btnClear->setObjectName(QString::fromUtf8("btnClear"));
-        btnClear->setGeometry(QRect(530, 260, 80, 18));
-        label = new QLabel(centralwidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(530, 20, 141, 141));
-        label->setFrameShape(QFrame::Box);
+        playPreviewButton->setGeometry(QRect(140, 500, 91, 31));
+        deleteFrameButton = new QPushButton(centralwidget);
+        deleteFrameButton->setObjectName(QString::fromUtf8("deleteFrameButton"));
+        deleteFrameButton->setGeometry(QRect(140, 470, 91, 31));
+        addFrameButton = new QPushButton(centralwidget);
+        addFrameButton->setObjectName(QString::fromUtf8("addFrameButton"));
+        addFrameButton->setGeometry(QRect(140, 440, 91, 31));
+        frameLeftButton = new QPushButton(centralwidget);
+        frameLeftButton->setObjectName(QString::fromUtf8("frameLeftButton"));
+        frameLeftButton->setGeometry(QRect(330, 440, 91, 91));
+        frameRightButton = new QPushButton(centralwidget);
+        frameRightButton->setObjectName(QString::fromUtf8("frameRightButton"));
+        frameRightButton->setGeometry(QRect(430, 440, 91, 91));
+        fpsSpinBox = new QSpinBox(centralwidget);
+        fpsSpinBox->setObjectName(QString::fromUtf8("fpsSpinBox"));
+        fpsSpinBox->setGeometry(QRect(240, 500, 71, 22));
+        fpsLabel = new QLabel(centralwidget);
+        fpsLabel->setObjectName(QString::fromUtf8("fpsLabel"));
+        fpsLabel->setGeometry(QRect(240, 460, 71, 31));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 683, 17));
+        menubar->setGeometry(QRect(0, 0, 751, 26));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menubar);
@@ -341,8 +345,14 @@ public:
         editDrawingWindow->setText(QString());
         btnTest->setText(QCoreApplication::translate("MainWindow", "New", nullptr));
         playPreviewButton->setText(QCoreApplication::translate("MainWindow", "Play", nullptr));
-        btnClear->setText(QCoreApplication::translate("MainWindow", "Clear", nullptr));
-        label->setText(QString());
+        deleteFrameButton->setText(QCoreApplication::translate("MainWindow", "Delete Frame", nullptr));
+        addFrameButton->setText(QCoreApplication::translate("MainWindow", "Add Frame", nullptr));
+        frameLeftButton->setText(QCoreApplication::translate("MainWindow", "Move Up \n"
+"A Frame", nullptr));
+        frameRightButton->setText(QCoreApplication::translate("MainWindow", "Move Down \n"
+"A Frame", nullptr));
+        fpsLabel->setText(QCoreApplication::translate("MainWindow", "Frames \n"
+"Per Second", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
     } // retranslateUi
 

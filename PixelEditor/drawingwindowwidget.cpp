@@ -16,9 +16,14 @@ drawingwindowwidget::drawingwindowwidget(QWidget *parent)
     gridWindow->setGeometry(0, 0, screenWidth, screenHeight);
     gridWindow->setAlignment(Qt::AlignCenter);
     gridWindow->setFrameShape(QFrame::Box);
+
+    shadowWindow = new QLabel(this);
+    shadowWindow->setGeometry(0, 0, screenWidth, screenHeight);
+    shadowWindow->setAlignment(Qt::AlignCenter);
+    shadowWindow->setFrameShape(QFrame::Box);
 }
 
-void drawingwindowwidget::displayCurrentFrame(QImage* frame, int width, int height)
+void drawingwindowwidget::displayCurrentFrame(QImage* frame, QImage* prevFrame, int width, int height)
 {
     setWidthAndHeight(width, height);
     QImage bars(gridWindow->width(), gridWindow->height(), QImage::Format_ARGB32);
@@ -26,25 +31,8 @@ void drawingwindowwidget::displayCurrentFrame(QImage* frame, int width, int heig
     int vLines = screenWidth / width;
     int hLines = screenHeight / height;
 
-//    QVector<QColor> color;
-//    for (int i = 0; i < width; i++) {
-//        for (int j = 0; j < height; j++) {
-//            color.append(frame->pixelColor(i,j));
-//        }
-//    }
-//    int count = 0;
-//    for (int i = 1; i <= width; i++) {
-//        for (int j = 1; j <= height; j++) {
-//            for (int k = vLines * (i - 1); k < vLines * i; k++) {
-//                for (int l = hLines * (j - 1); l < hLines * j; l++) {
-//                    pixels.setPixelColor(k, l, color.at(count));
-//                }
-//            }
-//            count++;
-//        }
-//    }
-
-    QImage scaledFrame = frame->scaled(screenWidth, screenHeight);
+    QImage scaledFrame = frame->scaled(screenWidth, screenHeight); 
+    QImage scaledPrevFrame = prevFrame->scaled(screenWidth, screenHeight);
 
     bars.fill(QColor(0, 0, 0, 0));
     for (int i = 0; i < gridWindow->width(); i += vLines) {
@@ -61,6 +49,17 @@ void drawingwindowwidget::displayCurrentFrame(QImage* frame, int width, int heig
     gridWindow->setPixmap(QPixmap::fromImage(bars));
     gridWindow->setEnabled(false);
     gridWindow->show();
+
+    QPixmap pixmap = QPixmap::fromImage(scaledPrevFrame);
+    scaledPrevFrame.fill(Qt::transparent);
+    QPainter p(&scaledPrevFrame);
+    p.setOpacity(0.2);
+    p.drawPixmap(0, 0, pixmap);
+    p.end();
+    pixmap = QPixmap::fromImage(scaledPrevFrame);
+    shadowWindow->setPixmap(pixmap);
+    shadowWindow->show();
+
     drawingWindow->setPixmap(QPixmap::fromImage(scaledFrame));
     drawingWindow->show();
 }
@@ -79,11 +78,20 @@ void drawingwindowwidget::mouseColor(int x, int y) {
     emit colorPixel(color, row, column);
 }
 
+void drawingwindowwidget::mouseFillColor(int x, int y) {
+    int row = x / (screenWidth / width);
+    int column = y / (screenHeight / height);
+    emit fillPixel(color, row, column);
+}
+
 void drawingwindowwidget::mousePressEvent(QMouseEvent *event)
 {
         int x = drawingWindow->mapFromGlobal(QCursor::pos()).x();
         int y = drawingWindow->mapFromGlobal(QCursor::pos()).y();
-        if (colorPicker) {
+        if (bucket) {
+            mouseFillColor(x, y);
+        }
+        else if (colorPicker) {
             QImage pixmap = drawingWindow->pixmap().toImage();
             QColor colorOfPixel = pixmap.pixelColor(x, y);
             if (colorOfPixel.alpha() > 0)
@@ -107,6 +115,10 @@ void drawingwindowwidget::setWidthAndHeight(int _width, int _height) {
 
 void drawingwindowwidget::setCurrentColor(QColor _color) {
     color = _color;
+}
+
+void drawingwindowwidget::bucketPicked(bool state) {
+    bucket = state;
 }
 
 void drawingwindowwidget::colorPicked(bool state) {

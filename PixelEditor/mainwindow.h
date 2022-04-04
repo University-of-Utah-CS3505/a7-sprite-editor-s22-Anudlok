@@ -47,6 +47,7 @@ signals:
     void saveAndNewFile(QString filename, int width, int height);
     void resetWindow();
     void newFps(int);
+    void bucketPicked(bool);
 
 private slots:
 

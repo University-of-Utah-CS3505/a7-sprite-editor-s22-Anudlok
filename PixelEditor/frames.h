@@ -26,7 +26,7 @@ private:
     void playNextFrame();
 
 signals:
-    void displayFrame(QImage* frame, int width, int height);
+    void displayFrame(QImage* frame, QImage* prevFrame, int width, int height);
     void displayPreview(QImage* frame);
     void sendFrame(QPixmap *frame, int index);
     void displayAnimFrame(QImage* frame);//, int width, int height);
@@ -50,7 +50,7 @@ public slots:
     void newFile(int width, int height);
     void saveAndNewFile(QString filename, int width, int height);
     void resetWindow();
-
+    void bucketToolFrame(QColor color, int row, int column);
 };
 
 

@@ -37,7 +37,9 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
     connect(&dww, &drawingwindowwidget::colorPixel, &frames, &Frames::updateFrame);
     connect(this, &MainWindow::currentColor, &dww, &drawingwindowwidget::setCurrentColor);
     connect(this, &MainWindow::colorPickerPicked, &dww, &drawingwindowwidget::colorPicked);
+    connect(this, &MainWindow::bucketPicked, &dww, &drawingwindowwidget::bucketPicked);
     connect(&dww, &drawingwindowwidget::colorChosen, this, &MainWindow::changePrimaryColor);
+    connect(&dww, &drawingwindowwidget::fillPixel, &frames, &Frames::bucketToolFrame);
     connect(this, &MainWindow::startDrawing, &dww, &drawingwindowwidget::startDrawing);
     //connect(this, &MainWindow::clearScreen, &frames, &Frames::clearFrame);
     connect(&frames, &Frames::displayPreview, &pw, &PreviewWindow::displayPreviewFrame);
@@ -253,6 +255,7 @@ void MainWindow::displayFrame(QImage* frame) {
 void MainWindow::on_brushButton_clicked()
 {
     emit colorPickerPicked(false);
+    emit bucketPicked(false);
     emit currentColor(primaryColor);
     selectButton(Toolbar::Tools::brush);
 }
@@ -260,6 +263,7 @@ void MainWindow::on_brushButton_clicked()
 void MainWindow::on_eraserButton_clicked()
 {
     emit colorPickerPicked(false);
+    emit bucketPicked(false);
     emit currentColor(eraser);
     selectButton(Toolbar::Tools::eraser);
 }
@@ -268,6 +272,7 @@ void MainWindow::on_eraserButton_clicked()
 void MainWindow::on_bucketButton_clicked()
 {
     emit colorPickerPicked(false);
+    emit bucketPicked(true);
     selectButton(Toolbar::Tools::bucket);
 }
 
@@ -275,6 +280,7 @@ void MainWindow::on_bucketButton_clicked()
 void MainWindow::on_colorPickerButton_clicked()
 {
     emit colorPickerPicked(true);
+    emit bucketPicked(false);
     selectButton(Toolbar::Tools::colorPicker);
 }
 
@@ -282,6 +288,7 @@ void MainWindow::on_colorPickerButton_clicked()
 void MainWindow::on_selectButton_clicked()
 {
     emit colorPickerPicked(false);
+    emit bucketPicked(false);
     selectButton(Toolbar::Tools::select);
 }
 
