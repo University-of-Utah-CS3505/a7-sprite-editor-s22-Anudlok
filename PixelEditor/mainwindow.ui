@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>751</width>
-    <height>571</height>
+    <height>593</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -326,10 +326,10 @@
    <widget class="QListWidget" name="framesListWidget">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>430</y>
-      <width>401</width>
-      <height>81</height>
+      <x>530</x>
+      <y>200</y>
+      <width>211</width>
+      <height>321</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -383,8 +383,8 @@
    <widget class="QPushButton" name="playPreviewButton">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>480</y>
+      <x>140</x>
+      <y>500</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -396,8 +396,8 @@
    <widget class="QPushButton" name="deleteFrameButton">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>450</y>
+      <x>140</x>
+      <y>470</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -409,8 +409,8 @@
    <widget class="QPushButton" name="addFrameButton">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>420</y>
+      <x>140</x>
+      <y>440</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -422,27 +422,53 @@
    <widget class="QPushButton" name="frameLeftButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>420</y>
-      <width>31</width>
-      <height>41</height>
+      <x>330</x>
+      <y>440</y>
+      <width>91</width>
+      <height>91</height>
      </rect>
     </property>
     <property name="text">
-     <string>&lt;&lt;</string>
+     <string>Move Up 
+A Frame</string>
     </property>
    </widget>
    <widget class="QPushButton" name="frameRightButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>470</y>
-      <width>31</width>
-      <height>41</height>
+      <x>430</x>
+      <y>440</y>
+      <width>91</width>
+      <height>91</height>
      </rect>
     </property>
     <property name="text">
-     <string>&gt;&gt;</string>
+     <string>Move Down 
+A Frame</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="fpsSpinBox">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>500</y>
+      <width>71</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="fpsLabel">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>460</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Frames 
+Per Second</string>
     </property>
    </widget>
   </widget>
@@ -452,7 +478,7 @@
      <x>0</x>
      <y>0</y>
      <width>751</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -46,6 +46,7 @@ signals:
     void newFile(int width, int height);
     void saveAndNewFile(QString filename, int width, int height);
     void resetWindow();
+    void newFps(int);
 
 private slots:
 
@@ -93,8 +94,9 @@ private slots:
 
     void on_frameRightButton_clicked();
 
-    void addToFrames(QPixmap *frame);
+    void displayInList(QPixmap *frame, int index);
 
+    void on_fpsSpinBox_valueChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;

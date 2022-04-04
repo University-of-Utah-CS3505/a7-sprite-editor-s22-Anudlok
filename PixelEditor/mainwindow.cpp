@@ -42,7 +42,7 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
     connect(this, &MainWindow::clearScreen, &frames, &Frames::clearFrame);
     connect(&frames, &Frames::displayPreview, &pw, &PreviewWindow::displayPreviewFrame);
     connect(this, &MainWindow::requestFrame, &pw, &PreviewWindow::requestForWindow);
-    connect(&pw, &PreviewWindow::sendWindow, this, &MainWindow::addToFrames);
+    //connect(&pw, &PreviewWindow::sendWindow, this, &MainWindow::addToFrames);
     connect(this, &MainWindow::deleteFrame, &frames, &Frames::deleteFrame);
     connect(this, &MainWindow::currentFrameChanged, &frames, &Frames::addFrameWithFrame);
     connect(this, &MainWindow::moveCurrFrame, &frames, &Frames::changeFrame);
@@ -51,6 +51,7 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames, drawingwindow& dw,
     connect(&frames, &Frames::displayAnimFrame, popUp, &AnimationPopUp::displayAnimFrame);
     connect(popUp, &AnimationPopUp::playAnim, &frames, &Frames::playAllFrames);
     connect(popUp, &AnimationPopUp::stopAnim, &frames, &Frames::stopPlayingFrames);
+    connect(this, &MainWindow::newFps, popUp, &AnimationPopUp::changeFramesPerSecond);
 
     // File-related Connects
     connect(this, &MainWindow::loadFile, &frames, &Frames::loadFile);
@@ -187,10 +188,20 @@ void MainWindow::on_deleteFrameButton_clicked()
 void MainWindow::on_addFrameButton_clicked()
 {
     emit addNewFrame();
+    QListWidgetItem item;
+    ui->framesListWidget->addItem(&item);
+
+   // ui->framesListWidget->addItem(&item);
+    //ui->framesListWidget->addItem()
+    //get the current frame pixmap
+    //make a QListWidgetItem
+    //add item to QList
 }
 
-void MainWindow::addToFrames(QPixmap *frame){
-
+void MainWindow::displayInList(QPixmap *frame, int index){
+    QListWidgetItem currItem = *(ui->framesListWidget->item(index));
+    QIcon icon(*frame);
+    currItem.setIcon(icon);
 }
 
 void MainWindow::on_frameLeftButton_clicked()
@@ -317,4 +328,10 @@ void MainWindow::on_btnClear_clicked()
     emit clearScreen();
 }
 
+
+
+void MainWindow::on_fpsSpinBox_valueChanged(int fps)
+{
+    emit newFps(fps);
+}
 

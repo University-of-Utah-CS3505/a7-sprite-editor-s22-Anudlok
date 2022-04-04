@@ -28,7 +28,6 @@ protected:
 public:
     explicit AnimationPopUp(QWidget *parent = nullptr);
     ~AnimationPopUp();
-    void changeFramesPerSecond(int);
     //void playPreviewClick(std::vector<QListWidgetItem>);
     //void animate();
 
@@ -38,7 +37,7 @@ signals:
 
 public slots:
     void displayAnimFrame(QImage* frame);//, int width, int height);
-
+    void changeFramesPerSecond(int);
 private:
     Ui::AnimationPopUp *ui;
 };

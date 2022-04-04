@@ -25,8 +25,9 @@ private:
 signals:
     void displayFrame(QImage* frame, int width, int height);
     void displayPreview(QImage* frame);
-    void sendFrame(QPixmap *frame);
+    void sendFrame(QPixmap *frame, int index);
     void displayAnimFrame(QImage* frame);//, int width, int height);
+
 
 public slots:
     void addFrame(int _width, int _height);
