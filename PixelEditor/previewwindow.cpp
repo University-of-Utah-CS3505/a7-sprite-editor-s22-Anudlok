@@ -5,7 +5,7 @@
 PreviewWindow::PreviewWindow(QWidget *parent)
     : QWidget{parent}
 {
-    this->setGeometry(530, 40, screenWidth, screenHeight);
+    this->setGeometry(550, 40, screenWidth, screenHeight);
 
     previewWindow = new QLabel(this);
     previewWindow->setGeometry(0, 0, screenWidth, screenHeight);

@@ -63,7 +63,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(751, 593);
+        MainWindow->resize(731, 587);
         actionNew = new QAction(MainWindow);
         actionNew->setObjectName(QString::fromUtf8("actionNew"));
         QIcon icon;
@@ -195,7 +195,7 @@ public:
         framesListWidget = new QListWidget(centralwidget);
         framesListWidget->setObjectName(QString::fromUtf8("framesListWidget"));
         framesListWidget->setEnabled(true);
-        framesListWidget->setGeometry(QRect(530, 200, 141, 321));
+        framesListWidget->setGeometry(QRect(550, 200, 141, 321));
         sizePolicy.setHeightForWidth(framesListWidget->sizePolicy().hasHeightForWidth());
         framesListWidget->setSizePolicy(sizePolicy);
         editDrawingWindow = new QLabel(centralwidget);
@@ -250,7 +250,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 751, 17));
+        menubar->setGeometry(QRect(0, 0, 731, 21));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuCredits = new QMenu(menubar);

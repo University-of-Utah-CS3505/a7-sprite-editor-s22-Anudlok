@@ -5,6 +5,12 @@ DrawingWindow::DrawingWindow(QWidget *parent)
     : QWidget{parent}
 {
     this->setGeometry(120, 40, screenWidth, screenHeight);
+
+    shadowWindow = new QLabel(this);
+    shadowWindow->setGeometry(0, 0, screenWidth, screenHeight);
+    shadowWindow->setAlignment(Qt::AlignCenter);
+    shadowWindow->setFrameShape(QFrame::Box);
+
     drawingWindow = new QLabel(this);
     drawingWindow->setGeometry(0, 0, screenWidth, screenHeight);
     drawingWindow->setAlignment(Qt::AlignCenter);
@@ -16,11 +22,6 @@ DrawingWindow::DrawingWindow(QWidget *parent)
     gridWindow->setGeometry(0, 0, screenWidth, screenHeight);
     gridWindow->setAlignment(Qt::AlignCenter);
     gridWindow->setFrameShape(QFrame::Box);
-
-    shadowWindow = new QLabel(this);
-    shadowWindow->setGeometry(0, 0, screenWidth, screenHeight);
-    shadowWindow->setAlignment(Qt::AlignCenter);
-    shadowWindow->setFrameShape(QFrame::Box);
 }
 
 DrawingWindow::~DrawingWindow() {
