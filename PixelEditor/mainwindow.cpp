@@ -15,12 +15,27 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
+    // UI configuration at start of application
     ui->setupUi(this);
     popUp = new AnimationPopUp;
 
     primaryColor = Qt::black;
     secondaryColor = Qt::white;
     eraserColor = QColor(0, 0, 0, 0);
+
+    this->layout()->addWidget(&dw);
+    this->layout()->addWidget(&pw);
+
+    ui->editDrawingWindow->setVisible(false);
+    ui->brushButton->setEnabled(true);
+    ui->framesListWidget->setIconSize(QSize(frameItemHeight, frameItemHeight));
+    ui->fpsSpinBox->setValue(popUp->getFPS());
+    ui->framesListWidget->setStyleSheet("QListWidget { background: white; }"
+                                        "QListWidget::item { border: 3px solid black; "
+                                        "background: rgba(0, 0, 0, 30);}"
+                                        "QListWidget::item:selected { foreground: white; "
+                                        "background: rgba(0, 0, 100, 20)}");
 
     // Connects for new file
     connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrame);
@@ -70,27 +85,12 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
     bool ok;
     int width = QInputDialog::getInt(this, tr("Size of Sprite Project"),
                                  tr("Width and Height:"), 25, 1, 128, 1, &ok);
-//    int height = QInputDialog::getInt(this, tr("Height of Sprite Project"),
-//                                 tr("Height:"), 25, 1, 128, 1, &ok);
     int height = width;
 
     // Make new frame of that width and height
     if (ok) {
         emit makeNewFrame(width, height);
     }
-
-    this->layout()->addWidget(&dw);
-    this->layout()->addWidget(&pw);
-
-    ui->editDrawingWindow->setVisible(false);
-    ui->brushButton->setEnabled(true);
-    ui->framesListWidget->setIconSize(QSize(frameItemHeight, frameItemHeight));
-    ui->fpsSpinBox->setValue(popUp->getFPS());
-    ui->framesListWidget->setStyleSheet("QListWidget { background: white; }"
-                                        "QListWidget::item { border: 3px solid black; "
-                                        "background: rgba(0, 0, 0, 30);}"
-                                        "QListWidget::item:selected { foreground: white; "
-                                        "background: rgba(0, 0, 100, 20)}");
 }
 
 MainWindow::~MainWindow() {
@@ -117,8 +117,6 @@ void MainWindow::on_actionNew_triggered()
     bool ok;
     int width = QInputDialog::getInt(this, tr("Size of Sprite Project"),
                                  tr("Width and Height:"), 25, 1, 128, 1, &ok);
-//    int height = QInputDialog::getInt(this, tr("Height of Sprite Project"),
-//                                 tr("Height:"), 25, 1, 128, 1, &ok);
     int height = width;
 
     switch (ret) {
