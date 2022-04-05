@@ -554,7 +554,14 @@ Per Second</string>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuCredits">
+    <property name="title">
+     <string>Credits</string>
+    </property>
+    <addaction name="actionCredits"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuCredits"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew">
@@ -595,6 +602,11 @@ Per Second</string>
    </property>
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionCredits">
+   <property name="text">
+    <string>Credits</string>
    </property>
   </action>
  </widget>

@@ -88,6 +88,8 @@ private slots:
     void displayInList(QPixmap *frame, int index);
     void clearFrameList();
 
+    void on_actionCredits_triggered();
+
 private:
     Ui::MainWindow *ui;
     AnimationPopUp *popUp;

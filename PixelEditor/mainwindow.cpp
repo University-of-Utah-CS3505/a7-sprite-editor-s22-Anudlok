@@ -391,3 +391,32 @@ void MainWindow::changePrimaryColor(QColor color) {
     selectButton(Tools::brush);
 }
 
+
+void MainWindow::on_actionCredits_triggered()
+{
+    QMessageBox msgBox;
+    msgBox.setText("<h1>Credits:</h1>");
+    msgBox.setInformativeText("<h2>Design and programming:</h2><br>"
+                              "Anna Timofeyenko<br>"
+                              "Gabby Culley<br>"
+                              "Gabby Torres<br>"
+                              "Raynard Christian<br>"
+                              "<br>"
+                              "<h2>Icons</h2> (by <a target=\"_blank\" href=\"https://icons8.com/\">Icons8</a>):<br>"
+                              "<a target=\"_blank\" href=\"https://icons8.com/icon/11815/add-file\">Add File icon by Icons8</a><br>"
+                              "<a target=\"_blank\" href=\"https://icons8.com/icon/13279/save\">Save icon icon by Icons8</a><br>"
+                              "<a target=\"_blank\" href=\"https://icons8.com/icon/12941/paint\">Opened Folder icon by Icons8</a><br>"
+                              "<a target=\"_blank\" href=\"https://icons8.com/icon/13903/close-window\">Close Window icon by Icons8</a><br>"
+                              "<a target=\"_blank\" href=\"https://icons8.com/icon/12941/paint\">Paint icon by Icons8</a><br>"
+                              "<a target=\"_blank\" href=\"https://icons8.com/icon/18705/erase\">Erase icon by Icons8</a><br>"
+                              "<a target=\"_blank\" href=\"https://icons8.com/icon/12937/fill-color\">Fill Color icon by Icons8</a><br>"
+                              "<a target=\"_blank\" href=\"https://icons8.com/icon/11888/color-dropper\">Color Dropper icon by Icons8</a><br>"
+                              "<a target=\"_blank\" href=\"https://icons8.com/icon/19041/curved-arrow\">Curved Arrow icon by Icons8</a><br>"
+                              "<a target=\"_blank\" href=\"https://icons8.com/icon/63671/circled-play\">Circled Play icon by Icons8</a><br>"
+                              "<a target=\"_blank\" href=\"https://icons8.com/icon/11816/add-image\">Add Image icon by Icons8</a><br>"
+                              "<a target=\"_blank\" href=\"https://icons8.com/icon/13066/remove-image\">Remove Image icon by Icons8</a><br>"
+                              "<a target=\"_blank\" href=\"https://icons8.com/icon/19162/sort-up\">Sort Up icon by Icons8</a><br>"
+                              "<a target=\"_blank\" href=\"https://icons8.com/icon/19161/sort-down\">Sort Down icon by Icons8</a><br>");
+    msgBox.exec();
+}
+
