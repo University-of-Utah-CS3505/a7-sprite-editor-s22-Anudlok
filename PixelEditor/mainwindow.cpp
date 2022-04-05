@@ -34,7 +34,7 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
     ui->framesListWidget->setStyleSheet("QListWidget { background: white; }"
                                         "QListWidget::item { border: 3px solid black; "
                                         "background: rgba(0, 0, 0, 30);}"
-                                        "QListWidget::item:selected { foreground: white; "
+                                        "QListWidget::item:selected { "
                                         "background: rgba(0, 0, 100, 20)}");
 
     // Connects for new file
