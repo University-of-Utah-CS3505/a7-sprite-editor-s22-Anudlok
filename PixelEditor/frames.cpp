@@ -207,8 +207,7 @@ void Frames::saveFile(QString fileName) {
              for (int pixel = 0; pixel < height; pixel++) {
                  QJsonArray RGBAColors;
                  //Grab the color of the pixel and put it inside a array
-                QRgb rgbas = iter->pixel(QPoint(pixel, row));
-                QColor color(rgbas);
+                QColor color = iter->pixelColor(pixel, row);
 
                 RGBAColors.push_back(color.red());
                 RGBAColors.push_back(color.green());
