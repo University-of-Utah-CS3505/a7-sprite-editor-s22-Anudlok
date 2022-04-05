@@ -115,10 +115,11 @@ void MainWindow::on_actionNew_triggered()
 
     // Dialogs to grab width & height from user
     bool ok;
-    int width = QInputDialog::getInt(this, tr("Width of Sprite Project"),
-                                 tr("Width:"), 25, 1, 128, 1, &ok);
-    int height = QInputDialog::getInt(this, tr("Height of Sprite Project"),
-                                 tr("Height:"), 25, 1, 128, 1, &ok);
+    int width = QInputDialog::getInt(this, tr("Size of Sprite Project"),
+                                 tr("Width and Height:"), 25, 1, 128, 1, &ok);
+//    int height = QInputDialog::getInt(this, tr("Height of Sprite Project"),
+//                                 tr("Height:"), 25, 1, 128, 1, &ok);
+    int height = width;
 
     switch (ret) {
       case QMessageBox::Save: {
