@@ -126,6 +126,11 @@ void Frames::bucketToolFrame(QColor color, int row, int column) {
     updateViewFrameList();
 }
 
+void Frames::selectFrames(int index) {
+    currentFrame = index;
+    updateView();
+}
+
 void Frames::changeFrame(bool upOrDown) {
     if (upOrDown) {
        if(currentFrame < frameList.size()-1){

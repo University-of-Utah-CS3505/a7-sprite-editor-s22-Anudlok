@@ -14,7 +14,7 @@ AnimationPopUp::AnimationPopUp(QWidget *parent) :
     animationWindow->setAlignment(Qt::AlignCenter);
     animationWindow->setFrameShape(QFrame::Box);
 
-    AnimationPopUp::framesPerSecond = 24;
+    AnimationPopUp::framesPerSecond = 30;
 }
 
 AnimationPopUp::~AnimationPopUp()

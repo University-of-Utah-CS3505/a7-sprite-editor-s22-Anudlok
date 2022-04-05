@@ -29,6 +29,7 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
     connect(this, &MainWindow::addNewFrame, &frames, &Frames::addNewFrame);
     connect(this, &MainWindow::deleteFrame, &frames, &Frames::deleteFrame);
     connect(this, &MainWindow::moveCurrFrame, &frames, &Frames::changeFrame);
+    connect(this, &MainWindow::selectFrame, &frames, &Frames::selectFrames);
 
     // DrawingWindow-related Connects
     connect(&dw, &DrawingWindow::colorPixel, &frames, &Frames::updateFrame);
@@ -67,10 +68,11 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
 
     // Pop up input dialogs grabbing the width and height from the user
     bool ok;
-    int width = QInputDialog::getInt(this, tr("Width of Sprite Project"),
-                                 tr("Width:"), 25, 1, 128, 1, &ok);
-    int height = QInputDialog::getInt(this, tr("Height of Sprite Project"),
-                                 tr("Height:"), 25, 1, 128, 1, &ok);
+    int width = QInputDialog::getInt(this, tr("Size of Sprite Project"),
+                                 tr("Width and Height:"), 25, 1, 128, 1, &ok);
+//    int height = QInputDialog::getInt(this, tr("Height of Sprite Project"),
+//                                 tr("Height:"), 25, 1, 128, 1, &ok);
+    int height = width;
 
     // Make new frame of that width and height
     if (ok) {
@@ -84,6 +86,11 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
     ui->brushButton->setEnabled(true);
     ui->framesListWidget->setIconSize(QSize(frameItemHeight, frameItemHeight));
     ui->fpsSpinBox->setValue(popUp->getFPS());
+    ui->framesListWidget->setStyleSheet("QListWidget { background: white; }"
+                                        "QListWidget::item { border: 3px solid black; "
+                                        "background: rgba(0, 0, 0, 30);}"
+                                        "QListWidget::item:selected { foreground: white; "
+                                        "background: rgba(0, 0, 100, 20)}");
 }
 
 MainWindow::~MainWindow() {
@@ -218,6 +225,7 @@ void MainWindow::addFrameToList(QPixmap *frame, int index) {
     QPixmap scaledFrame = frame->scaledToHeight(frameItemHeight);
     item->setIcon(QIcon(scaledFrame));
     ui->framesListWidget->insertItem(index, item);
+    ui->framesListWidget->setCurrentItem(item);
 }
 
 ///
@@ -254,6 +262,12 @@ void MainWindow::clearFrameList() {
 ///
 void MainWindow::on_frameUpButton_clicked()
 {
+    QListWidgetItem *current = ui->framesListWidget->currentItem();
+    int nextIndex = ui->framesListWidget->row(current) - 1;
+    if (nextIndex > -1) {
+        QListWidgetItem *next = ui->framesListWidget->item(nextIndex);
+        ui->framesListWidget->setCurrentItem(next);
+    }
     emit moveCurrFrame(false);
 }
 
@@ -262,6 +276,12 @@ void MainWindow::on_frameUpButton_clicked()
 ///
 void MainWindow::on_frameDownButton_clicked()
 {
+    QListWidgetItem *current = ui->framesListWidget->currentItem();
+    int nextIndex = ui->framesListWidget->row(current) + 1;
+    if (nextIndex < ui->framesListWidget->count()) {
+        QListWidgetItem *next = ui->framesListWidget->item(nextIndex);
+        ui->framesListWidget->setCurrentItem(next);
+    }
     emit moveCurrFrame(true);
 }
 
@@ -418,5 +438,12 @@ void MainWindow::on_actionCredits_triggered()
                               "<a target=\"_blank\" href=\"https://icons8.com/icon/19162/sort-up\">Sort Up icon by Icons8</a><br>"
                               "<a target=\"_blank\" href=\"https://icons8.com/icon/19161/sort-down\">Sort Down icon by Icons8</a><br>");
     msgBox.exec();
+}
+
+
+void MainWindow::on_framesListWidget_itemPressed(QListWidgetItem *item)
+{
+    int index = ui->framesListWidget->row(item);
+    emit selectFrame(index);
 }
 

@@ -49,6 +49,7 @@ public slots:
     void newFile(int width, int height);
     void saveAndNewFile(QString filename, int width, int height);
     void bucketToolFrame(QColor color, int row, int column);
+    void selectFrames(int index);
 };
 
 

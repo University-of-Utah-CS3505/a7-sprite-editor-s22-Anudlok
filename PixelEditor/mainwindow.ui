@@ -54,7 +54,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resources.qrc">
+        <iconset>
          <normaloff>:/Icons/icons8-paint-96.png</normaloff>:/Icons/icons8-paint-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -89,7 +89,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resources.qrc">
+        <iconset>
          <normaloff>:/Icons/icons8-erase-96.png</normaloff>:/Icons/icons8-erase-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -121,7 +121,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resources.qrc">
+        <iconset>
          <normaloff>:/Icons/icons8-fill-color-96.png</normaloff>:/Icons/icons8-fill-color-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -153,7 +153,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resources.qrc">
+        <iconset>
          <normaloff>:/Icons/icons8-color-dropper-96.png</normaloff>:/Icons/icons8-color-dropper-96.png</iconset>
        </property>
        <property name="iconSize">
@@ -206,7 +206,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset>
           <normaloff>:/Icons/icons8-curved-arrows-48.png</normaloff>:/Icons/icons8-curved-arrows-48.png</iconset>
         </property>
         <property name="flat">
@@ -363,7 +363,7 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset resource="Resources.qrc">
+     <iconset>
       <normaloff>:/Icons/icons8-circled-play-96.png</normaloff>:/Icons/icons8-circled-play-96.png</iconset>
     </property>
     <property name="iconSize">
@@ -392,7 +392,7 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset resource="Resources.qrc">
+     <iconset>
       <normaloff>:/Icons/icons8-remove-image-96.png</normaloff>:/Icons/icons8-remove-image-96.png</iconset>
     </property>
     <property name="iconSize">
@@ -424,7 +424,7 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset resource="Resources.qrc">
+     <iconset>
       <normaloff>:/Icons/icons8-add-image-96.png</normaloff>:/Icons/icons8-add-image-96.png</iconset>
     </property>
     <property name="iconSize">
@@ -453,7 +453,7 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset resource="Resources.qrc">
+     <iconset>
       <normaloff>:/Icons/icons8-sort-up-96.png</normaloff>:/Icons/icons8-sort-up-96.png</iconset>
     </property>
     <property name="iconSize">
@@ -485,7 +485,7 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset resource="Resources.qrc">
+     <iconset>
       <normaloff>:/Icons/icons8-sort-down-96.png</normaloff>:/Icons/icons8-sort-down-96.png</iconset>
     </property>
     <property name="iconSize">
@@ -541,7 +541,7 @@ Per Second</string>
      <x>0</x>
      <y>0</y>
      <width>751</width>
-     <height>26</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -610,8 +610,6 @@ Per Second</string>
    </property>
   </action>
  </widget>
- <resources>
-  <include location="Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

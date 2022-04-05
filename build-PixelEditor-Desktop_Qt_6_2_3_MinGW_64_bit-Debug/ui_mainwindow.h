@@ -33,6 +33,7 @@ public:
     QAction *actionSave;
     QAction *actionOpen;
     QAction *actionExit;
+    QAction *actionCredits;
     QWidget *centralwidget;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
@@ -40,23 +41,22 @@ public:
     QPushButton *eraserButton;
     QPushButton *bucketButton;
     QPushButton *colorPickerButton;
-    QPushButton *selectButton;
     QWidget *widget;
     QPushButton *swapColorButton;
     QPushButton *primaryColorButton;
     QPushButton *secondaryColorButton;
     QListWidget *framesListWidget;
     QLabel *editDrawingWindow;
-    QPushButton *btnTest;
     QPushButton *playPreviewButton;
     QPushButton *deleteFrameButton;
     QPushButton *addFrameButton;
-    QPushButton *frameLeftButton;
-    QPushButton *frameRightButton;
+    QPushButton *frameUpButton;
+    QPushButton *frameDownButton;
     QSpinBox *fpsSpinBox;
     QLabel *fpsLabel;
     QMenuBar *menubar;
     QMenu *menuFile;
+    QMenu *menuCredits;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -84,11 +84,13 @@ public:
         QIcon icon3;
         icon3.addFile(QString::fromUtf8(":/Icons/CloseIcon.png"), QSize(), QIcon::Normal, QIcon::On);
         actionExit->setIcon(icon3);
+        actionCredits = new QAction(MainWindow);
+        actionCredits->setObjectName(QString::fromUtf8("actionCredits"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayoutWidget = new QWidget(centralwidget);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(20, 20, 106, 512));
+        verticalLayoutWidget->setGeometry(QRect(20, 20, 106, 441));
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -146,18 +148,6 @@ public:
 
         verticalLayout->addWidget(colorPickerButton);
 
-        selectButton = new QPushButton(verticalLayoutWidget);
-        selectButton->setObjectName(QString::fromUtf8("selectButton"));
-        sizePolicy.setHeightForWidth(selectButton->sizePolicy().hasHeightForWidth());
-        selectButton->setSizePolicy(sizePolicy);
-        QIcon icon8;
-        icon8.addFile(QString::fromUtf8(":/Icons/icons8-select-all-3-96.png"), QSize(), QIcon::Normal, QIcon::Off);
-        selectButton->setIcon(icon8);
-        selectButton->setIconSize(QSize(70, 70));
-        selectButton->setCheckable(true);
-
-        verticalLayout->addWidget(selectButton);
-
         widget = new QWidget(verticalLayoutWidget);
         widget->setObjectName(QString::fromUtf8("widget"));
         QSizePolicy sizePolicy1(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
@@ -169,9 +159,9 @@ public:
         swapColorButton = new QPushButton(widget);
         swapColorButton->setObjectName(QString::fromUtf8("swapColorButton"));
         swapColorButton->setGeometry(QRect(0, 50, 31, 31));
-        QIcon icon9;
-        icon9.addFile(QString::fromUtf8(":/Icons/icons8-curved-arrows-48.png"), QSize(), QIcon::Normal, QIcon::Off);
-        swapColorButton->setIcon(icon9);
+        QIcon icon8;
+        icon8.addFile(QString::fromUtf8(":/Icons/icons8-curved-arrows-48.png"), QSize(), QIcon::Normal, QIcon::Off);
+        swapColorButton->setIcon(icon8);
         swapColorButton->setFlat(true);
         primaryColorButton = new QPushButton(widget);
         primaryColorButton->setObjectName(QString::fromUtf8("primaryColorButton"));
@@ -205,7 +195,7 @@ public:
         framesListWidget = new QListWidget(centralwidget);
         framesListWidget->setObjectName(QString::fromUtf8("framesListWidget"));
         framesListWidget->setEnabled(true);
-        framesListWidget->setGeometry(QRect(530, 200, 211, 321));
+        framesListWidget->setGeometry(QRect(530, 200, 141, 321));
         sizePolicy.setHeightForWidth(framesListWidget->sizePolicy().hasHeightForWidth());
         framesListWidget->setSizePolicy(sizePolicy);
         editDrawingWindow = new QLabel(centralwidget);
@@ -214,47 +204,70 @@ public:
         editDrawingWindow->setAutoFillBackground(true);
         editDrawingWindow->setFrameShape(QFrame::Box);
         editDrawingWindow->setAlignment(Qt::AlignCenter);
-        btnTest = new QPushButton(centralwidget);
-        btnTest->setObjectName(QString::fromUtf8("btnTest"));
-        btnTest->setGeometry(QRect(560, 160, 80, 18));
         playPreviewButton = new QPushButton(centralwidget);
         playPreviewButton->setObjectName(QString::fromUtf8("playPreviewButton"));
-        playPreviewButton->setGeometry(QRect(140, 500, 91, 31));
+        playPreviewButton->setGeometry(QRect(110, 440, 81, 81));
+        QIcon icon9;
+        icon9.addFile(QString::fromUtf8(":/Icons/icons8-circled-play-96.png"), QSize(), QIcon::Normal, QIcon::Off);
+        playPreviewButton->setIcon(icon9);
+        playPreviewButton->setIconSize(QSize(60, 60));
         deleteFrameButton = new QPushButton(centralwidget);
         deleteFrameButton->setObjectName(QString::fromUtf8("deleteFrameButton"));
-        deleteFrameButton->setGeometry(QRect(140, 470, 91, 31));
+        deleteFrameButton->setGeometry(QRect(380, 440, 81, 81));
+        QIcon icon10;
+        icon10.addFile(QString::fromUtf8(":/Icons/icons8-remove-image-96.png"), QSize(), QIcon::Normal, QIcon::Off);
+        deleteFrameButton->setIcon(icon10);
+        deleteFrameButton->setIconSize(QSize(60, 60));
         addFrameButton = new QPushButton(centralwidget);
         addFrameButton->setObjectName(QString::fromUtf8("addFrameButton"));
-        addFrameButton->setGeometry(QRect(140, 440, 91, 31));
-        frameLeftButton = new QPushButton(centralwidget);
-        frameLeftButton->setObjectName(QString::fromUtf8("frameLeftButton"));
-        frameLeftButton->setGeometry(QRect(330, 440, 91, 91));
-        frameRightButton = new QPushButton(centralwidget);
-        frameRightButton->setObjectName(QString::fromUtf8("frameRightButton"));
-        frameRightButton->setGeometry(QRect(430, 440, 91, 91));
+        addFrameButton->setGeometry(QRect(300, 440, 81, 81));
+        QIcon icon11;
+        icon11.addFile(QString::fromUtf8(":/Icons/icons8-add-image-96.png"), QSize(), QIcon::Normal, QIcon::Off);
+        addFrameButton->setIcon(icon11);
+        addFrameButton->setIconSize(QSize(60, 60));
+        frameUpButton = new QPushButton(centralwidget);
+        frameUpButton->setObjectName(QString::fromUtf8("frameUpButton"));
+        frameUpButton->setGeometry(QRect(470, 430, 51, 51));
+        QIcon icon12;
+        icon12.addFile(QString::fromUtf8(":/Icons/icons8-sort-up-96.png"), QSize(), QIcon::Normal, QIcon::Off);
+        frameUpButton->setIcon(icon12);
+        frameUpButton->setIconSize(QSize(50, 50));
+        frameDownButton = new QPushButton(centralwidget);
+        frameDownButton->setObjectName(QString::fromUtf8("frameDownButton"));
+        frameDownButton->setGeometry(QRect(470, 480, 51, 51));
+        QIcon icon13;
+        icon13.addFile(QString::fromUtf8(":/Icons/icons8-sort-down-96.png"), QSize(), QIcon::Normal, QIcon::Off);
+        frameDownButton->setIcon(icon13);
+        frameDownButton->setIconSize(QSize(50, 50));
         fpsSpinBox = new QSpinBox(centralwidget);
         fpsSpinBox->setObjectName(QString::fromUtf8("fpsSpinBox"));
-        fpsSpinBox->setGeometry(QRect(240, 500, 71, 22));
+        fpsSpinBox->setGeometry(QRect(200, 490, 71, 22));
+        fpsSpinBox->setMinimum(1);
+        fpsSpinBox->setMaximum(120);
         fpsLabel = new QLabel(centralwidget);
         fpsLabel->setObjectName(QString::fromUtf8("fpsLabel"));
-        fpsLabel->setGeometry(QRect(240, 460, 71, 31));
+        fpsLabel->setGeometry(QRect(200, 450, 71, 31));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 751, 26));
+        menubar->setGeometry(QRect(0, 0, 751, 17));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
+        menuCredits = new QMenu(menubar);
+        menuCredits->setObjectName(QString::fromUtf8("menuCredits"));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         MainWindow->setStatusBar(statusbar);
 
         menubar->addAction(menuFile->menuAction());
+        menubar->addAction(menuCredits->menuAction());
         menuFile->addAction(actionNew);
         menuFile->addAction(actionSave);
         menuFile->addAction(actionOpen);
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
+        menuCredits->addAction(actionCredits);
 
         retranslateUi(MainWindow);
 
@@ -263,11 +276,12 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Pixel Editor", nullptr));
         actionNew->setText(QCoreApplication::translate("MainWindow", "New", nullptr));
         actionSave->setText(QCoreApplication::translate("MainWindow", "Save", nullptr));
         actionOpen->setText(QCoreApplication::translate("MainWindow", "Open", nullptr));
         actionExit->setText(QCoreApplication::translate("MainWindow", "Exit", nullptr));
+        actionCredits->setText(QCoreApplication::translate("MainWindow", "Credits", nullptr));
 #if QT_CONFIG(tooltip)
         verticalLayoutWidget->setToolTip(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
 #endif // QT_CONFIG(tooltip)
@@ -303,13 +317,6 @@ public:
 #endif // QT_CONFIG(accessibility)
         colorPickerButton->setText(QString());
 #if QT_CONFIG(tooltip)
-        selectButton->setToolTip(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
-#endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(accessibility)
-        selectButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
-#endif // QT_CONFIG(accessibility)
-        selectButton->setText(QString());
-#if QT_CONFIG(tooltip)
         widget->setToolTip(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(accessibility)
@@ -337,23 +344,72 @@ public:
 #endif // QT_CONFIG(accessibility)
         secondaryColorButton->setText(QString());
 #if QT_CONFIG(tooltip)
-        framesListWidget->setToolTip(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
+        framesListWidget->setToolTip(QString());
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(accessibility)
-        framesListWidget->setAccessibleName(QCoreApplication::translate("MainWindow", "Select Tool", nullptr));
+        framesListWidget->setAccessibleName(QCoreApplication::translate("MainWindow", "Frame List", nullptr));
+#endif // QT_CONFIG(accessibility)
+#if QT_CONFIG(tooltip)
+        editDrawingWindow->setToolTip(QString());
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        editDrawingWindow->setAccessibleName(QCoreApplication::translate("MainWindow", "Drawing Window", nullptr));
 #endif // QT_CONFIG(accessibility)
         editDrawingWindow->setText(QString());
-        btnTest->setText(QCoreApplication::translate("MainWindow", "New", nullptr));
-        playPreviewButton->setText(QCoreApplication::translate("MainWindow", "Play", nullptr));
-        deleteFrameButton->setText(QCoreApplication::translate("MainWindow", "Delete Frame", nullptr));
-        addFrameButton->setText(QCoreApplication::translate("MainWindow", "Add Frame", nullptr));
-        frameLeftButton->setText(QCoreApplication::translate("MainWindow", "Move Up \n"
-"A Frame", nullptr));
-        frameRightButton->setText(QCoreApplication::translate("MainWindow", "Move Down \n"
-"A Frame", nullptr));
+#if QT_CONFIG(tooltip)
+        playPreviewButton->setToolTip(QCoreApplication::translate("MainWindow", "Play Preview", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        playPreviewButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Play Preview", nullptr));
+#endif // QT_CONFIG(accessibility)
+        playPreviewButton->setText(QString());
+#if QT_CONFIG(tooltip)
+        deleteFrameButton->setToolTip(QCoreApplication::translate("MainWindow", "Delete Frame", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        deleteFrameButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Delete Frame", nullptr));
+#endif // QT_CONFIG(accessibility)
+        deleteFrameButton->setText(QString());
+#if QT_CONFIG(tooltip)
+        addFrameButton->setToolTip(QCoreApplication::translate("MainWindow", "Add Frame", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(statustip)
+        addFrameButton->setStatusTip(QString());
+#endif // QT_CONFIG(statustip)
+#if QT_CONFIG(accessibility)
+        addFrameButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Add Frame", nullptr));
+#endif // QT_CONFIG(accessibility)
+        addFrameButton->setText(QString());
+#if QT_CONFIG(tooltip)
+        frameUpButton->setToolTip(QCoreApplication::translate("MainWindow", "Move Up a Frame", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        frameUpButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Move Up a Frame", nullptr));
+#endif // QT_CONFIG(accessibility)
+        frameUpButton->setText(QString());
+#if QT_CONFIG(tooltip)
+        frameDownButton->setToolTip(QCoreApplication::translate("MainWindow", "Move Down a Frame", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(statustip)
+        frameDownButton->setStatusTip(QString());
+#endif // QT_CONFIG(statustip)
+#if QT_CONFIG(accessibility)
+        frameDownButton->setAccessibleName(QCoreApplication::translate("MainWindow", "Move Down a Frame", nullptr));
+#endif // QT_CONFIG(accessibility)
+        frameDownButton->setText(QString());
+#if QT_CONFIG(tooltip)
+        fpsSpinBox->setToolTip(QCoreApplication::translate("MainWindow", "Frames Per Second", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        fpsSpinBox->setAccessibleName(QCoreApplication::translate("MainWindow", "Frames Per Second Spinbox", nullptr));
+#endif // QT_CONFIG(accessibility)
+#if QT_CONFIG(accessibility)
+        fpsLabel->setAccessibleName(QCoreApplication::translate("MainWindow", "Frames Per Second Label", nullptr));
+#endif // QT_CONFIG(accessibility)
         fpsLabel->setText(QCoreApplication::translate("MainWindow", "Frames \n"
 "Per Second", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
+        menuCredits->setTitle(QCoreApplication::translate("MainWindow", "Credits", nullptr));
     } // retranslateUi
 
 };

@@ -35,6 +35,7 @@ signals:
     void addNewFrame();
     void deleteFrame();
     void moveCurrFrame(bool isUp);
+    void selectFrame(int index);
 
     // File menu signals
     void saveFile(QString fileName);
@@ -89,6 +90,8 @@ private slots:
     void clearFrameList();
 
     void on_actionCredits_triggered();
+
+    void on_framesListWidget_itemPressed(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;
