@@ -5,7 +5,7 @@
 #include <QLabel>
 #include <QPainter>
 
-class drawingwindowwidget : public QWidget
+class DrawingWindow : public QWidget
 {
     Q_OBJECT
 
@@ -24,7 +24,8 @@ private:
     bool start = false;
 
 public:
-    explicit drawingwindowwidget(QWidget *parent = nullptr);
+    explicit DrawingWindow(QWidget *parent = nullptr);
+    ~DrawingWindow();
     void mouseColor(int x, int y);
     void mouseFillColor(int x, int y);
 

@@ -8,9 +8,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     Frames f;
-    drawingwindowwidget dww;
+    DrawingWindow dw;
     PreviewWindow pw;
-    MainWindow w(pw, f, dww);
+    MainWindow w(pw, f, dw);
     w.show();
     return a.exec();
 }

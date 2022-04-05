@@ -11,7 +11,7 @@
  * @param parent
  */
 MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
-                       drawingwindowwidget& dww, QWidget *parent)
+                       DrawingWindow& dw, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
@@ -31,16 +31,16 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
     connect(this, &MainWindow::moveCurrFrame, &frames, &Frames::changeFrame);
 
     // DrawingWindow-related Connects
-    connect(&dww, &drawingwindowwidget::colorPixel, &frames, &Frames::updateFrame);
-    connect(&dww, &drawingwindowwidget::fillPixel, &frames, &Frames::bucketToolFrame);
-    connect(&frames, &Frames::displayFrame, &dww, &drawingwindowwidget::displayCurrentFrame);
+    connect(&dw, &DrawingWindow::colorPixel, &frames, &Frames::updateFrame);
+    connect(&dw, &DrawingWindow::fillPixel, &frames, &Frames::bucketToolFrame);
+    connect(&frames, &Frames::displayFrame, &dw, &DrawingWindow::displayCurrentFrame);
 
     // DELETE THESE
-    connect(&dww, &drawingwindowwidget::colorChosen, this, &MainWindow::changePrimaryColor);
-    connect(this, &MainWindow::currentColor, &dww, &drawingwindowwidget::setCurrentColor);
-    connect(this, &MainWindow::colorPickerPicked, &dww, &drawingwindowwidget::colorPicked);
-    connect(this, &MainWindow::startDrawing, &dww, &drawingwindowwidget::startDrawing);
-    connect(this, &MainWindow::bucketPicked, &dww, &drawingwindowwidget::bucketPicked);
+    connect(&dw, &DrawingWindow::colorChosen, this, &MainWindow::changePrimaryColor);
+    connect(this, &MainWindow::currentColor, &dw, &DrawingWindow::setCurrentColor);
+    connect(this, &MainWindow::colorPickerPicked, &dw, &DrawingWindow::colorPicked);
+    connect(this, &MainWindow::startDrawing, &dw, &DrawingWindow::startDrawing);
+    connect(this, &MainWindow::bucketPicked, &dw, &DrawingWindow::bucketPicked);
 
     // PreviewWindow-related Connects
     connect(&frames, &Frames::displayPreview, &pw, &PreviewWindow::displayPreviewFrame);
@@ -77,7 +77,7 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
         emit makeNewFrame(width, height);
     }
 
-    this->layout()->addWidget(&dww);
+    this->layout()->addWidget(&dw);
     this->layout()->addWidget(&pw);
 
     ui->editDrawingWindow->setVisible(false);

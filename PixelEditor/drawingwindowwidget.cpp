@@ -1,7 +1,7 @@
 #include "drawingwindowwidget.h"
 #include "QImage"
 
-drawingwindowwidget::drawingwindowwidget(QWidget *parent)
+DrawingWindow::DrawingWindow(QWidget *parent)
     : QWidget{parent}
 {
     this->setGeometry(120, 40, screenWidth, screenHeight);
@@ -23,7 +23,13 @@ drawingwindowwidget::drawingwindowwidget(QWidget *parent)
     shadowWindow->setFrameShape(QFrame::Box);
 }
 
-void drawingwindowwidget::displayCurrentFrame(QImage* frame, QImage* prevFrame, int width, int height)
+DrawingWindow::~DrawingWindow() {
+    delete drawingWindow;
+    delete gridWindow;
+    delete shadowWindow;
+}
+
+void DrawingWindow::displayCurrentFrame(QImage* frame, QImage* prevFrame, int width, int height)
 {
     setWidthAndHeight(width, height);
     QImage bars(gridWindow->width(), gridWindow->height(), QImage::Format_ARGB32);
@@ -64,7 +70,7 @@ void drawingwindowwidget::displayCurrentFrame(QImage* frame, QImage* prevFrame, 
     drawingWindow->show();
 }
 
-void drawingwindowwidget::mouseMoveEvent(QMouseEvent *event){
+void DrawingWindow::mouseMoveEvent(QMouseEvent *event){
     int x = drawingWindow->mapFromGlobal(QCursor::pos()).x();
     int y = drawingWindow->mapFromGlobal(QCursor::pos()).y();
     if (mouseButtonDown && (x >= 0 && x < screenWidth) && (y >= 0 && y < screenHeight)) {
@@ -72,19 +78,19 @@ void drawingwindowwidget::mouseMoveEvent(QMouseEvent *event){
     }
 }
 
-void drawingwindowwidget::mouseColor(int x, int y) {
+void DrawingWindow::mouseColor(int x, int y) {
     int row = x / (screenWidth / width);
     int column = y / (screenHeight / height);
     emit colorPixel(color, row, column);
 }
 
-void drawingwindowwidget::mouseFillColor(int x, int y) {
+void DrawingWindow::mouseFillColor(int x, int y) {
     int row = x / (screenWidth / width);
     int column = y / (screenHeight / height);
     emit fillPixel(color, row, column);
 }
 
-void drawingwindowwidget::mousePressEvent(QMouseEvent *event)
+void DrawingWindow::mousePressEvent(QMouseEvent *event)
 {
         int x = drawingWindow->mapFromGlobal(QCursor::pos()).x();
         int y = drawingWindow->mapFromGlobal(QCursor::pos()).y();
@@ -104,27 +110,27 @@ void drawingwindowwidget::mousePressEvent(QMouseEvent *event)
         colorPicker = false;
 }
 
-void drawingwindowwidget::mouseReleaseEvent(QMouseEvent *event) {
+void DrawingWindow::mouseReleaseEvent(QMouseEvent *event) {
     mouseButtonDown = false;
 }
 
-void drawingwindowwidget::setWidthAndHeight(int _width, int _height) {
+void DrawingWindow::setWidthAndHeight(int _width, int _height) {
     height = _height;
     width = _width;
 }
 
-void drawingwindowwidget::setCurrentColor(QColor _color) {
+void DrawingWindow::setCurrentColor(QColor _color) {
     color = _color;
 }
 
-void drawingwindowwidget::bucketPicked(bool state) {
+void DrawingWindow::bucketPicked(bool state) {
     bucket = state;
 }
 
-void drawingwindowwidget::colorPicked(bool state) {
+void DrawingWindow::colorPicked(bool state) {
     colorPicker = state;
 }
 
-void drawingwindowwidget::startDrawing() {
+void DrawingWindow::startDrawing() {
     start = true;
 }
