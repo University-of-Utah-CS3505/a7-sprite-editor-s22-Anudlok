@@ -32,7 +32,7 @@ signals:
     void makeNewFrame(int width, int height);
 
     // Frame button signals
-    void addNewFrame();
+    void addFrame();
     void deleteFrame();
     void moveCurrFrame(bool isUp);
     void selectFrame(int index);

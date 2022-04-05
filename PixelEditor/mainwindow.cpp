@@ -38,10 +38,10 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
                                         "background: rgba(0, 0, 100, 20)}");
 
     // Connects for new file
-    connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrame);
+    connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrameWithSize);
 
     // Connects for frame buttons
-    connect(this, &MainWindow::addNewFrame, &frames, &Frames::addNewFrame);
+    connect(this, &MainWindow::addFrame, &frames, &Frames::addFrame);
     connect(this, &MainWindow::deleteFrame, &frames, &Frames::deleteFrame);
     connect(this, &MainWindow::moveCurrFrame, &frames, &Frames::changeFrame);
     connect(this, &MainWindow::selectFrame, &frames, &Frames::selectFrames);
@@ -265,7 +265,7 @@ void MainWindow::on_deleteFrameButton_clicked()
 ///
 void MainWindow::on_addFrameButton_clicked()
 {
-    emit addNewFrame();
+    emit addFrame();
 }
 
 ///
