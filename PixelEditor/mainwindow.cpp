@@ -1,18 +1,10 @@
 #include <QMessageBox>
-#include <vector>
-#include <QFile>
 #include <QFileDialog>
-#include <QJsonDocument>
-#include <QJsonArray>
-#include <QJsonObject>
-#include <QRgb>
 #include <QImage>
-#include <QVector>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QColorDialog>
 #include <QInputDialog>
-
 
 /**
  * @brief MainWindow::MainWindow The View Class
@@ -30,22 +22,28 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
     secondaryColor = Qt::white;
     eraserColor = QColor(0, 0, 0, 0);
 
-    connect(&frames, &Frames::displayFrame, &dww, &drawingwindowwidget::displayCurrentFrame);
+    // Connects for new file
     connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrame);
+
+    // Connects for frame buttons
     connect(this, &MainWindow::addNewFrame, &frames, &Frames::addNewFrame);
-    connect(&dww, &drawingwindowwidget::colorPixel, &frames, &Frames::updateFrame);
-    connect(this, &MainWindow::currentColor, &dww, &drawingwindowwidget::setCurrentColor);
-    connect(this, &MainWindow::colorPickerPicked, &dww, &drawingwindowwidget::colorPicked);
-    connect(this, &MainWindow::bucketPicked, &dww, &drawingwindowwidget::bucketPicked);
-    connect(&dww, &drawingwindowwidget::colorChosen, this, &MainWindow::changePrimaryColor);
-    connect(&dww, &drawingwindowwidget::fillPixel, &frames, &Frames::bucketToolFrame);
-    connect(this, &MainWindow::startDrawing, &dww, &drawingwindowwidget::startDrawing);
-    //connect(this, &MainWindow::clearScreen, &frames, &Frames::clearFrame);
-    connect(&frames, &Frames::displayPreview, &pw, &PreviewWindow::displayPreviewFrame);
-    connect(this, &MainWindow::requestFrame, &pw, &PreviewWindow::requestForWindow);
-    //connect(&pw, &PreviewWindow::sendWindow, this, &MainWindow::addToFrames);
     connect(this, &MainWindow::deleteFrame, &frames, &Frames::deleteFrame);
     connect(this, &MainWindow::moveCurrFrame, &frames, &Frames::changeFrame);
+
+    // DrawingWindow-related Connects
+    connect(&dww, &drawingwindowwidget::colorPixel, &frames, &Frames::updateFrame);
+    connect(&dww, &drawingwindowwidget::fillPixel, &frames, &Frames::bucketToolFrame);
+    connect(&frames, &Frames::displayFrame, &dww, &drawingwindowwidget::displayCurrentFrame);
+
+    // DELETE THESE
+    connect(&dww, &drawingwindowwidget::colorChosen, this, &MainWindow::changePrimaryColor);
+    connect(this, &MainWindow::currentColor, &dww, &drawingwindowwidget::setCurrentColor);
+    connect(this, &MainWindow::colorPickerPicked, &dww, &drawingwindowwidget::colorPicked);
+    connect(this, &MainWindow::startDrawing, &dww, &drawingwindowwidget::startDrawing);
+    connect(this, &MainWindow::bucketPicked, &dww, &drawingwindowwidget::bucketPicked);
+
+    // PreviewWindow-related Connects
+    connect(&frames, &Frames::displayPreview, &pw, &PreviewWindow::displayPreviewFrame);
 
     // Frame list-related Connects
     connect(&frames, &Frames::displayInList, this, &MainWindow::displayInList);
@@ -65,19 +63,17 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
     connect(this, &MainWindow::newFile, &frames, &Frames::newFile);
     connect(this, &MainWindow::saveAndNewFile, &frames, &Frames::saveAndNewFile);
 
-    // Reset Drawing Window with the height and width already in the project
-    connect(this, &MainWindow::resetWindow, &frames, &Frames::resetWindow);
-
     emit currentColor(primaryColor);
 
-    // This code block pops up a input dialog grabbing the width and height from the user
+    // Pop up input dialogs grabbing the width and height from the user
     bool ok;
     int width = QInputDialog::getInt(this, tr("Width of Sprite Project"),
                                  tr("Width:"), 25, 1, 128, 1, &ok);
     int height = QInputDialog::getInt(this, tr("Height of Sprite Project"),
                                  tr("Height:"), 25, 1, 128, 1, &ok);
+
+    // Make new frame of that width and height
     if (ok) {
-        qDebug() << "Making new frame";
         emit makeNewFrame(width, height);
     }
 
@@ -96,6 +92,9 @@ MainWindow::~MainWindow() {
 }
 
 /// File Menu Methods
+
+///
+/// \brief Handles New file button press
 ///
 void MainWindow::on_actionNew_triggered()
 {
@@ -107,7 +106,7 @@ void MainWindow::on_actionNew_triggered()
     msgBox.setDefaultButton(QMessageBox::Save);
     int ret = msgBox.exec();
 
-    // This code block pops up a input dialog grabbing the width and height from the user
+    // Dialogs to grab width & height from user
     bool ok;
     int width = QInputDialog::getInt(this, tr("Width of Sprite Project"),
                                  tr("Width:"), 25, 1, 128, 1, &ok);
@@ -116,7 +115,7 @@ void MainWindow::on_actionNew_triggered()
 
     switch (ret) {
       case QMessageBox::Save: {
-        // Make a QString of file name using QFile Dialog
+        // Make QString of file name with QFileDialog
         filename = QFileDialog::getSaveFileName(this,
                                                 tr("Save Project"),
                                                 "",
@@ -131,15 +130,17 @@ void MainWindow::on_actionNew_triggered()
           // Cancel was clicked
           break;
       default:
-          // should never be reached
+          // Should never be reached
           break;
     }
 }
 
-
+///
+/// \brief Handles Save file button press
+///
 void MainWindow::on_actionSave_triggered()
 {
-    // Make a QString of file name using QFile Dialog
+    // Make QString of file name with QFileDialog
     QString filename = QFileDialog::getSaveFileName(this,
                                                     tr("Save Project"),
                                                     "",
@@ -147,7 +148,9 @@ void MainWindow::on_actionSave_triggered()
     emit saveFile(filename);
 }
 
-
+///
+/// \brief Handles Open file button press
+///
 void MainWindow::on_actionOpen_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
@@ -157,53 +160,59 @@ void MainWindow::on_actionOpen_triggered()
     emit loadFile(fileName);
 }
 
-
+///
+/// \brief Handles Exit file button press
+///
 void MainWindow::on_actionExit_triggered()
 {
     this->close();
 }
 
-
 /// End File Menu Methods
+
+/// Animation Popup Methods
+
+///
+/// \brief Handles Play button press
+///
 void MainWindow::on_playPreviewButton_clicked()
 {
     popUp->show();
     emit popUp->playAnim(popUp->getFPS());
 }
 
-/**
-void MainWindow::on_framesListWidget_itemActivated(QListWidgetItem *item)
+///
+/// \brief Handles change in frames per second
+/// \param fps - Frames per second
+///
+void MainWindow::on_fpsSpinBox_valueChanged(int fps)
 {
-    //comment for future debugging, possible error bc idk what i'm doing tbh
-    ui->framesListWidget->addItem(item);
-    //goes through each frame in the frames list and adds it to list widget
-    for(QListWidgetItem item : widgetList){
-        ui->framesListWidget->addItem(&item);
-    }
+    emit newFps(fps);
 }
-**/
 
+/// Frame List Methods
+
+///
+/// \brief Handles Delete Frame button press
+///
 void MainWindow::on_deleteFrameButton_clicked()
 {
     emit deleteFrame();
-//    widgetList.erase(widgetList.begin() + currFrame);
-//    if (currFrame > 0) {
-//        currFrame--;
-//    }
 }
 
-
+///
+/// \brief Handles Add Frame button press
+///
 void MainWindow::on_addFrameButton_clicked()
 {
     emit addNewFrame();
-
-   // ui->framesListWidget->addItem(&item);
-    //ui->framesListWidget->addItem()
-    //get the current frame pixmap
-    //make a QListWidgetItem
-    //add item to QList
 }
 
+///
+/// \brief Adds frame to widget list
+/// \param frame - The frame to add
+/// \param index - The index to add the frame to
+///
 void MainWindow::addFrameToList(QPixmap *frame, int index) {
     QListWidgetItem* item = new QListWidgetItem();
     QPixmap scaledFrame = frame->scaledToHeight(frameItemHeight);
@@ -211,6 +220,10 @@ void MainWindow::addFrameToList(QPixmap *frame, int index) {
     ui->framesListWidget->insertItem(index, item);
 }
 
+///
+/// \brief Adds frame to widget list
+/// \param index - The index of the frame to remove
+///
 void MainWindow::removeFrameFromList(int index) {
     // Remove item from frame list widget
     QListWidgetItem* item = ui->framesListWidget->takeItem(index);
@@ -218,31 +231,56 @@ void MainWindow::removeFrameFromList(int index) {
     delete item;
 }
 
+///
+/// \brief Displays frame in widget list
+/// \param frame - The frame to display
+/// \param index - The index of the frame
+///
 void MainWindow::displayInList(QPixmap *frame, int index) {
     QListWidgetItem* currItem = ui->framesListWidget->item(index);
     QPixmap scaledFrame = frame->scaledToHeight(frameItemHeight);
     currItem->setIcon(QIcon(scaledFrame));
 }
 
+///
+/// \brief Clears the frame widget list
+///
 void MainWindow::clearFrameList() {
     ui->framesListWidget->clear();
 }
 
-void MainWindow::on_frameLeftButton_clicked()
+///
+/// \brief Handles frame up button press
+///
+void MainWindow::on_frameUpButton_clicked()
 {
     emit moveCurrFrame(false);
 }
 
-void MainWindow::on_frameRightButton_clicked()
+///
+/// \brief Handles frame down button press
+///
+void MainWindow::on_frameDownButton_clicked()
 {
     emit moveCurrFrame(true);
 }
 
+/// Drawing Window Methods
+
+///
+/// \brief Displays frame in drawing window
+/// \param frame - Frame to display
+///
 void MainWindow::displayFrame(QImage* frame) {
     ui->editDrawingWindow->setPixmap(QPixmap::fromImage(*frame));
     ui->editDrawingWindow->show();
 }
 
+/// Toolbar Methods
+
+///
+/// \brief Handles Brush button press
+///
 void MainWindow::on_brushButton_clicked()
 {
     emit colorPickerPicked(false);
@@ -251,6 +289,9 @@ void MainWindow::on_brushButton_clicked()
     selectButton(Tools::brush);
 }
 
+///
+/// \brief Handles Eraser button press
+///
 void MainWindow::on_eraserButton_clicked()
 {
     emit colorPickerPicked(false);
@@ -259,7 +300,9 @@ void MainWindow::on_eraserButton_clicked()
     selectButton(Tools::eraser);
 }
 
-
+///
+/// \brief Handles Bucket button press
+///
 void MainWindow::on_bucketButton_clicked()
 {
     emit colorPickerPicked(false);
@@ -267,7 +310,9 @@ void MainWindow::on_bucketButton_clicked()
     selectButton(Tools::bucket);
 }
 
-
+///
+/// \brief Handles Color Picker button press
+///
 void MainWindow::on_colorPickerButton_clicked()
 {
     emit colorPickerPicked(true);
@@ -275,11 +320,14 @@ void MainWindow::on_colorPickerButton_clicked()
     selectButton(Tools::colorPicker);
 }
 
+///
+/// \brief Selects the given tool in the toolbar (and unselects other tools)
+///
 void MainWindow::selectButton(Tools tool) {
-    //toolbar.switchTool(tool);
-
+    // Tools unselected by default
     bool brushChecked = false, eraserChecked = false, pickerChecked = false, bucketChecked = false;
 
+    // Get selected tool
     switch (tool) {
         case Tools::brush:
             brushChecked = true;
@@ -295,12 +343,16 @@ void MainWindow::selectButton(Tools tool) {
             break;
     }
 
+    // Select tool in UI
     ui->brushButton->setChecked(brushChecked);
     ui->eraserButton->setChecked(eraserChecked);
     ui->colorPickerButton->setChecked(pickerChecked);
     ui->bucketButton->setChecked(bucketChecked);
 }
 
+///
+/// \brief Handles Primary Color press
+///
 void MainWindow::on_primaryColorButton_clicked()
 {
     primaryColor = QColorDialog::getColor(primaryColor, this, "Primary Color", QColorDialog::ShowAlphaChannel);
@@ -308,12 +360,18 @@ void MainWindow::on_primaryColorButton_clicked()
     emit currentColor(primaryColor);
 }
 
+///
+/// \brief Handles Secondary Color press
+///
 void MainWindow::on_secondaryColorButton_clicked()
 {
     secondaryColor = QColorDialog::getColor(secondaryColor, this, "Secondary Color", QColorDialog::ShowAlphaChannel);
     ui->secondaryColorButton->setStyleSheet("background-color: " + secondaryColor.name() + ";border-style: none;");
 }
 
+///
+/// \brief Handles Swap Colors button press
+///
 void MainWindow::on_swapColorButton_clicked()
 {
     std::swap(primaryColor, secondaryColor);
@@ -322,15 +380,14 @@ void MainWindow::on_swapColorButton_clicked()
     emit currentColor(primaryColor);
 }
 
+///
+/// \brief Displays primary color in DrawingWindow
+/// \param color - Color to display
+///
 void MainWindow::changePrimaryColor(QColor color) {
     primaryColor = color;
     ui->primaryColorButton->setStyleSheet("background-color: " + primaryColor.name() + ";border-style: none;");
     emit currentColor(primaryColor);
     selectButton(Tools::brush);
-}
-
-void MainWindow::on_fpsSpinBox_valueChanged(int fps)
-{
-    emit newFps(fps);
 }
 

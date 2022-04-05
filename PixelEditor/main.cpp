@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "drawingwindow.h"
 #include "drawingwindowwidget.h"
 #include "previewwindow.h"
 

@@ -434,7 +434,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="frameLeftButton">
+   <widget class="QPushButton" name="frameUpButton">
     <property name="geometry">
      <rect>
       <x>470</x>
@@ -463,7 +463,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="frameRightButton">
+   <widget class="QPushButton" name="frameDownButton">
     <property name="geometry">
      <rect>
       <x>470</x>

@@ -299,7 +299,3 @@ void Frames::loadFile(QString fileName) {
      saveFile(filename);
      newFile(width, height);
  }
-
- void Frames::resetWindow() {
-      addFrame(width, height);
- }

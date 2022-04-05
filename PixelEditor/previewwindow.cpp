@@ -16,8 +16,3 @@ PreviewWindow::PreviewWindow(QWidget *parent)
 void PreviewWindow::displayPreviewFrame(QImage* frame) {
     previewWindow->setPixmap(QPixmap::fromImage(*frame));
 }
-
-void PreviewWindow::requestForWindow(){
-    QPixmap pxMap = previewWindow->pixmap();
-    emit sendWindow(&pxMap);
-}

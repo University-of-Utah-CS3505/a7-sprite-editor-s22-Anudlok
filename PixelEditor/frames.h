@@ -44,12 +44,10 @@ public slots:
     void playAllFrames(int framesPerSecond);
     void stopPlayingFrames();
     void setWidthAndHeight(int width, int height);
-    //void clearFrame();
     void saveFile(QString fileName);
     void loadFile(QString fileName);
     void newFile(int width, int height);
     void saveAndNewFile(QString filename, int width, int height);
-    void resetWindow();
     void bucketToolFrame(QColor color, int row, int column);
 };
 

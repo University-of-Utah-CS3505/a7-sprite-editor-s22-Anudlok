@@ -4,14 +4,12 @@
 #include <QMainWindow>
 #include <vector>
 #include "QtWidgets/qlistwidget.h"
-#include "drawingwindow.h"
 #include "drawingwindowwidget.h"
 #include "previewwindow.h"
 #include "animationpopup.h"
 #include "./ui_animationpopup.h"
 #include "frames.h"
 #include "toolbar.h"
-#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,24 +28,28 @@ public:
     std::vector<QListWidgetItem> widgetList;
 
 signals:
+    // New file signal
     void makeNewFrame(int width, int height);
+
+    // Frame button signals
     void addNewFrame();
-    void currentColor(QColor color);
-    void colorPickerPicked(bool state);
-    void moveCurrFrame(bool isUp);
-    void startDrawing();
-    //void clearScreen();
-    void animateFrames(std::vector<QListWidgetItem> frames);
-    void requestFrame();
     void deleteFrame();
-    void sendFrame();
+    void moveCurrFrame(bool isUp);
+
+    // File menu signals
     void saveFile(QString fileName);
     void loadFile(QString fileName);
     void newFile(int width, int height);
     void saveAndNewFile(QString filename, int width, int height);
-    void resetWindow();
-    void newFps(int);
+
+    // DELETE THESE
+    void currentColor(QColor color);
+    void colorPickerPicked(bool state);
     void bucketPicked(bool);
+    void startDrawing();
+
+    // ALSO DELETE
+    void newFps(int);
 
 private slots:
 
@@ -57,7 +59,7 @@ private slots:
     void on_actionOpen_triggered();
     void on_actionExit_triggered();
 
-    // Button and spinbox slots
+    // Toolbar slots
     void on_brushButton_clicked();
     void on_eraserButton_clicked();
     void on_bucketButton_clicked();
@@ -66,13 +68,13 @@ private slots:
     void on_secondaryColorButton_clicked();
     void on_swapColorButton_clicked();
 
+    // Slots for other buttons and spinboxes
     void on_playPreviewButton_clicked();
     void on_fpsSpinBox_valueChanged(int arg1);
     void on_deleteFrameButton_clicked();
     void on_addFrameButton_clicked();
-    void on_frameLeftButton_clicked();
-    void on_frameRightButton_clicked();
-
+    void on_frameUpButton_clicked();
+    void on_frameDownButton_clicked();
 
     // Drawing window slots
     void displayFrame(QImage* frame);
@@ -89,16 +91,18 @@ private slots:
 private:
     Ui::MainWindow *ui;
     AnimationPopUp *popUp;
-    //Toolbar toolbar;
+
     enum Tools {
         brush,
         eraser,
         bucket,
         colorPicker
     };
-    QColor primaryColor, secondaryColor;
-    QColor eraserColor;
+
+    QColor primaryColor, secondaryColor, eraserColor;
+
     const int frameItemHeight = 100;
+
     void selectButton(Tools tool);
 };
 #endif // MAINWINDOW_H

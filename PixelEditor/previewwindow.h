@@ -21,7 +21,6 @@ signals:
 
 public slots:
     void displayPreviewFrame(QImage* frame);
-    void requestForWindow();
 };
 
 #endif // PREVIEWWINDOW_H

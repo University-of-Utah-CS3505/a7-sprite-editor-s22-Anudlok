@@ -10,7 +10,6 @@ CONFIG += c++11
 
 SOURCES += \
     animationpopup.cpp \
-    drawingwindow.cpp \
     drawingwindowwidget.cpp \
     frames.cpp \
     main.cpp \
@@ -20,7 +19,6 @@ SOURCES += \
 
 HEADERS += \
     animationpopup.h \
-    drawingwindow.h \
     drawingwindowwidget.h \
     frames.h \
     mainwindow.h \
