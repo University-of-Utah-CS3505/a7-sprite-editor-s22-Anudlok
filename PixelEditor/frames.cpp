@@ -208,7 +208,6 @@ void Frames::saveFile(QString fileName) {
                  QJsonArray RGBAColors;
                  //Grab the color of the pixel and put it inside a array
                 QColor color = iter->pixelColor(pixel, row);
-
                 RGBAColors.push_back(color.red());
                 RGBAColors.push_back(color.green());
                 RGBAColors.push_back(color.blue());
@@ -278,7 +277,7 @@ void Frames::loadFile(QString fileName) {
         // Iterate through list of frames
         foreach(const QJsonValue &frame, listOfFrames) {
             // Create a fresh frame
-            QImage image (height, width, QImage::Format_RGB32);
+            QImage image (height, width, QImage::Format_ARGB32);
 
             // Create a array of rows for each frame
             QJsonArray rows = frame.toArray();

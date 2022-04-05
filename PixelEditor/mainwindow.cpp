@@ -34,7 +34,7 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
     ui->framesListWidget->setStyleSheet("QListWidget { background: white; }"
                                         "QListWidget::item { border: 3px solid black; "
                                         "background: rgba(0, 0, 0, 30);}"
-                                        "QListWidget::item:selected { foreground: white; "
+                                        "QListWidget::item:selected { "
                                         "background: rgba(0, 0, 100, 20)}");
 
     // Connects for new file
@@ -84,7 +84,7 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
     // Pop up input dialogs grabbing the width and height from the user
     bool ok;
     int width = QInputDialog::getInt(this, tr("Size of Sprite Project"),
-                                 tr("Width and Height:"), 25, 1, 128, 1, &ok);
+                                 tr("Width and Height:"), 32, 1, 128, 1, &ok);
     int height = width;
 
     // Make new frame of that width and height
@@ -116,7 +116,7 @@ void MainWindow::on_actionNew_triggered()
     // Dialogs to grab width & height from user
     bool ok;
     int width = QInputDialog::getInt(this, tr("Size of Sprite Project"),
-                                 tr("Width and Height:"), 25, 1, 128, 1, &ok);
+                                 tr("Width and Height:"), 32, 1, 128, 1, &ok);
     int height = width;
 
     switch (ret) {
