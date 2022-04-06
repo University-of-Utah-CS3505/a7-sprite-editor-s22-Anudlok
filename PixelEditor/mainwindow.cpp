@@ -109,6 +109,7 @@ MainWindow::MainWindow(QWidget *parent)
  * @brief Destructor for MainWindow
  */
 MainWindow::~MainWindow() {
+    // Deleting memory from the heap
     delete ui;
     delete popUp;
     delete frames;
@@ -118,9 +119,9 @@ MainWindow::~MainWindow() {
 
 /// File Menu Methods
 
-///
-/// \brief Handles New file button press
-///
+/**
+ * @brief Handles New file button press
+ */
 void MainWindow::on_actionNew_triggered()
 {
     QString filename = "";
@@ -159,9 +160,9 @@ void MainWindow::on_actionNew_triggered()
     }
 }
 
-///
-/// \brief Handles Save file button press
-///
+/**
+ * @brief Handles Save file button press
+ */
 void MainWindow::on_actionSave_triggered()
 {
     // Make QString of file name with QFileDialog
@@ -172,12 +173,11 @@ void MainWindow::on_actionSave_triggered()
     emit saveFile(filename);
 }
 
-///
-/// \brief Handles Open file button press
-///
+/**
+ * @brief Handles Open file button press
+ */
 void MainWindow::on_actionOpen_triggered()
 {
-
     QString filename = "";
     QMessageBox msgBox;
     msgBox.setText("You have unsaved changes.");
@@ -219,12 +219,11 @@ void MainWindow::on_actionOpen_triggered()
     }
 }
 
-///
-/// \brief Handles Exit file button press
-///
+/**
+ * @brief Handles Exit file button press
+ */
 void MainWindow::on_actionExit_triggered()
 {
-
     QString filename = "";
     QMessageBox msgBox;
     msgBox.setText("You have unsaved changes.");
@@ -234,27 +233,27 @@ void MainWindow::on_actionExit_triggered()
     int ret = msgBox.exec();
 
     switch (ret) {
-      case QMessageBox::Save: {
+        case QMessageBox::Save: {
           // Make QString of file name with QFileDialog
-          filename = QFileDialog::getSaveFileName(this,
+            filename = QFileDialog::getSaveFileName(this,
                                                 tr("Save Project"),
                                                 "",
                                                 tr("Sprite Project (*.ssp)"));
-          emit saveFile(filename);
+            emit saveFile(filename);
 
-          this->close();
-          break;
-      }
-      case QMessageBox::Discard:{
-          this->close();
-          break;
-      }
-      case QMessageBox::Cancel:
-          // Cancel was clicked
-          break;
-      default:
-          // Should never be reached
-          break;
+            this->close();
+            break;
+        }
+        case QMessageBox::Discard:{
+            this->close();
+            break;
+        }
+        case QMessageBox::Cancel:
+            // Cancel was clicked
+            break;
+        default:
+            // Should never be reached
+            break;
     }
 }
 
@@ -262,19 +261,19 @@ void MainWindow::on_actionExit_triggered()
 
 /// Animation Popup Methods
 
-///
-/// \brief Handles Play button press
-///
+/**
+ * @brief Handles Play button press
+ */
 void MainWindow::on_playPreviewButton_clicked()
 {
     popUp->show();
     emit popUp->playAnim(popUp->getFPS());
 }
 
-///
-/// \brief Handles change in frames per second
-/// \param fps - Frames per second
-///
+/**
+* @brief Handles change in frames per second
+* @param fps - Frames per second
+*/
 void MainWindow::on_fpsSpinBox_valueChanged(int fps)
 {
     emit newFps(fps);
@@ -282,39 +281,40 @@ void MainWindow::on_fpsSpinBox_valueChanged(int fps)
 
 /// Frame List Methods
 
-///
-/// \brief Handles Delete Frame button press
-///
+/**
+ * @brief Handles Delete Frame button press
+ */
 void MainWindow::on_deleteFrameButton_clicked()
 {
     emit deleteFrame();
 }
 
-///
-/// \brief Handles Add Frame button press
-///
+/**
+ * @brief Handles Add Frame button press
+ */
 void MainWindow::on_addFrameButton_clicked()
 {
     emit addFrame();
 }
 
-///
-/// \brief Adds frame to widget list
-/// \param frame - The frame to add
-/// \param index - The index to add the frame to
-///
+/**
+ * @brief Adds frame to widget list
+ * @param frame - The frame to add
+ * @param index - The index to add the frame to
+ */
 void MainWindow::addFrameToList(QPixmap *frame, int index) {
     QListWidgetItem* item = new QListWidgetItem();
     QPixmap scaledFrame = frame->scaledToHeight(frameItemHeight);
+
     item->setIcon(QIcon(scaledFrame));
     ui->framesListWidget->insertItem(index, item);
     ui->framesListWidget->setCurrentItem(item);
 }
 
-///
-/// \brief Adds frame to widget list
-/// \param index - The index of the frame to remove
-///
+/**
+ * @brief Adds frame to widget list
+ * @param index - The index of the frame to remove
+ */
 void MainWindow::removeFrameFromList(int index) {
     // Remove item from frame list widget
     QListWidgetItem* item = ui->framesListWidget->takeItem(index);
@@ -322,47 +322,51 @@ void MainWindow::removeFrameFromList(int index) {
     delete item;
 }
 
-///
-/// \brief Displays frame in widget list
-/// \param frame - The frame to display
-/// \param index - The index of the frame
-///
+/**
+ * @brief Displays frame in widget list
+ * @param frame - The frame to display
+ * @param index - The index of the frame
+ */
 void MainWindow::displayInList(QPixmap *frame, int index) {
     QListWidgetItem* currItem = ui->framesListWidget->item(index);
     QPixmap scaledFrame = frame->scaledToHeight(frameItemHeight);
     currItem->setIcon(QIcon(scaledFrame));
 }
 
-///
-/// \brief Clears the frame widget list
-///
+/**
+ * @brief Clears the frame widget list
+ */
 void MainWindow::clearFrameList() {
     ui->framesListWidget->clear();
 }
 
-///
-/// \brief Handles frame up button press
-///
+/**
+ * @brief Handles frame up button press
+ */
 void MainWindow::on_frameUpButton_clicked()
 {
     QListWidgetItem *current = ui->framesListWidget->currentItem();
     int nextIndex = ui->framesListWidget->row(current) - 1;
+
     if (nextIndex > -1) {
         QListWidgetItem *next = ui->framesListWidget->item(nextIndex);
+
         ui->framesListWidget->setCurrentItem(next);
     }
     emit moveCurrFrame(false);
 }
 
-///
-/// \brief Handles frame down button press
-///
+/**
+ * @brief Handles frame down button press
+ */
 void MainWindow::on_frameDownButton_clicked()
 {
     QListWidgetItem *current = ui->framesListWidget->currentItem();
     int nextIndex = ui->framesListWidget->row(current) + 1;
+
     if (nextIndex < ui->framesListWidget->count()) {
         QListWidgetItem *next = ui->framesListWidget->item(nextIndex);
+
         ui->framesListWidget->setCurrentItem(next);
     }
     emit moveCurrFrame(true);
@@ -370,10 +374,10 @@ void MainWindow::on_frameDownButton_clicked()
 
 /// Drawing Window Methods
 
-///
-/// \brief Displays frame in drawing window
-/// \param frame - Frame to display
-///
+/**
+ * @brief Displays frame in drawing window
+ * @param frame - Frame to display
+ */
 void MainWindow::displayFrame(QImage* frame) {
     ui->editDrawingWindow->setPixmap(QPixmap::fromImage(*frame));
     ui->editDrawingWindow->show();
@@ -381,9 +385,9 @@ void MainWindow::displayFrame(QImage* frame) {
 
 /// Toolbar Methods
 
-///
-/// \brief Handles Brush button press
-///
+/**
+ * @brief Handles Brush button press
+ */
 void MainWindow::on_brushButton_clicked()
 {
     emit colorPickerPicked(false);
@@ -392,9 +396,9 @@ void MainWindow::on_brushButton_clicked()
     selectButton(Tools::brush);
 }
 
-///
-/// \brief Handles Eraser button press
-///
+/**
+ * @brief Handles Eraser button press
+ */
 void MainWindow::on_eraserButton_clicked()
 {
     emit colorPickerPicked(false);
@@ -403,9 +407,9 @@ void MainWindow::on_eraserButton_clicked()
     selectButton(Tools::eraser);
 }
 
-///
-/// \brief Handles Bucket button press
-///
+/**
+ * @brief Handles Bucket button press
+ */
 void MainWindow::on_bucketButton_clicked()
 {
     emit colorPickerPicked(false);
@@ -413,9 +417,9 @@ void MainWindow::on_bucketButton_clicked()
     selectButton(Tools::bucket);
 }
 
-///
-/// \brief Handles Color Picker button press
-///
+/**
+ * @brief Handles Color Picker button press
+ */
 void MainWindow::on_colorPickerButton_clicked()
 {
     emit colorPickerPicked(true);
@@ -423,9 +427,10 @@ void MainWindow::on_colorPickerButton_clicked()
     selectButton(Tools::colorPicker);
 }
 
-///
-/// \brief Selects the given tool in the toolbar (and unselects other tools)
-///
+/**
+ * @brief Selects the given tool in the toolbar (and unselects other tools)
+ * @param tool
+ */
 void MainWindow::selectButton(Tools tool) {
     // Tools unselected by default
     bool brushChecked = false, eraserChecked = false, pickerChecked = false, bucketChecked = false;
@@ -453,28 +458,30 @@ void MainWindow::selectButton(Tools tool) {
     ui->bucketButton->setChecked(bucketChecked);
 }
 
-///
-/// \brief Handles Primary Color press
-///
+/**
+ * @brief Handles Primary Color press
+ */
 void MainWindow::on_primaryColorButton_clicked()
 {
     primaryColor = QColorDialog::getColor(primaryColor, this, "Primary Color", QColorDialog::ShowAlphaChannel);
+
     ui->primaryColorButton->setStyleSheet("background-color: " + primaryColor.name() + ";border-style: none;");
     emit currentColor(primaryColor);
 }
 
-///
-/// \brief Handles Secondary Color press
-///
+/**
+ * @brief Handles Secondary Color press
+ */
 void MainWindow::on_secondaryColorButton_clicked()
 {
     secondaryColor = QColorDialog::getColor(secondaryColor, this, "Secondary Color", QColorDialog::ShowAlphaChannel);
+
     ui->secondaryColorButton->setStyleSheet("background-color: " + secondaryColor.name() + ";border-style: none;");
 }
 
-///
-/// \brief Handles Swap Colors button press
-///
+/**
+ * @brief Handles Swap Colors button press
+ */
 void MainWindow::on_swapColorButton_clicked()
 {
     std::swap(primaryColor, secondaryColor);
@@ -483,50 +490,58 @@ void MainWindow::on_swapColorButton_clicked()
     emit currentColor(primaryColor);
 }
 
-///
-/// \brief Displays primary color in DrawingWindow
-/// \param color - Color to display
-///
+/**
+ * @brief Displays primary color in DrawingWindow
+ * @param color - Color to display
+ */
 void MainWindow::changePrimaryColor(QColor color) {
     primaryColor = color;
+
     ui->primaryColorButton->setStyleSheet("background-color: " + primaryColor.name() + ";border-style: none;");
     emit currentColor(primaryColor);
     selectButton(Tools::brush);
 }
 
-
+/**
+ * @brief Handles Credits button press
+ */
 void MainWindow::on_actionCredits_triggered()
 {
     QMessageBox msgBox;
+
     msgBox.setText("<h1>Credits:</h1>");
     msgBox.setInformativeText("<h2>Design and programming:</h2><br>"
-                              "Anna Timofeyenko<br>"
-                              "Gabby Culley<br>"
-                              "Gaby Torres<br>"
-                              "Raynard Christian<br>"
-                              "<br>"
-                              "<h2>Icons</h2> (by <a target=\"_blank\" href=\"https://icons8.com/\">Icons8</a>):<br>"
-                              "<a target=\"_blank\" href=\"https://icons8.com/icon/11815/add-file\">Add File icon by Icons8</a><br>"
-                              "<a target=\"_blank\" href=\"https://icons8.com/icon/13279/save\">Save icon icon by Icons8</a><br>"
-                              "<a target=\"_blank\" href=\"https://icons8.com/icon/12941/paint\">Opened Folder icon by Icons8</a><br>"
-                              "<a target=\"_blank\" href=\"https://icons8.com/icon/13903/close-window\">Close Window icon by Icons8</a><br>"
-                              "<a target=\"_blank\" href=\"https://icons8.com/icon/12941/paint\">Paint icon by Icons8</a><br>"
-                              "<a target=\"_blank\" href=\"https://icons8.com/icon/18705/erase\">Erase icon by Icons8</a><br>"
-                              "<a target=\"_blank\" href=\"https://icons8.com/icon/12937/fill-color\">Fill Color icon by Icons8</a><br>"
-                              "<a target=\"_blank\" href=\"https://icons8.com/icon/11888/color-dropper\">Color Dropper icon by Icons8</a><br>"
-                              "<a target=\"_blank\" href=\"https://icons8.com/icon/19041/curved-arrow\">Curved Arrow icon by Icons8</a><br>"
-                              "<a target=\"_blank\" href=\"https://icons8.com/icon/63671/circled-play\">Circled Play icon by Icons8</a><br>"
-                              "<a target=\"_blank\" href=\"https://icons8.com/icon/11816/add-image\">Add Image icon by Icons8</a><br>"
-                              "<a target=\"_blank\" href=\"https://icons8.com/icon/13066/remove-image\">Remove Image icon by Icons8</a><br>"
-                              "<a target=\"_blank\" href=\"https://icons8.com/icon/19162/sort-up\">Sort Up icon by Icons8</a><br>"
-                              "<a target=\"_blank\" href=\"https://icons8.com/icon/19161/sort-down\">Sort Down icon by Icons8</a><br>");
+        "Anna Timofeyenko<br>"
+        "Gabby Culley<br>"
+        "Gaby Torres<br>"
+        "Raynard Christian<br>"
+        "<br>"
+        "<h2>Icons</h2> (by <a target=\"_blank\" href=\"https://icons8.com/\">Icons8</a>):<br>"
+        "<a target=\"_blank\" href=\"https://icons8.com/icon/11815/add-file\">Add File icon by Icons8</a><br>"
+        "<a target=\"_blank\" href=\"https://icons8.com/icon/13279/save\">Save icon icon by Icons8</a><br>"
+        "<a target=\"_blank\" href=\"https://icons8.com/icon/12941/paint\">Opened Folder icon by Icons8</a><br>"
+        "<a target=\"_blank\" href=\"https://icons8.com/icon/13903/close-window\">Close Window icon by Icons8</a><br>"
+        "<a target=\"_blank\" href=\"https://icons8.com/icon/12941/paint\">Paint icon by Icons8</a><br>"
+        "<a target=\"_blank\" href=\"https://icons8.com/icon/18705/erase\">Erase icon by Icons8</a><br>"
+        "<a target=\"_blank\" href=\"https://icons8.com/icon/12937/fill-color\">Fill Color icon by Icons8</a><br>"
+        "<a target=\"_blank\" href=\"https://icons8.com/icon/11888/color-dropper\">Color Dropper icon by Icons8</a><br>"
+        "<a target=\"_blank\" href=\"https://icons8.com/icon/19041/curved-arrow\">Curved Arrow icon by Icons8</a><br>"
+        "<a target=\"_blank\" href=\"https://icons8.com/icon/63671/circled-play\">Circled Play icon by Icons8</a><br>"
+        "<a target=\"_blank\" href=\"https://icons8.com/icon/11816/add-image\">Add Image icon by Icons8</a><br>"
+        "<a target=\"_blank\" href=\"https://icons8.com/icon/13066/remove-image\">Remove Image icon by Icons8</a><br>"
+        "<a target=\"_blank\" href=\"https://icons8.com/icon/19162/sort-up\">Sort Up icon by Icons8</a><br>"
+        "<a target=\"_blank\" href=\"https://icons8.com/icon/19161/sort-down\">Sort Down icon by Icons8</a><br>");
     msgBox.exec();
 }
 
-
+/**
+ * @brief Handles item press for list widget
+ * @param item - The selected item in the list widget
+ */
 void MainWindow::on_framesListWidget_itemPressed(QListWidgetItem *item)
 {
     int index = ui->framesListWidget->row(item);
+
     emit selectFrame(index);
 }
 

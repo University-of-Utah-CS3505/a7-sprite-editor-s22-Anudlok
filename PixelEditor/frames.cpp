@@ -1,7 +1,6 @@
 /************************************************
  * DrawingWindow class
- * Class definition for displaying the animation
- * pop up window
+ * Class definition for storing the frames
  * @author: Anna Timofeyenko, Gabby Culley,
  *          Gaby Torres, Raynard Christian
  * @date: 4/5/2022
@@ -19,29 +18,29 @@
 #include <QVector>
 #include <QTimer>
 
-///
-/// \brief Frames constructor.
-/// \param parent
-///
+/**
+ * @brief Frames constructor.
+ * @param parent
+ */
 Frames::Frames(QObject *parent)
     : QObject{parent}
 {
 
 }
 
-///
-/// \brief Sets the width and height of the frames.
-/// \param _width
-/// \param _height
-///
+/**
+ * @brief Sets the width and height of the frames.
+ * @param _width - The width of the frame
+ * @param _height - The height of the frame
+ */
 void Frames::setWidthAndHeight(int _width, int _height) {
     width = _width;
     height = _height;
 }
 
-///
-/// \brief Sends current frame to drawing window and preview window to display.
-///
+/**
+ * @brief Sends current frame to drawing window and preview window to display.
+ */
 void Frames::updateView() {
     if (currentFrame > 0) {
         emit displayFrame(&(frameList[currentFrame]), &(frameList[currentFrame - 1]), width, height);
@@ -52,44 +51,44 @@ void Frames::updateView() {
     emit displayPreview(&(frameList[currentFrame]));
 }
 
-///
-/// \brief Sends current frame to frame list (in View) to display.
-///
+/**
+ * @brief Sends current frame to frame list (in View) to display.
+ */
 void Frames::updateViewFrameList() {
     QPixmap pxMap = QPixmap::fromImage(frameList[currentFrame]);
     emit displayInList(&pxMap, currentFrame);
 }
 
-///
-/// \brief Sends a new frame to frame list (in View) to display.
-///
+/**
+ * @brief Sends a new frame to frame list (in View) to display.
+ */
 void Frames::addToFrameList() {
     QPixmap pxMap = QPixmap::fromImage(frameList[currentFrame]);
     emit addFrameToList(&pxMap, currentFrame);
 }
 
-///
-/// \brief Notifies the frame list (in View) to remove the frame at the given index.
-/// \param deletedFrame - Index of frame to remove
-///
+/**
+ * @brief Notifies the frame list (in View) to remove the frame at the given index.
+ * @param deletedFrame - Index of frame to remove
+ */
 void Frames::removeFromFrameList(int deletedFrame) {
     emit removeFrameFromList(deletedFrame);
 }
 
-///
-/// \brief Sets size of frames and adds new frame.
-/// \param _width
-/// \param _height
-///
+/**
+ * @brief Sets size of frames and adds new frame.
+ * @param _width - The width of the frame
+ * @param _height - The height of the frame
+ */
 void Frames::addFrameWithSize(int _width, int _height){
     setWidthAndHeight(_width, _height);
     addFrame();
 }
 
-///
-/// \brief Adds new transparent frame to list and updates view.
-/// Current frame is set to the new frame.
-///
+/**
+ * @brief Adds new transparent frame to list and updates view.
+ * Current frame is set to the new frame.
+ */
 void Frames::addFrame() {
     QImage image = QImage(width, height, QImage::Format_ARGB32);
     image.fill(QColor(0, 0, 0, 0));
@@ -100,9 +99,9 @@ void Frames::addFrame() {
     addToFrameList();
 }
 
-///
-/// \brief Deletes current frame from the list and updates view.
-///
+/**
+ * @brief Deletes current frame from the list and updates view.
+ */
 void Frames::deleteFrame() {
     int deleteFrameIndex = currentFrame;
 
@@ -124,25 +123,25 @@ void Frames::deleteFrame() {
     }
 }
 
-///
-/// \brief Sets pixel at coordinate to the given color and updates the view.
-/// \param color - Color to set pixel to
-/// \param row - Row of pixel
-/// \param column - Column of pixel
-///
+/**
+ * @brief Sets pixel at coordinate to the given color and updates the view.
+ * @param color - Color to set pixel to
+ * @param row - Row of pixel
+ * @param column - Column of pixel
+ */
 void Frames::updateFrame(QColor color, int row, int column) {
     frameList[currentFrame].setPixelColor(row, column, color);
     updateView();
     updateViewFrameList();
 }
 
-///
-/// \brief Fills the pixel at the given coordinate and all connected
-/// same-colored pixels with the given color.
-/// \param color - Color to fill with
-/// \param row - Row of pixel
-/// \param column - Column of pixel
-///
+/**
+ * @brief Fills the pixel at the given coordinate and all connected
+ * same-colored pixels with the given color.
+ * @param color - Color to fill with
+ * @param row - Row of pixel
+ * @param column - Column of pixel
+ */
 void Frames::bucketToolFrame(QColor color, int row, int column) {
     // Get current color of first pixel
     QColor colorToChange = frameList[currentFrame].pixelColor(row, column);
@@ -184,10 +183,10 @@ void Frames::bucketToolFrame(QColor color, int row, int column) {
     updateViewFrameList();
 }
 
-///
-/// \brief Selects the frame at the given index and updates the view.
-/// \param index - Index of selected frame
-///
+/**
+ * @brief Selects the frame at the given index and updates the view.
+ * @param index - Index of selected frame
+ */
 void Frames::selectFrames(int index) {
     currentFrame = index;
     updateView();
@@ -198,6 +197,11 @@ void Frames::selectFrames(int index) {
 /// \param upOrDown - True if user wants to go up in the frame list,
 /// false otherwise
 ///
+/**
+ * @brief Changes the frame on the drawing window given the up or down boolean.
+ * @param upOrDown - True if user wants to go up in the frame list,
+ * false otherwise
+ */
 void Frames::changeFrame(bool upOrDown) {
     if (upOrDown) {
        if(currentFrame < frameList.size()-1){
@@ -212,10 +216,10 @@ void Frames::changeFrame(bool upOrDown) {
     updateView();
 }
 
-///
-/// \brief Plays all the frames using the given FPS.
-/// \param framesPerSecond - The FPS for the animation
-///
+/**
+ * @brief Plays all the frames using the given FPS.
+ * @param framesPerSecond - The FPS for the animation
+ */
 void Frames::playAllFrames(int framesPerSecond) {
    animFrame = 0;
    interval = 1000 / framesPerSecond;
@@ -223,9 +227,9 @@ void Frames::playAllFrames(int framesPerSecond) {
    playNextFrame();
 }
 
-///
-/// \brief Plays the next frame in the list.
-///
+/**
+ * @brief Plays the next frame in the list.
+ */
 void Frames::playNextFrame() {
     // Notify view of frame to play
     emit displayAnimFrame(&(frameList[animFrame]));
@@ -236,17 +240,17 @@ void Frames::playNextFrame() {
         QTimer::singleShot(interval, this, &Frames::playNextFrame);
 }
 
-///
-/// \brief Stops playing all the frames.
-///
+/**
+ * @brief Stops playing all the frames.
+ */
 void Frames::stopPlayingFrames() {
     animPlaying = false;
 }
 
-///
-/// \brief Saves the Sprite Project using the given file name.
-/// \param fileName - The name the project should be saved under
-///
+/**
+* @brief Saves the Sprite Project using the given file name.
+* @param fileName - The name the project should be saved under
+*/
 void Frames::saveFile(QString fileName) {
     int counter = 0;
     QFile file(fileName);
@@ -309,10 +313,10 @@ void Frames::saveFile(QString fileName) {
     file.close();
 }
 
-///
-/// \brief Loads the Sprite Project given the file name.
-/// \param fileName - The name of the file to be loaded
-///
+/**
+ * @brief Loads the Sprite Project given the file name.
+ * @param fileName - The name of the file to be loaded
+ */
 void Frames::loadFile(QString fileName) {
     if (fileName.isEmpty()) {
         return;
@@ -377,11 +381,11 @@ void Frames::loadFile(QString fileName) {
     }
 }
 
-///
-/// \brief Makes a new file using the given width and height.
-/// \param width - The width of the Sprite project
-/// \param height - The height of the Sprite project
-///
+/**
+  * @brief Makes a new file using the given width and height.
+  * @param width - The width of the Sprite project
+  * @param height - The height of the Sprite project
+  */
  void Frames::newFile(int width, int height) {
      // Clears the current frame list and counter.
      currentFrame = -1;
