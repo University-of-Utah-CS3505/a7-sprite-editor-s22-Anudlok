@@ -229,19 +229,23 @@ void MainWindow::on_actionExit_triggered()
     QMessageBox msgBox;
     msgBox.setText("You have unsaved changes.");
     msgBox.setInformativeText("Do you want to save your changes before exiting?");
-    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Save);
     int ret = msgBox.exec();
 
     switch (ret) {
       case QMessageBox::Save: {
-        // Make QString of file name with QFileDialog
-        filename = QFileDialog::getSaveFileName(this,
+          // Make QString of file name with QFileDialog
+          filename = QFileDialog::getSaveFileName(this,
                                                 tr("Save Project"),
                                                 "",
                                                 tr("Sprite Project (*.ssp)"));
           emit saveFile(filename);
 
+          this->close();
+          break;
+      }
+      case QMessageBox::Discard:{
           this->close();
           break;
       }
