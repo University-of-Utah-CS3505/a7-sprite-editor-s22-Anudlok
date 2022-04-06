@@ -168,7 +168,7 @@ void DrawingWindow::colorPickerPicked(bool state) {
 }
 
 /**
- * @brief DrawingWindow::getColorPicked get whether or not color picker
+ * @brief DrawingWindow::getColorPicked slot to indicate whther the color picker
  * was picked
  * @return whether or not color picker was picked
  */

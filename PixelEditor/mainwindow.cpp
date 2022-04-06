@@ -546,7 +546,8 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
     int y = dw->getY();
     //statement checks if the mouse clicks in bounds
     //to the drawing window to draw
-    if (dw->getMouseButtonDown() && (x >= 0 && x < dw->SCREEN_WIDTH) && (y >= 0 && y < dw->SCREEN_HEIGHT)) {
+    if (dw->getMouseButtonDown() && (x >= 0 && x < dw->SCREEN_WIDTH) &&
+            (y >= 0 && y < dw->SCREEN_HEIGHT)) {
         dw->mouseColor(x, y);
     }
 }
@@ -568,6 +569,8 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
         QColor colorOfPixel = pixmap.pixelColor(x, y);
         if (colorOfPixel.alpha() > 0)
             dw->setCurrentColor(colorOfPixel);
+        selectButton(Tools::brush);
+        changePrimaryColor(colorOfPixel);
     }
     else {
         dw->mouseColor(x, y);
