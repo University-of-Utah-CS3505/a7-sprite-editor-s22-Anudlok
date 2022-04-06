@@ -13,6 +13,9 @@
 #include <QLabel>
 #include <QPixmap>
 
+/**
+ * @brief The PreviewWindow class
+ */
 class PreviewWindow : public QWidget
 {
     Q_OBJECT

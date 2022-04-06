@@ -24,8 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
 {          
     //Making the widgets to be connected
     frames = new Frames();
-    dw = new DrawingWindow();
-    pw = new PreviewWindow();
+    dw = new DrawingWindow(this);
+    pw = new PreviewWindow(this);
     popUp = new AnimationPopUp;
 
     // UI configuration at start of application
@@ -36,8 +36,8 @@ MainWindow::MainWindow(QWidget *parent)
     secondaryColor = Qt::white;
     eraserColor = QColor(0, 0, 0, 0);
 
-    this->layout()->addWidget(dw);
-    this->layout()->addWidget(pw);
+//    this->layout()->addWidget(dw);
+//    this->layout()->addWidget(pw);
 
     //UI Setup
     ui->editDrawingWindow->setVisible(false);
@@ -64,6 +64,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(dw, &DrawingWindow::fillPixel, frames, &Frames::bucketToolFrame);
     connect(frames, &Frames::displayFrame, dw, &DrawingWindow::displayCurrentFrame);
     connect(dw, &DrawingWindow::colorChosen, this, &MainWindow::changePrimaryColor);
+
+    // Delete this
     connect(this, &MainWindow::currentColor, dw, &DrawingWindow::setCurrentColor);
     connect(this, &MainWindow::colorPickerPicked, dw, &DrawingWindow::colorPicked);
     connect(this, &MainWindow::startDrawing, dw, &DrawingWindow::startDrawing);

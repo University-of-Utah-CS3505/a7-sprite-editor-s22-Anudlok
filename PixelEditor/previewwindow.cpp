@@ -10,9 +10,14 @@
 #include <QPixmap>
 #include <QImage>
 
+/**
+ * @brief Preview Window Constructor
+ * @param parent
+ */
 PreviewWindow::PreviewWindow(QWidget *parent)
     : QWidget{parent}
 {
+    // Set up the preview window screen
     this->setGeometry(540, 40, screenWidth, screenHeight);
 
     previewWindow = new QLabel(this);

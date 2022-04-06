@@ -39,14 +39,20 @@ void Frames::setWidthAndHeight(int _width, int _height) {
 }
 
 /**
- * @brief Sends current frame to drawing window and preview window to display.
+ * @brief Sends current frame to drawing window and
+ * preview window to display.
  */
 void Frames::updateView() {
     if (currentFrame > 0) {
-        emit displayFrame(&(frameList[currentFrame]), &(frameList[currentFrame - 1]), width, height);
+        // Adds shadow of the previous frame
+        // starting at the 2nd frame
+        emit displayFrame(&(frameList[currentFrame]),
+                          &(frameList[currentFrame - 1]), width, height);
     }
     else {
-        emit displayFrame(&(frameList[currentFrame]), &(frameList[currentFrame]), width, height);
+        // Don't have the frame at the beginning frame
+        emit displayFrame(&(frameList[currentFrame]),
+                          &(frameList[currentFrame]), width, height);
     }
     emit displayPreview(&(frameList[currentFrame]));
 }
@@ -68,7 +74,8 @@ void Frames::addToFrameList() {
 }
 
 /**
- * @brief Notifies the frame list (in View) to remove the frame at the given index.
+ * @brief Notifies the frame list (in View) to remove the frame
+ * at the given index.
  * @param deletedFrame - Index of frame to remove
  */
 void Frames::removeFromFrameList(int deletedFrame) {
@@ -124,7 +131,8 @@ void Frames::deleteFrame() {
 }
 
 /**
- * @brief Sets pixel at coordinate to the given color and updates the view.
+ * @brief Sets pixel at coordinate to the given color and
+ * updates the view.
  * @param color - Color to set pixel to
  * @param row - Row of pixel
  * @param column - Column of pixel
@@ -144,7 +152,8 @@ void Frames::updateFrame(QColor color, int row, int column) {
  */
 void Frames::bucketToolFrame(QColor color, int row, int column) {
     // Get current color of first pixel
-    QColor colorToChange = frameList[currentFrame].pixelColor(row, column);
+    QColor colorToChange = frameList[currentFrame].pixelColor(row,
+                                                              column);
 
     // Fill the first pixel and add to a queue
     QVector<QPair<int, int>> filledPixels;
@@ -163,13 +172,18 @@ void Frames::bucketToolFrame(QColor color, int row, int column) {
                     int rowToAdd = currentPixelCoord.first + i;
                     int columnToAdd = currentPixelCoord.second + j;
 
-                    // If adjacent pixel is within the drawing window's bounds
-                    if ((rowToAdd >= 0 && rowToAdd < width) && (columnToAdd >= 0 && columnToAdd < height)) {
+                    // If adjacent pixel is within the drawing
+                    // window's bounds
+                    if ((rowToAdd >= 0 && rowToAdd < width) &&
+                            (columnToAdd >= 0 && columnToAdd < height)) {
                         // If the color of the pixel needs to be changed
-                        if (frameList[currentFrame].pixelColor(rowToAdd, columnToAdd) == colorToChange
-                          && frameList[currentFrame].pixelColor(rowToAdd, columnToAdd) != color) {
+                        if (frameList[currentFrame].pixelColor(rowToAdd,
+                                                               columnToAdd) == colorToChange
+                          && frameList[currentFrame].pixelColor(rowToAdd,
+                                                                columnToAdd) != color) {
                             // Change pixel's color and add to filled pixel queue
-                            frameList[currentFrame].setPixelColor(rowToAdd, columnToAdd, color);
+                            frameList[currentFrame].setPixelColor(rowToAdd,
+                                                                  columnToAdd, color);
                             QPair<int, int> newPixelCoord(rowToAdd, columnToAdd);
                             filledPixels.push_front(newPixelCoord);
                         }
@@ -192,13 +206,9 @@ void Frames::selectFrames(int index) {
     updateView();
 }
 
-///
-/// \brief Changes the frame on the drawing window given the up or down boolean.
-/// \param upOrDown - True if user wants to go up in the frame list,
-/// false otherwise
-///
 /**
- * @brief Changes the frame on the drawing window given the up or down boolean.
+ * @brief Changes the frame on the drawing window given the up or
+ * down boolean.
  * @param upOrDown - True if user wants to go up in the frame list,
  * false otherwise
  */
@@ -248,9 +258,9 @@ void Frames::stopPlayingFrames() {
 }
 
 /**
-* @brief Saves the Sprite Project using the given file name.
-* @param fileName - The name the project should be saved under
-*/
+ * @brief Saves the Sprite Project using the given file name.
+ * @param fileName - The name the project should be saved under
+ */
 void Frames::saveFile(QString fileName) {
     int counter = 0;
     QFile file(fileName);
@@ -265,7 +275,8 @@ void Frames::saveFile(QString fileName) {
      // Make a frames object
      QJsonObject listOfFrames;
      // Iterate through vector of frames
-     for(QVector<QImage>::iterator iter = frameList.begin(); iter != frameList.end(); iter++) {
+     for(QVector<QImage>::iterator iter = frameList.begin();
+         iter != frameList.end(); iter++) {
          QJsonArray frame;
 
          // Iterate through the rows
@@ -303,7 +314,8 @@ void Frames::saveFile(QString fileName) {
      document.setObject(projectObj);
      QByteArray bytes = document.toJson( QJsonDocument::Indented);
      QFile writeFile(fileName);
-     if(writeFile.open( QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
+     if(writeFile.open( QIODevice::WriteOnly | QIODevice::Text |
+                        QIODevice::Truncate))
      {
          QTextStream iStream(&writeFile);
          iStream << bytes;
@@ -331,7 +343,8 @@ void Frames::loadFile(QString fileName) {
 
         // If there is a error reading in the file, pop up a window
         if(!file.open(QIODevice::ReadOnly)) {
-            QMessageBox::information(0, "Error reading file.", file.errorString());
+            QMessageBox::information(0, "Error reading file.",
+                                     file.errorString());
         }
 
         QByteArray array = file.readAll();
@@ -360,7 +373,8 @@ void Frames::loadFile(QString fileName) {
                 for (int pixel = 0; pixel < pixels.size(); pixel++) {
                     // Create a rgba color using the array within a pixel
                     QJsonArray RGBAColors = pixels[pixel].toArray();
-                    QColor color(RGBAColors[0].toInt(), RGBAColors[1].toInt(), RGBAColors[2].toInt(), RGBAColors[3].toInt());
+                    QColor color(RGBAColors[0].toInt(), RGBAColors[1].toInt(),
+                            RGBAColors[2].toInt(), RGBAColors[3].toInt());
                     image.setPixelColor(pixel, row, color);
                 }
             }
@@ -382,28 +396,28 @@ void Frames::loadFile(QString fileName) {
 }
 
 /**
-  * @brief Makes a new file using the given width and height.
-  * @param width - The width of the Sprite project
-  * @param height - The height of the Sprite project
-  */
- void Frames::newFile(int width, int height) {
-     // Clears the current frame list and counter.
-     currentFrame = -1;
-     frameList.clear();
-     emit clearFrameList();
+ * @brief Makes a new file using the given width and height.
+ * @param width - The width of the Sprite project
+ * @param height - The height of the Sprite project
+ */
+void Frames::newFile(int width, int height) {
+    // Clears the current frame list and counter.
+    currentFrame = -1;
+    frameList.clear();
+    emit clearFrameList();
 
-     // Adds a new frame using the given width and height
-     addFrameWithSize(width, height);
- }
+    // Adds a new frame using the given width and height
+    addFrameWithSize(width, height);
+}
 
- ///
- /// \brief Saves the file using the given file name, then makes
- /// a new window with the given height and width.
- /// \param filename - The filename used to save the project under
- /// \param width - The width of the Sprite project
- /// \param height - The height of the Sprite project
- ///
- void Frames::saveAndNewFile(QString filename, int width, int height) {
-     saveFile(filename);
-     newFile(width, height);
- }
+/**
+ * @brief Saves the file using the given file name, then makes
+ * a new window with the given height and width.
+ * @param filename - The filename used to save the project under
+ * @param width - The width of the Sprite project
+ * @param height - The height of the Sprite project
+ */
+void Frames::saveAndNewFile(QString filename, int width, int height) {
+    saveFile(filename);
+    newFile(width, height);
+}

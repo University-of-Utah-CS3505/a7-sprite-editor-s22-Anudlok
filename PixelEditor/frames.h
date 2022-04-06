@@ -11,9 +11,10 @@
 #include <QObject>
 #include <QImage>
 
-///
-/// \brief The Frames class - The Model class header file
-///
+/**
+ * @brief The Frames class - The Model class header
+ * file
+ */
 class Frames : public QObject
 {
     Q_OBJECT
@@ -36,10 +37,11 @@ private:
     void playNextFrame();
 
 signals:
-    void displayFrame(QImage* frame, QImage* prevFrame, int width, int height);
+    void displayFrame(QImage* frame, QImage* prevFrame,
+                      int width, int height);
     void displayPreview(QImage* frame);
     void sendFrame(QPixmap *frame, int index);
-    void displayAnimFrame(QImage* frame);//, int width, int height);
+    void displayAnimFrame(QImage* frame);
     void displayInList(QPixmap*, int);
     void addFrameToList(QPixmap *, int);
     void removeFrameFromList(int);
@@ -57,11 +59,10 @@ public slots:
     void saveFile(QString fileName);
     void loadFile(QString fileName);
     void newFile(int width, int height);
-    void saveAndNewFile(QString filename, int width, int height);
+    void saveAndNewFile(QString filename, int width,
+                        int height);
     void bucketToolFrame(QColor color, int row, int column);
     void selectFrames(int index);
 };
-
-
 
 #endif // FRAMES_H
