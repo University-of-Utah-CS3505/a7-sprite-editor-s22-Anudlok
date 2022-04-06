@@ -1,3 +1,11 @@
+/************************************************
+ * DrawingWindow class
+ * Class definition for displaying Drawing
+ * Window
+ * @author: Anna Timofeyenko, Gabby Culley,
+ *          Gaby Torres, Raynard Christian
+ * @date: 4/5/2022
+************************************************/
 #include "drawingwindowwidget.h"
 #include "QImage"
 

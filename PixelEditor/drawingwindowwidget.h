@@ -1,3 +1,10 @@
+/************************************************
+ * DrawingWindow class
+ * Class Definition for the Drawing Window
+ * @author: Anna Timofeyenko, Gabby Culley,
+ *          Gaby Torres, Raynard Christian
+ * @date: 4/5/2022
+************************************************/
 #ifndef DRAWINGWINDOWWIDGET_H
 #define DRAWINGWINDOWWIDGET_H
 

@@ -1,3 +1,11 @@
+/************************************************
+ * DrawingWindow class
+ * Class definition for displaying the main
+ * window which displays all the widget.
+ * @author: Anna Timofeyenko, Gabby Culley,
+ *          Gaby Torres, Raynard Christian
+ * @date: 4/5/2022
+************************************************/
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 

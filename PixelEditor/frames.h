@@ -1,3 +1,10 @@
+/************************************************
+ * DrawingWindow class
+ * Class definition for the Frames class
+ * @author: Anna Timofeyenko, Gabby Culley,
+ *          Gaby Torres, Raynard Christian
+ * @date: 4/5/2022
+************************************************/
 #ifndef FRAMES_H
 #define FRAMES_H
 

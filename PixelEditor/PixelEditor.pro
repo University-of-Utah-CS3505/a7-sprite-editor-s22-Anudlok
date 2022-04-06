@@ -14,16 +14,14 @@ SOURCES += \
     frames.cpp \
     main.cpp \
     mainwindow.cpp \
-    previewwindow.cpp \
-    toolbar.cpp
+    previewwindow.cpp
 
 HEADERS += \
     animationpopup.h \
     drawingwindowwidget.h \
     frames.h \
     mainwindow.h \
-    previewwindow.h \
-    toolbar.h
+    previewwindow.h
 
 FORMS += \
     animationpopup.ui \

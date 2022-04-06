@@ -1,3 +1,11 @@
+/************************************************
+ * DrawingWindow class
+ * Class definition for displaying the animation
+ * pop up window
+ * @author: Anna Timofeyenko, Gabby Culley,
+ *          Gaby Torres, Raynard Christian
+ * @date: 4/5/2022
+************************************************/
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QImage>
@@ -167,32 +175,34 @@ void MainWindow::on_actionOpen_triggered()
     QMessageBox msgBox;
     msgBox.setText("You have unsaved changes.");
     msgBox.setInformativeText("Do you want to save your changes before opening another project?");
-    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Save);
     int ret = msgBox.exec();
 
     switch (ret) {
-      case QMessageBox::Save: {
+        case QMessageBox::Save: {
         // Make QString of file name with QFileDialog
-        filename = QFileDialog::getSaveFileName(this,
+            filename = QFileDialog::getSaveFileName(this,
                                                 tr("Save Project"),
                                                 "",
                                                 tr("Sprite Project (*.ssp)"));
-          emit saveFile(filename);
+            emit saveFile(filename);
 
-          QString fileName = QFileDialog::getOpenFileName(this,
+            QString fileName = QFileDialog::getOpenFileName(this,
                                                         tr("Open Sprite Project"),
                                                         QDir::homePath(),
                                                         tr("Sprite Project (*.ssp)"));
-          emit loadFile(fileName);
-          break;
-      }
-      case QMessageBox::Cancel:
-          // Cancel was clicked
-          break;
-      default:
-          // Should never be reached
-          break;
+            emit loadFile(fileName);
+            break;
+        }
+        case QMessageBox::Discard:
+            break;
+        case QMessageBox::Cancel:
+            // Cancel was clicked
+            break;
+        default:
+            // Should never be reached
+            break;
     }
 }
 

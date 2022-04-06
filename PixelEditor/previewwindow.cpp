@@ -1,3 +1,11 @@
+/************************************************
+ * DrawingWindow class
+ * Class definition for displaying the animation
+ * pop up window
+ * @author: Anna Timofeyenko, Gabby Culley,
+ *          Gaby Torres, Raynard Christian
+ * @date: 4/5/2022
+************************************************/
 #include "previewwindow.h"
 #include <QPixmap>
 #include <QImage>
