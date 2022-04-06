@@ -103,6 +103,9 @@ private slots:
 private:
     Ui::MainWindow *ui;
     AnimationPopUp *popUp;
+    Frames* frames;
+    DrawingWindow* dw;
+    PreviewWindow* pw;
 
     enum Tools {
         brush,

@@ -1,7 +1,7 @@
 /************************************************
  * DrawingWindow class
- * Class definition for displaying the animation
- * pop up window
+ * Class definition for displaying the main
+ * window which displays all the widget.
  * @author: Anna Timofeyenko, Gabby Culley,
  *          Gaby Torres, Raynard Christian
  * @date: 4/5/2022
@@ -22,15 +22,16 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {          
-    Frames* frames = new Frames();
-    DrawingWindow* dw = new DrawingWindow();
-    PreviewWindow* pw = new PreviewWindow();
+    //Making the widgets to be connected
+    frames = new Frames();
+    dw = new DrawingWindow();
+    pw = new PreviewWindow();
+    popUp = new AnimationPopUp;
 
     // UI configuration at start of application
     this->ui->setupUi(this);
 
-    popUp = new AnimationPopUp;
-
+    //Make default colors
     primaryColor = Qt::black;
     secondaryColor = Qt::white;
     eraserColor = QColor(0, 0, 0, 0);
@@ -38,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->layout()->addWidget(dw);
     this->layout()->addWidget(pw);
 
+    //UI Setup
     ui->editDrawingWindow->setVisible(false);
     ui->brushButton->setEnabled(true);
     ui->framesListWidget->setIconSize(QSize(frameItemHeight, frameItemHeight));
@@ -61,8 +63,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(dw, &DrawingWindow::colorPixel, frames, &Frames::updateFrame);
     connect(dw, &DrawingWindow::fillPixel, frames, &Frames::bucketToolFrame);
     connect(frames, &Frames::displayFrame, dw, &DrawingWindow::displayCurrentFrame);
-
-    // DELETE THESE
     connect(dw, &DrawingWindow::colorChosen, this, &MainWindow::changePrimaryColor);
     connect(this, &MainWindow::currentColor, dw, &DrawingWindow::setCurrentColor);
     connect(this, &MainWindow::colorPickerPicked, dw, &DrawingWindow::colorPicked);
@@ -90,6 +90,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::newFile, frames, &Frames::newFile);
     connect(this, &MainWindow::saveAndNewFile, frames, &Frames::saveAndNewFile);
 
+    //Send the default color to Frames
     emit currentColor(primaryColor);
 
     // Pop up input dialogs grabbing the width and height from the user
@@ -104,9 +105,15 @@ MainWindow::MainWindow(QWidget *parent)
     }
 }
 
+/**
+ * @brief Destructor for MainWindow
+ */
 MainWindow::~MainWindow() {
     delete ui;
     delete popUp;
+    delete frames;
+    delete dw;
+    delete pw;
 }
 
 /// File Menu Methods
