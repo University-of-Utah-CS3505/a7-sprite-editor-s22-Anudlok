@@ -258,8 +258,6 @@ void MainWindow::on_actionExit_triggered()
     }
 }
 
-/// End File Menu Methods
-
 /// Animation Popup Methods
 
 ///
