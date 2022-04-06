@@ -36,9 +36,6 @@ MainWindow::MainWindow(QWidget *parent)
     secondaryColor = Qt::white;
     eraserColor = QColor(0, 0, 0, 0);
 
-//    this->layout()->addWidget(dw);
-//    this->layout()->addWidget(pw);
-
     //UI Setup
     ui->editDrawingWindow->setVisible(false);
     ui->brushButton->setEnabled(true);
@@ -63,13 +60,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(dw, &DrawingWindow::colorPixel, frames, &Frames::updateFrame);
     connect(dw, &DrawingWindow::fillPixel, frames, &Frames::bucketToolFrame);
     connect(frames, &Frames::displayFrame, dw, &DrawingWindow::displayCurrentFrame);
-    connect(dw, &DrawingWindow::colorChosen, this, &MainWindow::changePrimaryColor);
 
-    // Delete this
-    connect(this, &MainWindow::currentColor, dw, &DrawingWindow::setCurrentColor);
-    connect(this, &MainWindow::colorPickerPicked, dw, &DrawingWindow::colorPicked);
-    connect(this, &MainWindow::startDrawing, dw, &DrawingWindow::startDrawing);
-    connect(this, &MainWindow::bucketPicked, dw, &DrawingWindow::bucketPicked);
+    connect(dw, &DrawingWindow::colorChosen, this, &MainWindow::changePrimaryColor);
 
     // PreviewWindow-related Connects
     connect(frames, &Frames::displayPreview, pw, &PreviewWindow::displayPreviewFrame);
@@ -84,7 +76,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(frames, &Frames::displayAnimFrame, popUp, &AnimationPopUp::displayAnimFrame);
     connect(popUp, &AnimationPopUp::playAnim, frames, &Frames::playAllFrames);
     connect(popUp, &AnimationPopUp::stopAnim, frames, &Frames::stopPlayingFrames);
-    connect(this, &MainWindow::newFps, popUp, &AnimationPopUp::changeFramesPerSecond);
 
     // File-related Connects
     connect(this, &MainWindow::loadFile, frames, &Frames::loadFile);
@@ -93,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::saveAndNewFile, frames, &Frames::saveAndNewFile);
 
     //Send the default color to Frames
-    emit currentColor(primaryColor);
+    dw->setCurrentColor(primaryColor);
 
     // Pop up input dialogs grabbing the width and height from the user
     bool ok;
@@ -276,7 +267,7 @@ void MainWindow::on_playPreviewButton_clicked()
 */
 void MainWindow::on_fpsSpinBox_valueChanged(int fps)
 {
-    emit newFps(fps);
+    popUp->setFPS(fps);
 }
 
 /// Frame List Methods
@@ -401,9 +392,9 @@ void MainWindow::displayFrame(QImage* frame) {
  */
 void MainWindow::on_brushButton_clicked()
 {
-    emit colorPickerPicked(false);
-    emit bucketPicked(false);
-    emit currentColor(primaryColor);
+    dw->colorPicked(false);
+    dw->bucketPicked(false);
+    dw->setCurrentColor(primaryColor);
     selectButton(Tools::brush);
 }
 
@@ -412,9 +403,9 @@ void MainWindow::on_brushButton_clicked()
  */
 void MainWindow::on_eraserButton_clicked()
 {
-    emit colorPickerPicked(false);
-    emit bucketPicked(false);
-    emit currentColor(eraserColor);
+    dw->colorPicked(false);
+    dw->bucketPicked(false);
+    dw->setCurrentColor(eraserColor);
     selectButton(Tools::eraser);
 }
 
@@ -423,8 +414,8 @@ void MainWindow::on_eraserButton_clicked()
  */
 void MainWindow::on_bucketButton_clicked()
 {
-    emit colorPickerPicked(false);
-    emit bucketPicked(true);
+    dw->colorPicked(false);
+    dw->bucketPicked(true);
     selectButton(Tools::bucket);
 }
 
@@ -433,8 +424,8 @@ void MainWindow::on_bucketButton_clicked()
  */
 void MainWindow::on_colorPickerButton_clicked()
 {
-    emit colorPickerPicked(true);
-    emit bucketPicked(false);
+    dw->colorPicked(true);
+    dw->bucketPicked(false);
     selectButton(Tools::colorPicker);
 }
 
@@ -477,7 +468,7 @@ void MainWindow::on_primaryColorButton_clicked()
     primaryColor = QColorDialog::getColor(primaryColor, this, "Primary Color", QColorDialog::ShowAlphaChannel);
 
     ui->primaryColorButton->setStyleSheet("background-color: " + primaryColor.name() + ";border-style: none;");
-    emit currentColor(primaryColor);
+    dw->setCurrentColor(primaryColor);
 }
 
 /**
@@ -498,7 +489,7 @@ void MainWindow::on_swapColorButton_clicked()
     std::swap(primaryColor, secondaryColor);
     ui->primaryColorButton->setStyleSheet("background-color: " + primaryColor.name() + ";border-style: none;");
     ui->secondaryColorButton->setStyleSheet("background-color: " + secondaryColor.name() + ";border-style: none;");
-    emit currentColor(primaryColor);
+    dw->setCurrentColor(primaryColor);
 }
 
 /**
@@ -509,7 +500,7 @@ void MainWindow::changePrimaryColor(QColor color) {
     primaryColor = color;
 
     ui->primaryColorButton->setStyleSheet("background-color: " + primaryColor.name() + ";border-style: none;");
-    emit currentColor(primaryColor);
+    dw->setCurrentColor(primaryColor);
     selectButton(Tools::brush);
 }
 
@@ -543,4 +534,36 @@ void MainWindow::on_actionCredits_triggered()
         "<a target=\"_blank\" href=\"https://icons8.com/icon/19162/sort-up\">Sort Up icon by Icons8</a><br>"
         "<a target=\"_blank\" href=\"https://icons8.com/icon/19161/sort-down\">Sort Down icon by Icons8</a><br>");
     msgBox.exec();
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event){
+    int x = dw->getX();
+    int y = dw->getY();
+    if (dw->getMouseButtonDown() && (x >= 0 && x < dw->SCREEN_WIDTH) && (y >= 0 && y < dw->SCREEN_HEIGHT)) {
+        dw->mouseColor(x, y);
+    }
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    int x = dw->getX();
+    int y = dw->getY();
+    if (bucket) {
+        dw->mouseFillColor(x, y);
+    }
+    else if (dw->getColorPicked()) {
+        QImage pixmap = dw->getImage();
+        QColor colorOfPixel = pixmap.pixelColor(x, y);
+        if (colorOfPixel.alpha() > 0)
+            dw->setCurrentColor(colorOfPixel);
+    }
+    else {
+        dw->mouseColor(x, y);
+        dw->setMouseButtonDown(true);
+    }
+    dw->colorPicked(false);
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
+    dw->setMouseButtonDown(false);
 }

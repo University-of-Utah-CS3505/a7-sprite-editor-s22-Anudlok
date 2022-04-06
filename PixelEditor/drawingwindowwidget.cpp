@@ -12,20 +12,20 @@
 DrawingWindow::DrawingWindow(QWidget *parent)
     : QWidget{parent}
 {   
-    this->setGeometry(130, 40, screenWidth, screenHeight);
+    this->setGeometry(130, 40, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     gridWindow = new QLabel(this);
-    gridWindow->setGeometry(0, 0, screenWidth, screenHeight);
+    gridWindow->setGeometry(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     gridWindow->setAlignment(Qt::AlignCenter);
     gridWindow->setFrameShape(QFrame::Box);
 
     shadowWindow = new QLabel(this);
-    shadowWindow->setGeometry(0, 0, screenWidth, screenHeight);
+    shadowWindow->setGeometry(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     shadowWindow->setAlignment(Qt::AlignCenter);
     shadowWindow->setFrameShape(QFrame::Box);
 
     drawingWindow = new QLabel(this);
-    drawingWindow->setGeometry(0, 0, screenWidth, screenHeight);
+    drawingWindow->setGeometry(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     drawingWindow->setAlignment(Qt::AlignCenter);
 //    drawingWindow->setAutoFillBackground(true);
 //    drawingWindow->setStyleSheet("background-color: white;");
@@ -43,8 +43,8 @@ void DrawingWindow::displayCurrentFrame(QImage* frame, QImage* prevFrame, int wi
     setWidthAndHeight(width, height);
     QImage pixels(drawingWindow->width(), drawingWindow->height(), QImage::Format_ARGB32);
 
-    QImage scaledFrame = frame->scaled(screenWidth, screenHeight); 
-    QImage scaledPrevFrame = prevFrame->scaled(screenWidth, screenHeight);
+    QImage scaledFrame = frame->scaled(SCREEN_WIDTH, SCREEN_HEIGHT);
+    QImage scaledPrevFrame = prevFrame->scaled(SCREEN_WIDTH, SCREEN_HEIGHT);
     QImage bars(width, height, QImage::Format_ARGB32);
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
@@ -56,7 +56,7 @@ void DrawingWindow::displayCurrentFrame(QImage* frame, QImage* prevFrame, int wi
             }
         }
     }
-    bars = bars.scaled(screenWidth, screenHeight);
+    bars = bars.scaled(SCREEN_WIDTH, SCREEN_HEIGHT);
 
     gridWindow->setPixmap(QPixmap::fromImage(bars));
     gridWindow->setEnabled(false);
@@ -76,50 +76,20 @@ void DrawingWindow::displayCurrentFrame(QImage* frame, QImage* prevFrame, int wi
     drawingWindow->show();
 }
 
-void DrawingWindow::mouseMoveEvent(QMouseEvent *event){
-    int x = drawingWindow->mapFromGlobal(QCursor::pos()).x();
-    int y = drawingWindow->mapFromGlobal(QCursor::pos()).y();
-    if (mouseButtonDown && (x >= 0 && x < screenWidth) && (y >= 0 && y < screenHeight)) {
-        mouseColor(x, y);
-    }
-}
-
 void DrawingWindow::mouseColor(int x, int y) {
-    int row = x / (screenWidth / width);
-    int column = y / (screenHeight / height);
+    int row = x / (SCREEN_WIDTH / width);
+    int column = y / (SCREEN_HEIGHT / height);
+    qDebug() << "actual: " << row << ", " << column;
     if (row >= 0 && row < width && column >= 0 && column < height)
         emit colorPixel(color, row, column);
 }
 
 void DrawingWindow::mouseFillColor(int x, int y) {
-    int row = x / (screenWidth / width);
-    int column = y / (screenHeight / height);
+    int row = x / (SCREEN_WIDTH / width);
+    int column = y / (SCREEN_HEIGHT / height);
+    qDebug() << "fill: " << row << ", " << column;
     if (row >= 0 && row < width && column >= 0 && column < height)
         emit fillPixel(color, row, column);
-}
-
-void DrawingWindow::mousePressEvent(QMouseEvent *event)
-{
-        int x = drawingWindow->mapFromGlobal(QCursor::pos()).x();
-        int y = drawingWindow->mapFromGlobal(QCursor::pos()).y();
-        if (bucket) {
-            mouseFillColor(x, y);
-        }
-        else if (colorPicker) {
-            QImage pixmap = drawingWindow->pixmap().toImage();
-            QColor colorOfPixel = pixmap.pixelColor(x, y);
-            if (colorOfPixel.alpha() > 0)
-                emit colorChosen(colorOfPixel);
-        }
-        else {
-            mouseColor(x, y);
-            mouseButtonDown = true;
-        }
-        colorPicker = false;
-}
-
-void DrawingWindow::mouseReleaseEvent(QMouseEvent *event) {
-    mouseButtonDown = false;
 }
 
 void DrawingWindow::setWidthAndHeight(int _width, int _height) {
@@ -139,6 +109,30 @@ void DrawingWindow::colorPicked(bool state) {
     colorPicker = state;
 }
 
+bool DrawingWindow::getColorPicked() {
+    return colorPicker;
+}
+
 void DrawingWindow::startDrawing() {
     start = true;
+}
+
+QImage DrawingWindow::getImage() {
+    return drawingWindow->pixmap().toImage();
+}
+
+void DrawingWindow::setMouseButtonDown(bool state) {
+    mouseButtonDown = state;
+}
+
+bool DrawingWindow::getMouseButtonDown() {
+    return mouseButtonDown;
+}
+
+int DrawingWindow::getX() {
+    return drawingWindow->mapFromGlobal(QCursor::pos()).x();
+}
+
+int DrawingWindow::getY() {
+    return drawingWindow->mapFromGlobal(QCursor::pos()).y();
 }

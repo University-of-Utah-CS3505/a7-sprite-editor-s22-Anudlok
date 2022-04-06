@@ -58,7 +58,7 @@ void AnimationPopUp::closeEvent (QCloseEvent *event)
  * @brief Changes the FPS to the given amount
  * @param newFPS
  */
-void AnimationPopUp::changeFramesPerSecond(int newFPS)
+void AnimationPopUp::setFPS(int newFPS)
 {
     framesPerSecond = newFPS;
 }

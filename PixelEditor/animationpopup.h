@@ -38,6 +38,7 @@ public:
                             = nullptr);
     ~AnimationPopUp();
     int getFPS();
+    void setFPS(int newFPS);
 
 signals:
     void playAnim(int framesPerSecond);
@@ -45,7 +46,6 @@ signals:
 
 public slots:
     void displayAnimFrame(QImage* frame);
-    void changeFramesPerSecond(int newFPS);
 
 private:
     Ui::AnimationPopUp *ui;

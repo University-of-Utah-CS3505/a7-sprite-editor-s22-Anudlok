@@ -20,8 +20,6 @@ private:
     QLabel* drawingWindow;
     QLabel* gridWindow;
     QLabel* shadowWindow;
-    int screenWidth = 384;
-    int screenHeight = 384;
     int height = 1;
     int width = 1;
     bool mouseButtonDown = false;
@@ -31,10 +29,23 @@ private:
     bool start = false;
 
 public:
+    const int SCREEN_WIDTH = 384;
+    const int SCREEN_HEIGHT = 384;
+
     explicit DrawingWindow(QWidget *parent = nullptr);
     ~DrawingWindow();
     void mouseColor(int x, int y);
     void mouseFillColor(int x, int y);
+    void setCurrentColor(QColor color);
+    void colorPicked(bool state);
+    bool getColorPicked();
+    void bucketPicked(bool state);
+    void startDrawing();
+    QImage getImage();
+    void setMouseButtonDown(bool state);
+    bool getMouseButtonDown();
+    int getX();
+    int getY();
 
 signals:
     void colorPixel(QColor color, int row, int column);
@@ -43,14 +54,7 @@ signals:
 
 public slots:
     void displayCurrentFrame(QImage* frame, QImage* prevFrame, int width, int height);
-    void mousePressEvent(QMouseEvent *event);
     void setWidthAndHeight(int _width, int _height);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void setCurrentColor(QColor color);
-    void colorPicked(bool state);
-    void bucketPicked(bool state);
-    void startDrawing();
 };
 
 #endif // DRAWINGWINDOWWIDGET_H

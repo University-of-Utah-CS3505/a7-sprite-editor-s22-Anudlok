@@ -50,15 +50,6 @@ signals:
     void newFile(int width, int height);
     void saveAndNewFile(QString filename, int width, int height);
 
-    // DrawingWindow signals
-    void currentColor(QColor color);
-    void colorPickerPicked(bool state);
-    void bucketPicked(bool);
-    void startDrawing();
-
-    // Animation preview signal
-    void newFps(int);
-
 private slots:
 
     // File menu slots
@@ -86,6 +77,9 @@ private slots:
 
     // Drawing window slots
     void displayFrame(QImage* frame);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
     // Toolbar slots
     void changePrimaryColor(QColor color);
