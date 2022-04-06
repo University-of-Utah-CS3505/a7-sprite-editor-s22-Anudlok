@@ -6,6 +6,11 @@ DrawingWindow::DrawingWindow(QWidget *parent)
 {
     this->setGeometry(120, 40, screenWidth, screenHeight);
 
+    gridWindow = new QLabel(this);
+    gridWindow->setGeometry(0, 0, screenWidth, screenHeight);
+    gridWindow->setAlignment(Qt::AlignCenter);
+    gridWindow->setFrameShape(QFrame::Box);
+
     shadowWindow = new QLabel(this);
     shadowWindow->setGeometry(0, 0, screenWidth, screenHeight);
     shadowWindow->setAlignment(Qt::AlignCenter);
@@ -17,11 +22,6 @@ DrawingWindow::DrawingWindow(QWidget *parent)
 //    drawingWindow->setAutoFillBackground(true);
 //    drawingWindow->setStyleSheet("background-color: white;");
     drawingWindow->setFrameShape(QFrame::Box);
-
-    gridWindow = new QLabel(this);
-    gridWindow->setGeometry(0, 0, screenWidth, screenHeight);
-    gridWindow->setAlignment(Qt::AlignCenter);
-    gridWindow->setFrameShape(QFrame::Box);
 }
 
 DrawingWindow::~DrawingWindow() {
@@ -33,25 +33,22 @@ DrawingWindow::~DrawingWindow() {
 void DrawingWindow::displayCurrentFrame(QImage* frame, QImage* prevFrame, int width, int height)
 {
     setWidthAndHeight(width, height);
-    QImage bars(gridWindow->width(), gridWindow->height(), QImage::Format_ARGB32);
     QImage pixels(drawingWindow->width(), drawingWindow->height(), QImage::Format_ARGB32);
-    int vLines = screenWidth / width;
-    int hLines = screenHeight / height;
 
     QImage scaledFrame = frame->scaled(screenWidth, screenHeight); 
     QImage scaledPrevFrame = prevFrame->scaled(screenWidth, screenHeight);
-
-    bars.fill(QColor(0, 0, 0, 0));
-    for (int i = 0; i < gridWindow->width(); i += vLines) {
-        for (int j = 0; j < gridWindow->height(); j++) {
-            bars.setPixelColor(i, j, QColor(0, 0, 0, 100));
+    QImage bars(width, height, QImage::Format_ARGB32);
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            if ((i + j) % 2 == 0) {
+                bars.setPixelColor(i, j, QColor(100, 100, 100, 30));
+            }
+            else {
+                bars.setPixelColor(i, j, QColor(0, 0, 0, 30));
+            }
         }
     }
-    for (int i = 0; i < gridWindow->height(); i += hLines) {
-        for (int j = 0; j < gridWindow->width(); j++) {
-            bars.setPixelColor(j, i, QColor(0, 0, 0, 100));
-        }
-    }
+    bars = bars.scaled(screenWidth, screenHeight);
 
     gridWindow->setPixmap(QPixmap::fromImage(bars));
     gridWindow->setEnabled(false);
@@ -60,7 +57,7 @@ void DrawingWindow::displayCurrentFrame(QImage* frame, QImage* prevFrame, int wi
     QPixmap pixmap = QPixmap::fromImage(scaledPrevFrame);
     scaledPrevFrame.fill(Qt::transparent);
     QPainter p(&scaledPrevFrame);
-    p.setOpacity(0.2);
+    p.setOpacity(0.3);
     p.drawPixmap(0, 0, pixmap);
     p.end();
     pixmap = QPixmap::fromImage(scaledPrevFrame);
