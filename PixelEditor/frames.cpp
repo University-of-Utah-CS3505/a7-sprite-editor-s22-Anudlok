@@ -8,21 +8,32 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QRgb>
-#include <QImage>
 #include <QVector>
 #include <QTimer>
 
+///
+/// \brief Frames constructor.
+/// \param parent
+///
 Frames::Frames(QObject *parent)
     : QObject{parent}
 {
 
 }
 
+///
+/// \brief Sets the width and height of the frames.
+/// \param _width
+/// \param _height
+///
 void Frames::setWidthAndHeight(int _width, int _height) {
     width = _width;
     height = _height;
 }
 
+///
+/// \brief Sends current frame to drawing window and preview window to display.
+///
 void Frames::updateView() {
     if (currentFrame > 0) {
         emit displayFrame(&(frameList[currentFrame]), &(frameList[currentFrame - 1]), width, height);
@@ -33,33 +44,45 @@ void Frames::updateView() {
     emit displayPreview(&(frameList[currentFrame]));
 }
 
+///
+/// \brief Sends current frame to frame list (in View) to display.
+///
 void Frames::updateViewFrameList() {
     QPixmap pxMap = QPixmap::fromImage(frameList[currentFrame]);
     emit displayInList(&pxMap, currentFrame);
 }
 
+///
+/// \brief Sends a new frame to frame list (in View) to display.
+///
 void Frames::addToFrameList() {
     QPixmap pxMap = QPixmap::fromImage(frameList[currentFrame]);
     emit addFrameToList(&pxMap, currentFrame);
 }
 
+///
+/// \brief Notifies the frame list (in View) to remove the frame at the given index.
+/// \param deletedFrame - Index of frame to remove
+///
 void Frames::removeFromFrameList(int deletedFrame) {
     emit removeFrameFromList(deletedFrame);
 }
 
-//void Frames::clearFrame() {
-//    frameList[currentFrame].fill(QColor(0, 0, 0, 0));
-
-//    updateView();
-//    updateViewFrameList();
-//}
-
-void Frames::addFrame(int _width, int _height){
+///
+/// \brief Sets size of frames and adds new frame.
+/// \param _width
+/// \param _height
+///
+void Frames::addFrameWithSize(int _width, int _height){
     setWidthAndHeight(_width, _height);
-    addNewFrame();
+    addFrame();
 }
 
-void Frames::addNewFrame() {
+///
+/// \brief Adds new transparent frame to list and updates view.
+/// Current frame is set to the new frame.
+///
+void Frames::addFrame() {
     QImage image = QImage(width, height, QImage::Format_ARGB32);
     image.fill(QColor(0, 0, 0, 0));
     frameList.insert(currentFrame + 1, image);
@@ -69,63 +92,94 @@ void Frames::addNewFrame() {
     addToFrameList();
 }
 
+///
+/// \brief Deletes current frame from the list and updates view.
+///
 void Frames::deleteFrame() {
     int deleteFrameIndex = currentFrame;
 
-    // If deleted frame is last frame, change frame displayed
+    // If last frame is deleted, change current frame
     if (currentFrame == frameList.size() - 1) {
         currentFrame--;
     }
 
     frameList.removeAt(deleteFrameIndex);
+
     removeFromFrameList(deleteFrameIndex);
 
     // Frame list should never be empty
     if (frameList.empty()) {
-        addNewFrame();
+        addFrame();
     }
     else {
         updateView();
     }
 }
 
+///
+/// \brief Sets pixel at coordinate to the given color and updates the view.
+/// \param color - Color to set pixel to
+/// \param row - Row of pixel
+/// \param column - Column of pixel
+///
 void Frames::updateFrame(QColor color, int row, int column) {
     frameList[currentFrame].setPixelColor(row, column, color);
     updateView();
     updateViewFrameList();
 }
 
+///
+/// \brief Fills the pixel at the given coordinate and all connected
+/// same-colored pixels with the given color.
+/// \param color - Color to fill with
+/// \param row - Row of pixel
+/// \param column - Column of pixel
+///
 void Frames::bucketToolFrame(QColor color, int row, int column) {
+    // Get current color of first pixel
     QColor colorToChange = frameList[currentFrame].pixelColor(row, column);
-    QVector<QPair<int, int>> list;
-    list.append({row, column});
+
+    // Fill the first pixel and add to a queue
+    QVector<QPair<int, int>> filledPixels;
+    filledPixels.append({row, column});
     frameList[currentFrame].setPixelColor(row, column, color);
 
-    QPair<int, int> currentPair;
-    while (list.length() > 0) {
-        currentPair = list.takeFirst();
+    // Visit filled pixels in queue
+    QPair<int, int> currentPixelCoord;
+    while (filledPixels.length() > 0) {
+        currentPixelCoord = filledPixels.takeFirst();
+
+        // Visit pixels adjacent to current pixel
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
                 if ((i != j) && (j == 0 || i == 0)) {
-                    int rowToAdd = currentPair.first + i;
-                    int columnToAdd = currentPair.second + j;
+                    int rowToAdd = currentPixelCoord.first + i;
+                    int columnToAdd = currentPixelCoord.second + j;
+
+                    // If adjacent pixel is within the drawing window's bounds
                     if ((rowToAdd >= 0 && rowToAdd < width) && (columnToAdd >= 0 && columnToAdd < height)) {
+                        // If the color of the pixel needs to be changed
                         if (frameList[currentFrame].pixelColor(rowToAdd, columnToAdd) == colorToChange
-                            && frameList[currentFrame].pixelColor(rowToAdd, columnToAdd) != color) {
+                          && frameList[currentFrame].pixelColor(rowToAdd, columnToAdd) != color) {
+                            // Change pixel's color and add to filled pixel queue
                             frameList[currentFrame].setPixelColor(rowToAdd, columnToAdd, color);
-                            QPair<int, int> newPair(rowToAdd, columnToAdd);
-                            list.push_front(newPair);
+                            QPair<int, int> newPixelCoord(rowToAdd, columnToAdd);
+                            filledPixels.push_front(newPixelCoord);
                         }
                     }
                 }
             }
         }
-
     }
+
     updateView();
     updateViewFrameList();
 }
 
+///
+/// \brief Selects the frame at the given index and updates the view.
+/// \param index - Index of selected frame
+///
 void Frames::selectFrames(int index) {
     currentFrame = index;
     updateView();
@@ -152,7 +206,7 @@ void Frames::changeFrame(bool upOrDown) {
 
 ///
 /// \brief Plays all the frames using the given FPS.
-/// \param framesPerSecond - The FPS for the gif
+/// \param framesPerSecond - The FPS for the animation
 ///
 void Frames::playAllFrames(int framesPerSecond) {
    animFrame = 0;
@@ -165,7 +219,10 @@ void Frames::playAllFrames(int framesPerSecond) {
 /// \brief Plays the next frame in the list.
 ///
 void Frames::playNextFrame() {
+    // Notify view of frame to play
     emit displayAnimFrame(&(frameList[animFrame]));
+
+    // Queue up next frame
     animFrame = (animFrame + 1) % frameList.size();
     if (animPlaying)
         QTimer::singleShot(interval, this, &Frames::playNextFrame);
@@ -324,7 +381,7 @@ void Frames::loadFile(QString fileName) {
      emit clearFrameList();
 
      // Adds a new frame using the given width and height
-     addFrame(width, height);
+     addFrameWithSize(width, height);
  }
 
  ///

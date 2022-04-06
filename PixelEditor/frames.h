@@ -4,6 +4,9 @@
 #include <QObject>
 #include <QImage>
 
+///
+/// \brief The Frames class - The Model class header file
+///
 class Frames : public QObject
 {
     Q_OBJECT
@@ -36,8 +39,8 @@ signals:
     void clearFrameList();
 
 public slots:
-    void addFrame(int _width, int _height);
-    void addNewFrame();
+    void addFrameWithSize(int _width, int _height);
+    void addFrame();
     void deleteFrame();
     void updateFrame(QColor color, int row, int column);
     void changeFrame(bool upOrDown);

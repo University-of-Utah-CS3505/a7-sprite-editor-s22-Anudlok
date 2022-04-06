@@ -38,10 +38,10 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
                                         "background: rgba(0, 0, 100, 20)}");
 
     // Connects for new file
-    connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrame);
+    connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrameWithSize);
 
     // Connects for frame buttons
-    connect(this, &MainWindow::addNewFrame, &frames, &Frames::addNewFrame);
+    connect(this, &MainWindow::addFrame, &frames, &Frames::addFrame);
     connect(this, &MainWindow::deleteFrame, &frames, &Frames::deleteFrame);
     connect(this, &MainWindow::moveCurrFrame, &frames, &Frames::changeFrame);
     connect(this, &MainWindow::selectFrame, &frames, &Frames::selectFrames);
@@ -159,11 +159,38 @@ void MainWindow::on_actionSave_triggered()
 ///
 void MainWindow::on_actionOpen_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open Sprite Project"),
-                                                    QDir::homePath(),
-                                                    tr("Sprite Project (*.ssp)"));
-    emit loadFile(fileName);
+
+    QString filename = "";
+    QMessageBox msgBox;
+    msgBox.setText("You have unsaved changes.");
+    msgBox.setInformativeText("Do you want to save your changes before opening another project?");
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
+    int ret = msgBox.exec();
+
+    switch (ret) {
+      case QMessageBox::Save: {
+        // Make QString of file name with QFileDialog
+        filename = QFileDialog::getSaveFileName(this,
+                                                tr("Save Project"),
+                                                "",
+                                                tr("Sprite Project (*.ssp)"));
+          emit saveFile(filename);
+
+          QString fileName = QFileDialog::getOpenFileName(this,
+                                                        tr("Open Sprite Project"),
+                                                        QDir::homePath(),
+                                                        tr("Sprite Project (*.ssp)"));
+          emit loadFile(fileName);
+          break;
+      }
+      case QMessageBox::Cancel:
+          // Cancel was clicked
+          break;
+      default:
+          // Should never be reached
+          break;
+    }
 }
 
 ///
@@ -171,7 +198,34 @@ void MainWindow::on_actionOpen_triggered()
 ///
 void MainWindow::on_actionExit_triggered()
 {
-    this->close();
+
+    QString filename = "";
+    QMessageBox msgBox;
+    msgBox.setText("You have unsaved changes.");
+    msgBox.setInformativeText("Do you want to save your changes before exiting?");
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
+    int ret = msgBox.exec();
+
+    switch (ret) {
+      case QMessageBox::Save: {
+        // Make QString of file name with QFileDialog
+        filename = QFileDialog::getSaveFileName(this,
+                                                tr("Save Project"),
+                                                "",
+                                                tr("Sprite Project (*.ssp)"));
+          emit saveFile(filename);
+
+          this->close();
+          break;
+      }
+      case QMessageBox::Cancel:
+          // Cancel was clicked
+          break;
+      default:
+          // Should never be reached
+          break;
+    }
 }
 
 /// End File Menu Methods
@@ -211,7 +265,7 @@ void MainWindow::on_deleteFrameButton_clicked()
 ///
 void MainWindow::on_addFrameButton_clicked()
 {
-    emit addNewFrame();
+    emit addFrame();
 }
 
 ///
@@ -418,7 +472,7 @@ void MainWindow::on_actionCredits_triggered()
     msgBox.setInformativeText("<h2>Design and programming:</h2><br>"
                               "Anna Timofeyenko<br>"
                               "Gabby Culley<br>"
-                              "Gabby Torres<br>"
+                              "Gaby Torres<br>"
                               "Raynard Christian<br>"
                               "<br>"
                               "<h2>Icons</h2> (by <a target=\"_blank\" href=\"https://icons8.com/\">Icons8</a>):<br>"
