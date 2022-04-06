@@ -13,8 +13,8 @@ public:
 
 private:
     QLabel* previewWindow;
-    int screenWidth = 160;
-    int screenHeight = 160;
+    int screenWidth = 128;
+    int screenHeight = 128;
 
 signals:
     void sendWindow(QPixmap *frame);

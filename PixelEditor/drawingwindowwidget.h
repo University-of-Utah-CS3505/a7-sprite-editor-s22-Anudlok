@@ -13,8 +13,8 @@ private:
     QLabel* drawingWindow;
     QLabel* gridWindow;
     QLabel* shadowWindow;
-    int screenWidth = 416;
-    int screenHeight = 416;
+    int screenWidth = 384;
+    int screenHeight = 384;
     int height = 1;
     int width = 1;
     bool mouseButtonDown = false;

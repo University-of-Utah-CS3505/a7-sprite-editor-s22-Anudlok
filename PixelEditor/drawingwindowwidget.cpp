@@ -4,7 +4,7 @@
 DrawingWindow::DrawingWindow(QWidget *parent)
     : QWidget{parent}
 {
-    this->setGeometry(120, 40, screenWidth, screenHeight);
+    this->setGeometry(130, 40, screenWidth, screenHeight);
 
     gridWindow = new QLabel(this);
     gridWindow->setGeometry(0, 0, screenWidth, screenHeight);
@@ -79,13 +79,16 @@ void DrawingWindow::mouseMoveEvent(QMouseEvent *event){
 void DrawingWindow::mouseColor(int x, int y) {
     int row = x / (screenWidth / width);
     int column = y / (screenHeight / height);
-    emit colorPixel(color, row, column);
+    qDebug() << row << ", " << column;
+    if (row >= 0 && row < width && column >= 0 && column < height)
+        emit colorPixel(color, row, column);
 }
 
 void DrawingWindow::mouseFillColor(int x, int y) {
     int row = x / (screenWidth / width);
     int column = y / (screenHeight / height);
-    emit fillPixel(color, row, column);
+    if (row >= 0 && row < width && column >= 0 && column < height)
+        emit fillPixel(color, row, column);
 }
 
 void DrawingWindow::mousePressEvent(QMouseEvent *event)
