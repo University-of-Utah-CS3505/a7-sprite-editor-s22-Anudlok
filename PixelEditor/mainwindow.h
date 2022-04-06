@@ -50,13 +50,13 @@ signals:
     void newFile(int width, int height);
     void saveAndNewFile(QString filename, int width, int height);
 
-    // DELETE THESE
+    // DrawingWindow signals
     void currentColor(QColor color);
     void colorPickerPicked(bool state);
     void bucketPicked(bool);
     void startDrawing();
 
-    // ALSO DELETE
+    // Animation preview signal
     void newFps(int);
 
 private slots:
