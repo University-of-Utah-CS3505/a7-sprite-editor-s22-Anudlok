@@ -19,11 +19,14 @@ namespace Ui {
 class AnimationPopUp;
 }
 
+/**
+ * @brief The AnimationPopUp class
+ */
 class AnimationPopUp : public QWidget
 {
     Q_OBJECT
-    int framesPerSecond;
     QLabel* animationWindow;
+    int framesPerSecond;
     int screenWidth = 200;
     int screenHeight = 200;
 
@@ -42,7 +45,7 @@ signals:
 
 public slots:
     void displayAnimFrame(QImage* frame);
-    void changeFramesPerSecond(int);
+    void changeFramesPerSecond(int newFPS);
 
 private:
     Ui::AnimationPopUp *ui;
