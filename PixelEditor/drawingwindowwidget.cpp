@@ -79,7 +79,6 @@ void DrawingWindow::mouseMoveEvent(QMouseEvent *event){
 void DrawingWindow::mouseColor(int x, int y) {
     int row = x / (screenWidth / width);
     int column = y / (screenHeight / height);
-    qDebug() << row << ", " << column;
     if (row >= 0 && row < width && column >= 0 && column < height)
         emit colorPixel(color, row, column);
 }

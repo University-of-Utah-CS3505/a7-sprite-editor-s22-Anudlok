@@ -63,7 +63,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(731, 587);
+        MainWindow->resize(706, 587);
         actionNew = new QAction(MainWindow);
         actionNew->setObjectName(QString::fromUtf8("actionNew"));
         QIcon icon;
@@ -195,9 +195,10 @@ public:
         framesListWidget = new QListWidget(centralwidget);
         framesListWidget->setObjectName(QString::fromUtf8("framesListWidget"));
         framesListWidget->setEnabled(true);
-        framesListWidget->setGeometry(QRect(540, 200, 141, 321));
+        framesListWidget->setGeometry(QRect(540, 170, 141, 351));
         sizePolicy.setHeightForWidth(framesListWidget->sizePolicy().hasHeightForWidth());
         framesListWidget->setSizePolicy(sizePolicy);
+        framesListWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         editDrawingWindow = new QLabel(centralwidget);
         editDrawingWindow->setObjectName(QString::fromUtf8("editDrawingWindow"));
         editDrawingWindow->setGeometry(QRect(140, 20, 384, 384));
@@ -250,7 +251,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 731, 21));
+        menubar->setGeometry(QRect(0, 0, 706, 21));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuCredits = new QMenu(menubar);
