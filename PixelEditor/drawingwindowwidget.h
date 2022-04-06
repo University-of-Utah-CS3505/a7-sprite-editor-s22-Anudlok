@@ -35,9 +35,9 @@ public:
     explicit DrawingWindow(QWidget *parent = nullptr);
     ~DrawingWindow();
     void mouseColor(int x, int y);
-    void mouseFillColor(int x, int y);
+    void bucketColor(int x, int y);
     void setCurrentColor(QColor color);
-    void colorPicked(bool state);
+    void colorPickerPicked(bool state);
     bool getColorPicked();
     void bucketPicked(bool state);
     void startDrawing();
@@ -46,6 +46,7 @@ public:
     bool getMouseButtonDown();
     int getX();
     int getY();
+    bool getBucket();
 
 signals:
     void colorPixel(QColor color, int row, int column);

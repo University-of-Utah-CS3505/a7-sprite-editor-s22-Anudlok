@@ -1,5 +1,5 @@
 /************************************************
- * DrawingWindow class
+ * PreviewWindow class
  * Class definition for displaying the preview
  * window
  * @author: Anna Timofeyenko, Gabby Culley,

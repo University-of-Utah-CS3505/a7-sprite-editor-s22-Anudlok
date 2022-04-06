@@ -1,5 +1,5 @@
 /************************************************
- * DrawingWindow class
+ * MainWindow class
  * Class definition for displaying the main
  * window which displays all the widget.
  * @author: Anna Timofeyenko, Gabby Culley,
@@ -392,7 +392,7 @@ void MainWindow::displayFrame(QImage* frame) {
  */
 void MainWindow::on_brushButton_clicked()
 {
-    dw->colorPicked(false);
+    dw->colorPickerPicked(false);
     dw->bucketPicked(false);
     dw->setCurrentColor(primaryColor);
     selectButton(Tools::brush);
@@ -403,7 +403,7 @@ void MainWindow::on_brushButton_clicked()
  */
 void MainWindow::on_eraserButton_clicked()
 {
-    dw->colorPicked(false);
+    dw->colorPickerPicked(false);
     dw->bucketPicked(false);
     dw->setCurrentColor(eraserColor);
     selectButton(Tools::eraser);
@@ -414,7 +414,7 @@ void MainWindow::on_eraserButton_clicked()
  */
 void MainWindow::on_bucketButton_clicked()
 {
-    dw->colorPicked(false);
+    dw->colorPickerPicked(false);
     dw->bucketPicked(true);
     selectButton(Tools::bucket);
 }
@@ -424,7 +424,7 @@ void MainWindow::on_bucketButton_clicked()
  */
 void MainWindow::on_colorPickerButton_clicked()
 {
-    dw->colorPicked(true);
+    dw->colorPickerPicked(true);
     dw->bucketPicked(false);
     selectButton(Tools::colorPicker);
 }
@@ -536,20 +536,32 @@ void MainWindow::on_actionCredits_triggered()
     msgBox.exec();
 }
 
+/**
+ * @brief MainWindow::mouseMoveEvent slot for when a mouse moves
+ * to draw
+ * @param event pointer to the even that triggered the event
+ */
 void MainWindow::mouseMoveEvent(QMouseEvent *event){
     int x = dw->getX();
     int y = dw->getY();
+    //statement checks if the mouse clicks in bounds
+    //to the drawing window to draw
     if (dw->getMouseButtonDown() && (x >= 0 && x < dw->SCREEN_WIDTH) && (y >= 0 && y < dw->SCREEN_HEIGHT)) {
         dw->mouseColor(x, y);
     }
 }
 
+/**
+ * @brief MainWindow::mousePressEvent slot to draw when a user presses
+ * and draws
+ * @param event - pointer to the triggered event
+ */
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     int x = dw->getX();
     int y = dw->getY();
-    if (bucket) {
-        dw->mouseFillColor(x, y);
+    if (dw->getBucket()) {
+        dw->bucketColor(x, y);
     }
     else if (dw->getColorPicked()) {
         QImage pixmap = dw->getImage();
@@ -561,9 +573,14 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
         dw->mouseColor(x, y);
         dw->setMouseButtonDown(true);
     }
-    dw->colorPicked(false);
+    dw->colorPickerPicked(false);
 }
 
+/**
+ * @brief MainWindow::mouseReleaseEvent slot for when the user stops pressing
+ * the button, stop drawing
+ * @param event - pointer to triggered event
+ */
 void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
     dw->setMouseButtonDown(false);
 }

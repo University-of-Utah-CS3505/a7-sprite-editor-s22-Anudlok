@@ -1,5 +1,5 @@
 /************************************************
- * DrawingWindow class
+ * Frames class
  * Class definition for storing the frames
  * @author: Anna Timofeyenko, Gabby Culley,
  *          Gaby Torres, Raynard Christian

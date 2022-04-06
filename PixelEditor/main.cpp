@@ -1,7 +1,6 @@
 /************************************************
- * DrawingWindow class
- * Class definition for displaying the animation
- * pop up window
+ * Main class
+ * Contains the MainWindow and build the ui
  * @author: Anna Timofeyenko, Gabby Culley,
  *          Gaby Torres, Raynard Christian
  * @date: 4/5/2022

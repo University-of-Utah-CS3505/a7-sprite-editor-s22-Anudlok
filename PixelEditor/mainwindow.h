@@ -1,5 +1,5 @@
 /************************************************
- * DrawingWindow class
+ * MainWindow class
  * Class definition for displaying the main
  * window which displays all the widget.
  * @author: Anna Timofeyenko, Gabby Culley,

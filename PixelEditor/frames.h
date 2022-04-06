@@ -1,5 +1,5 @@
 /************************************************
- * DrawingWindow class
+ * Frames class
  * Class definition for the Frames class
  * @author: Anna Timofeyenko, Gabby Culley,
  *          Gaby Torres, Raynard Christian
