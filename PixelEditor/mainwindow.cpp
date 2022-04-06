@@ -259,8 +259,6 @@ void MainWindow::on_actionExit_triggered()
     }
 }
 
-/// End File Menu Methods
-
 /// Animation Popup Methods
 
 /**
@@ -372,6 +370,17 @@ void MainWindow::on_frameDownButton_clicked()
         ui->framesListWidget->setCurrentItem(next);
     }
     emit moveCurrFrame(true);
+}
+
+/**
+ * @brief Handles item press for list widget
+ * @param item - The selected item in the list widget
+ */
+void MainWindow::on_framesListWidget_itemPressed(QListWidgetItem *item)
+{
+    int index = ui->framesListWidget->row(item);
+
+    emit selectFrame(index);
 }
 
 /// Drawing Window Methods
@@ -535,15 +544,3 @@ void MainWindow::on_actionCredits_triggered()
         "<a target=\"_blank\" href=\"https://icons8.com/icon/19161/sort-down\">Sort Down icon by Icons8</a><br>");
     msgBox.exec();
 }
-
-/**
- * @brief Handles item press for list widget
- * @param item - The selected item in the list widget
- */
-void MainWindow::on_framesListWidget_itemPressed(QListWidgetItem *item)
-{
-    int index = ui->framesListWidget->row(item);
-
-    emit selectFrame(index);
-}
-
