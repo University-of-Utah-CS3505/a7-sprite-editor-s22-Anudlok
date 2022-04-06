@@ -195,8 +195,14 @@ void MainWindow::on_actionOpen_triggered()
             emit loadFile(fileName);
             break;
         }
-        case QMessageBox::Discard:
+        case QMessageBox::Discard:{
+            QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open Sprite Project"),
+                                                    QDir::homePath(),
+                                                    tr("Sprite Project (*.ssp)"));
+            emit loadFile(fileName);
             break;
+        }
         case QMessageBox::Cancel:
             // Cancel was clicked
             break;
