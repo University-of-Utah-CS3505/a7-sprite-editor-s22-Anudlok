@@ -22,8 +22,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    MainWindow(PreviewWindow& pw, Frames& frames, DrawingWindow& dww,
-               QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     std::vector<QListWidgetItem> widgetList;
 

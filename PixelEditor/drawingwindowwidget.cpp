@@ -3,7 +3,7 @@
 
 DrawingWindow::DrawingWindow(QWidget *parent)
     : QWidget{parent}
-{
+{   
     this->setGeometry(130, 40, screenWidth, screenHeight);
 
     gridWindow = new QLabel(this);

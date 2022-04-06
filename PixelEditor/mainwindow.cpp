@@ -10,22 +10,25 @@
  * @brief MainWindow::MainWindow The View Class
  * @param parent
  */
-MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
-                       DrawingWindow& dw, QWidget *parent)
+MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-{
+{          
+    Frames* frames = new Frames();
+    DrawingWindow* dw = new DrawingWindow();
+    PreviewWindow* pw = new PreviewWindow();
 
     // UI configuration at start of application
-    ui->setupUi(this);
+    this->ui->setupUi(this);
+
     popUp = new AnimationPopUp;
 
     primaryColor = Qt::black;
     secondaryColor = Qt::white;
     eraserColor = QColor(0, 0, 0, 0);
 
-    this->layout()->addWidget(&dw);
-    this->layout()->addWidget(&pw);
+    this->layout()->addWidget(dw);
+    this->layout()->addWidget(pw);
 
     ui->editDrawingWindow->setVisible(false);
     ui->brushButton->setEnabled(true);
@@ -38,46 +41,46 @@ MainWindow::MainWindow(PreviewWindow& pw, Frames& frames,
                                         "background: rgba(0, 0, 100, 20)}");
 
     // Connects for new file
-    connect(this, &MainWindow::makeNewFrame, &frames, &Frames::addFrameWithSize);
+    connect(this, &MainWindow::makeNewFrame, frames, &Frames::addFrameWithSize);
 
     // Connects for frame buttons
-    connect(this, &MainWindow::addFrame, &frames, &Frames::addFrame);
-    connect(this, &MainWindow::deleteFrame, &frames, &Frames::deleteFrame);
-    connect(this, &MainWindow::moveCurrFrame, &frames, &Frames::changeFrame);
-    connect(this, &MainWindow::selectFrame, &frames, &Frames::selectFrames);
+    connect(this, &MainWindow::addFrame, frames, &Frames::addFrame);
+    connect(this, &MainWindow::deleteFrame, frames, &Frames::deleteFrame);
+    connect(this, &MainWindow::moveCurrFrame, frames, &Frames::changeFrame);
+    connect(this, &MainWindow::selectFrame, frames, &Frames::selectFrames);
 
     // DrawingWindow-related Connects
-    connect(&dw, &DrawingWindow::colorPixel, &frames, &Frames::updateFrame);
-    connect(&dw, &DrawingWindow::fillPixel, &frames, &Frames::bucketToolFrame);
-    connect(&frames, &Frames::displayFrame, &dw, &DrawingWindow::displayCurrentFrame);
+    connect(dw, &DrawingWindow::colorPixel, frames, &Frames::updateFrame);
+    connect(dw, &DrawingWindow::fillPixel, frames, &Frames::bucketToolFrame);
+    connect(frames, &Frames::displayFrame, dw, &DrawingWindow::displayCurrentFrame);
 
     // DELETE THESE
-    connect(&dw, &DrawingWindow::colorChosen, this, &MainWindow::changePrimaryColor);
-    connect(this, &MainWindow::currentColor, &dw, &DrawingWindow::setCurrentColor);
-    connect(this, &MainWindow::colorPickerPicked, &dw, &DrawingWindow::colorPicked);
-    connect(this, &MainWindow::startDrawing, &dw, &DrawingWindow::startDrawing);
-    connect(this, &MainWindow::bucketPicked, &dw, &DrawingWindow::bucketPicked);
+    connect(dw, &DrawingWindow::colorChosen, this, &MainWindow::changePrimaryColor);
+    connect(this, &MainWindow::currentColor, dw, &DrawingWindow::setCurrentColor);
+    connect(this, &MainWindow::colorPickerPicked, dw, &DrawingWindow::colorPicked);
+    connect(this, &MainWindow::startDrawing, dw, &DrawingWindow::startDrawing);
+    connect(this, &MainWindow::bucketPicked, dw, &DrawingWindow::bucketPicked);
 
     // PreviewWindow-related Connects
-    connect(&frames, &Frames::displayPreview, &pw, &PreviewWindow::displayPreviewFrame);
+    connect(frames, &Frames::displayPreview, pw, &PreviewWindow::displayPreviewFrame);
 
     // Frame list-related Connects
-    connect(&frames, &Frames::displayInList, this, &MainWindow::displayInList);
-    connect(&frames, &Frames::addFrameToList, this, &MainWindow::addFrameToList);
-    connect(&frames, &Frames::removeFrameFromList, this, &MainWindow::removeFrameFromList);
-    connect(&frames, &Frames::clearFrameList, this, &MainWindow::clearFrameList);
+    connect(frames, &Frames::displayInList, this, &MainWindow::displayInList);
+    connect(frames, &Frames::addFrameToList, this, &MainWindow::addFrameToList);
+    connect(frames, &Frames::removeFrameFromList, this, &MainWindow::removeFrameFromList);
+    connect(frames, &Frames::clearFrameList, this, &MainWindow::clearFrameList);
 
     // Animation preview-related Connects
-    connect(&frames, &Frames::displayAnimFrame, popUp, &AnimationPopUp::displayAnimFrame);
-    connect(popUp, &AnimationPopUp::playAnim, &frames, &Frames::playAllFrames);
-    connect(popUp, &AnimationPopUp::stopAnim, &frames, &Frames::stopPlayingFrames);
+    connect(frames, &Frames::displayAnimFrame, popUp, &AnimationPopUp::displayAnimFrame);
+    connect(popUp, &AnimationPopUp::playAnim, frames, &Frames::playAllFrames);
+    connect(popUp, &AnimationPopUp::stopAnim, frames, &Frames::stopPlayingFrames);
     connect(this, &MainWindow::newFps, popUp, &AnimationPopUp::changeFramesPerSecond);
 
     // File-related Connects
-    connect(this, &MainWindow::loadFile, &frames, &Frames::loadFile);
-    connect(this, &MainWindow::saveFile, &frames, &Frames::saveFile);
-    connect(this, &MainWindow::newFile, &frames, &Frames::newFile);
-    connect(this, &MainWindow::saveAndNewFile, &frames, &Frames::saveAndNewFile);
+    connect(this, &MainWindow::loadFile, frames, &Frames::loadFile);
+    connect(this, &MainWindow::saveFile, frames, &Frames::saveFile);
+    connect(this, &MainWindow::newFile, frames, &Frames::newFile);
+    connect(this, &MainWindow::saveAndNewFile, frames, &Frames::saveAndNewFile);
 
     emit currentColor(primaryColor);
 

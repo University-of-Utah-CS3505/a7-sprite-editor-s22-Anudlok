@@ -7,10 +7,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Frames f;
-    DrawingWindow dw;
-    PreviewWindow pw;
-    MainWindow w(pw, f, dw);
+    MainWindow w;
     w.show();
     return a.exec();
 }
