@@ -1,6 +1,11 @@
-/*****************************************************
- * Tester
-******************************************************/
+/************************************************
+ * AnimationPopUp class
+ * Class definition for displaying the animation
+ * pop up window
+ * @author: Anna Timofeyenko, Gabby Culley,
+ *          Gaby Torres, Raynard Christian
+ * @date: 4/5/2022
+************************************************/
 #ifndef ANIMATIONPOPUP_H
 #define ANIMATIONPOPUP_H
 
@@ -26,7 +31,8 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 public:
-    explicit AnimationPopUp(QWidget *parent = nullptr);
+    explicit AnimationPopUp(QWidget *parent
+                            = nullptr);
     ~AnimationPopUp();
     int getFPS();
 
@@ -35,7 +41,7 @@ signals:
     void stopAnim();
 
 public slots:
-    void displayAnimFrame(QImage* frame);//, int width, int height);
+    void displayAnimFrame(QImage* frame);
     void changeFramesPerSecond(int);
 
 private:
